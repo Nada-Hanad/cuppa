@@ -19,6 +19,25 @@ ChartJS.register(
   Legend
 );
 
+export const options = {
+  indexAxis: "y",
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "right",
+    },
+    title: {
+      display: true,
+      text: "Chart.js Horizontal Bar Chart",
+    },
+  },
+};
+
 const labels = ["January"];
 
 const data = {
@@ -55,6 +74,6 @@ const data = {
   ],
 };
 
-export default function BarChart() {
-  return <Bar data={data} />;
+export function HorizontalBarChart() {
+  return <Bar options={options} data={data} />;
 }

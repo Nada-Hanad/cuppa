@@ -27,18 +27,18 @@ export default function Layout({ children }) {
             title: "Employes",
             icon: "/icons/user.svg",
           },
-          {
-            href: "/adm/notifications",
-            title: "Notifications",
-            icon: "/icons/notifications.svg",
-          },
+          // {
+          //   href: "/adm/notifications",
+          //   title: "Notifications",
+          //   icon: "/icons/notifications.svg",
+          // },
         ]);
         break;
     }
   }, [route]);
 
   return (
-    <div className="min-h-screen w-screen">
+    <div className="min-h-screen w-screen bg-bg-color">
       <aside className="h-[calc(100%-32px)] bg-dark-grey rounded-2xl w-[250px] fixed top-4 left-4">
         <div className="flex justify-center items-center h-24 text-white gap-4 my-10">
           <div className="h-20 w-20 rounded-full overflow-hidden">
@@ -62,7 +62,9 @@ export default function Layout({ children }) {
                 <Link href={href}>
                   <span
                     className={`gap-4 flex p-4 bg-bg-grey rounded-xl hover:bg-white cursor-pointer ${
-                      router.asPath === href && "bg-white"
+                      (router.asPath === href ||
+                        router.pathname === href + "/[pid]") &&
+                      "bg-white"
                     }`}
                   >
                     <Image height={24} width={24} src={icon} alt="icon"></Image>
@@ -83,7 +85,7 @@ export default function Layout({ children }) {
           </ul>
         </nav>
       </aside>
-      <main className="flex-1 ml-[316px] w-[calc(100%-316px)]">{children}</main>
+      <main className="flex-1 ml-[300px] w-[calc(100%-300px)]">{children}</main>
     </div>
   );
 }
