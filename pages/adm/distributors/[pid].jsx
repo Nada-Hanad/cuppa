@@ -39,7 +39,7 @@ const Distributor = () => {
           <div className="w-96 h-64  bg-black flex items-center justify-center bg-white rounded shadow-2xl">
             <HorizontalBarChart />
           </div>
-          <div className="w-96 h-64 bg-black flex items-center justify-center bg-white rounded shadow-2xl">
+          <div className="w-96  h-64 bg-black flex items-center justify-center bg-white rounded shadow-2xl">
             <BarChart />
           </div>
         </div>
