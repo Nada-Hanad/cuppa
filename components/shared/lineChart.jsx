@@ -58,5 +58,5 @@ const data = {
 };
 
 export default function LineChart() {
-  return <Line data={data} />;
+  return <Line data={data} className="w-full h-full" />;
 }
