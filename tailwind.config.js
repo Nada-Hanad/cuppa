@@ -13,6 +13,7 @@ module.exports = {
         "bg-grey": "#D3D5D4",
         "header-bg": "#d5d8e0",
         dark: "#222326",
+        brown: "#D27842",
       },
     },
   },
