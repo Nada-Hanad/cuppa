@@ -27,11 +27,30 @@ export default function Layout({ children }) {
             title: "Employes",
             icon: "/icons/user.svg",
           },
-          // {
-          //   href: "/adm/notifications",
-          //   title: "Notifications",
-          //   icon: "/icons/notifications.svg",
-          // },
+        ]);
+        break;
+      case "ac":
+        setMenuItems([
+          {
+            href: "/ac/profil",
+            title: "Profil",
+            icon: "/icons/user.svg",
+          },
+          {
+            href: "/ac/reclamations",
+            title: "Reclamations",
+            icon: "/icons/reclamationIcon.svg",
+          },
+          {
+            href: "/ac/boissons",
+            title: "Boissons",
+            icon: "/icons/mug.svg",
+          },
+          {
+            href: "/ac/ads",
+            title: "Annonces",
+            icon: "/icons/adIcon.svg",
+          },
         ]);
         break;
     }
