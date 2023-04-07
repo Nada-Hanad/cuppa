@@ -4,7 +4,7 @@ export default function Input({ placeholder, value, setValue }) {
   }
   return (
     <input
-      className="rounded-md p-2"
+      className="rounded-md p-2 shadow"
       type="text"
       placeholder={placeholder}
       value={value}
