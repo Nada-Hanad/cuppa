@@ -6,8 +6,18 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function EditBoissonModal({ drink, drinks, setDrinks }) {
   const [showModal, setShowModal] = React.useState(false);
-  const availableIngredients = ["Ingredient 1", "Ingredient 2", "Ingredient 3"];
-
+  const availableIngredients = [
+    "coffee",
+    "tea",
+    "milk",
+    "sugar",
+    "honey",
+    "cinnamon",
+    "nutmeg",
+    "cocoa",
+    "whipped cream",
+    "marshmallows",
+  ];
   useEffect(() => {
     function handleClickOutside(event) {
       if (event.target.classList.contains("modal")) {
@@ -111,7 +121,9 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[600px] w-[600px] overflow-scroll">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Ajouter un boisson</h3>
+                  <h3 className="text-3xl font-semibold">
+                    Modifier un boisson
+                  </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
