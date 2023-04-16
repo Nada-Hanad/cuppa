@@ -30,10 +30,29 @@ export default function Layout({ children }) {
             title: "Employes",
             icon: "/icons/user.svg",
           },
+        ]);
+        break;
+      case "ac":
+        setMenuItems([
           {
-            href: "/adm/notifications",
-            title: "Notifications",
-            icon: "/icons/notifications.svg",
+            href: "/ac/profil",
+            title: "Profil",
+            icon: "/icons/user.svg",
+          },
+          {
+            href: "/ac/reclamations",
+            title: "Reclamations",
+            icon: "/icons/reclamationIcon.svg",
+          },
+          {
+            href: "/ac/boissons",
+            title: "Boissons",
+            icon: "/icons/mug.svg",
+          },
+          {
+            href: "/ac/ads",
+            title: "Annonces",
+            icon: "/icons/adIcon.svg",
           },
         ]);
          break;
@@ -55,7 +74,7 @@ export default function Layout({ children }) {
   }, [route]);
 
   return (
-    <div className="min-h-screen w-screen bg-[#EBEEF3] overflow-hidden">
+    <div className="min-h-screen w-screen bg--bg-color overflow-hidden">
       <aside className="h-[calc(100%-32px)] bg-dark-grey rounded-2xl w-[250px] fixed top-4 left-4">
         <div className="flex justify-center items-center h-24 text-white gap-4 my-10">
           <div className="h-20 w-20 rounded-lg overflow-hidden">
@@ -80,7 +99,9 @@ export default function Layout({ children }) {
                 <Link href={href}>
                   <span
                     className={`gap-4 flex p-4 bg-bg-grey rounded-xl hover:bg-white cursor-pointer ${
-                      router.asPath === href && "bg-white"
+                      (router.asPath === href ||
+                        router.pathname === href + "/[pid]") &&
+                      "bg-white"
                     }`}
                   >
                     <Image height={24} width={24} src={icon} alt="icon"></Image>

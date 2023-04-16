@@ -1,34 +1,118 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Charte de codage
 
-## Getting Started
+La charte de codage est un document qui regroupe l'ensemble des règles à suivre durant la programmation pour assurer un code cohérent et de qualité. Elle doit être respectée par tous les membres de l'équipe de développement.
 
-First, run the development server:
+## Règles générales
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- Le code doit être lisible et compréhensible par tous les membres de l'équipe.
+- Le code doit être documenté de manière adéquate. Les commentaires doivent être pertinents, clairs et concis.
+- Les noms de variables, de fonctions et de classes doivent être explicites et évocateurs de leur utilisation.
+- Le code doit être organisé de manière logique, en regroupant les fonctions et les classes qui ont une fonctionnalité similaire.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Les messages des commits
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Les messages des commits doivent être clairs et explicites.
+- Les messages des commits doivent décrire la fonctionnalité ou le correctif apporté par le commit.
+- Les messages des commits doivent être rédigés en anglais.
+- Les messages des commits doivent être rédigés en utilisant la convention suivante : _type: message_.
+  Par exemple, pour faire un commit de finition de la fonctionnalité d'authentification :
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+  ```bash
+  git commit -m "feat: completed authentification"
+  ```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+  ### Les types de commits
 
-## Learn More
+  | Type         | Description                                        |
+  | ------------ | -------------------------------------------------- |
+  | **feat**     | Ajout d'une nouvelle fonctionnalité                |
+  | **fix**      | Correction d'un bug                                |
+  | **docs**     | Modification de la documentation                   |
+  | **style**    | Modification de la mise en forme du code           |
+  | **refactor** | Modification du code sans changer son comportement |
+  | **test**     | Ajout ou modification de tests                     |
+  | **conf**     | Modification de la configuration du projet         |
 
-To learn more about Next.js, take a look at the following resources:
+## La création des branches
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Les branches doivent être créées à partir de la branche principale. i.e avant de créer une nouvelle branche, il faut basculer vers la branche **master**.
+  Avant de commencer à travailler :
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  ```bash
+  git checkout master
+  ```
 
-## Deploy on Vercel
+  Effectuer un pull :
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  ```bash
+  git pull origin master
+  ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  En fin créer et basculer vers la nouvelle branche :
+
+  ```bash
+  git checkout -b feature-name
+  ```
+
+- Les branches doivent être nommées de manière explicite pour indiquer leur fonctionnalité ou leur objectif ainsi que le responsable de la tâche. elles doivent être nommées de cette manière : _name/feature/feature-name_.
+  Par exemple, pour la création de la fonctionnalité d'authentification :
+
+  ```bash
+  git checkout -b name/feature/auth
+  ```
+
+- Les branches doivent être fusionnées dans la branche principale après la fin de leur développement et leur validation.
+
+## Les normes de codage
+
+- Les noms des variables doivent être en anglais, en utilisant la convention camelCase.
+  ```javascript
+  const myVariable = "Hello World";
+  ```
+- Les noms des constantes doivent être en anglais, en utilisant la convention SCREAMING_SNAKE_CASE.
+
+  ```javascript
+  const API_URL = "https://api.example.com";
+  ```
+
+- Les noms des fonctions et des classes doivent être en anglais, en utilisant la convention PascalCase.
+
+  ```javascript
+  class MyClass {
+    myFunction() {
+      // ...
+    }
+  }
+  ```
+
+- Les fonctions doivent être écrites avec des commentaires avant le début de la fonction expliquant leur but et leur utilisation.
+
+  ```javascript
+  /**
+   * This function is used to do something
+   * @param {string} param1 - The first parameter
+   * @param {number} param2 - The second parameter
+   * @returns {boolean} - The result of the function
+   */
+  function myFunction(param1, param2) {
+    // ...
+  }
+  ```
+
+## Structure de code
+
+- Utiliser Prettier pour le formatage du code.
+
+- Chaque projet aura son propre fichier de configuration Prettier.
+
+## La documentation du code
+
+- Le code doit être documenté pour faciliter la compréhension de son fonctionnement et de son utilisation.
+- Les commentaires doivent être placés à des endroits stratégiques pour aider à la compréhension du code.
+- Les commentaires doivent être clairs, précis et pertinents. Ils doivent décrire le fonctionnement de la fonction, de la classe ou de la variable.
+- Les commentaires doivent être rédigés en anglais.
+- Le code doit être documenté de manière à faciliter la maintenance et les éventuelles modifications futures.
+
+## Conclusion
+
+La charte de codage est essentielle pour assurer un code de qualité, cohérent et facilement lisible par tous les membres de l'équipe. Elle doit être suivie avec rigueur et respect par tous les développeurs travaillant sur le projet.
