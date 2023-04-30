@@ -14,7 +14,7 @@ const Distributor = () => {
   return (
     <div className="text-center pt-8 flex flex-col items-center gap-20">
       <Head>
-        <title>Distributeur : {pid}</title>
+        <title>{`Distributeur : ${pid}`}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Title title="Distributeur" />
