@@ -1,3 +1,4 @@
+import { useAsyncDebounce } from 'react-table'
 import Head from 'next/head'
 import Image from 'next/image'
 import { DataTable } from '../../components/shared/table'
@@ -5,6 +6,7 @@ import { useEffect, useState, useMemo } from 'react'
 import axios from 'axios'
 import { useGlobalFilter, useTable } from 'react-table'
 import { Search_bar } from '../../components/shared/search_bar'
+import AddDistModal from '../../components/SadmModels/addDist'
 import tw from 'twin.macro'
 
 const Button = tw.button`
@@ -18,13 +20,9 @@ const Button = tw.button`
 `
 
 export default function SADM_distributeurs() {
-  const [showAddForm, setShowAddForm] = useState(false)
-  const addBtnClick = () => {
-    setShowAddForm(!showAddForm)
-    console.log(showAddForm)
-  }
   ////////////---------------------- Dynamic table -----------------------------------///////////////////////////////////////////////////////////////////////////////////////////////
   const [distributeurs, setDistributeurs] = useState([])
+  const [defaultData, setDefaultData] = useState([])
 
   const fetchDistributeurs = async () => {
     const response = await axios
@@ -33,6 +31,17 @@ export default function SADM_distributeurs() {
     if (response) {
       const dists = response.data
       setDistributeurs(dists)
+      setDefaultData(dists)
+    }
+  }
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/distributeurs/${id}`
+      )
+      fetchDistributeurs()
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -55,6 +64,7 @@ export default function SADM_distributeurs() {
   )
   //////////////////--------------API EXAMPLE----------------------//////////////////////////////////////////////////////////////////////////
   const distData = useMemo(() => [...distributeurs], [distributeurs])
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const tableHooks = (hooks) => {
     hooks.visibleColumns.push((columns) => [
@@ -66,21 +76,26 @@ export default function SADM_distributeurs() {
           if (row.original.etat_distributeur === 'Desactivé') {
             return (
               <div className="flex justify-evenly">
-                <button onClick={() => alert('edit ')}>
-                  <Image src="/icons/edit.png" width={40} height={40}></Image>
-                </button>
-                <button onClick={() => alert('delete ')}>
+                {/*
+                  <button onClick={() => alert('edit ')}>
+                    <Image src="/icons/edit.png" width={40} height={40}></Image>
+                  </button>*/}
+                <button
+                  onClick={() =>
+                    handleDelete(row.original.numero_serie_distributeur)
+                  }
+                >
                   <Image src="/icons/delete.svg" width={40} height={40}></Image>
                 </button>
-                <Button onClick={() => alert('details ')}>details</Button>
+                {/*<Button onClick={() => alert('details ')}>details</Button>*/}
               </div>
             )
           } else {
             return (
               <div className="flex justify-end">
-                <Button onClick={() => alert('details ')} className="mr-16">
+                {/*<Button onClick={() => alert('details ')} className="mr-16">
                   details
-                </Button>
+                </Button>*/}
               </div>
             )
           }
@@ -111,7 +126,23 @@ export default function SADM_distributeurs() {
   }, [])
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const [value, setValue] = useState(state.globalFilter)
+  const filterBtn = useAsyncDebounce((value) => {
+    console.log(value)
+    setGlobalFilter(value || undefined)
+  }, 300)
 
+  const [filter, setFilter] = useState('all')
+  const filteredData = distributeurs
+    ? distributeurs.filter((item) => {
+        if (filter === 'all') {
+          return true
+        } else {
+          return item.etat_distributeur === filter
+        }
+      })
+    : []
+  ////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className="text-center pt-4 flex flex-col items-center gap-11 overflow-y-scroll overflow-x-hidden">
       <Head>
@@ -133,16 +164,13 @@ export default function SADM_distributeurs() {
         <button className="w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center">
           <Image src="/icons/search.png" width={30} height={30}></Image>
         </button>
-        <button
-          onClick={addBtnClick}
-          className="w-[180px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
-        >
-          <Image src="/icons/plus.png" width={35} height={35}></Image>
-          distributeur
-        </button>
+        <AddDistModal fetchDistributeurs={fetchDistributeurs} />
       </div>
       <div className="flex w-[1000px] items-center justify-evenly">
-        <button className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly">
+        <button
+          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
+          /* onClick={() => handleFilterClick('all')}*/
+        >
           Tous
         </button>
         <button className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly">
@@ -151,16 +179,20 @@ export default function SADM_distributeurs() {
         <button className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly">
           Non affectés
         </button>
-        <button className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly">
+        <button
+          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
+          onClick={() => {
+            setDistributeurs(
+              defaultData.filter((d) => d.etat_distributeur === 'Activé')
+            )
+          }}
+        >
           Activés
         </button>
         <button className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly">
           Désactivés
         </button>
       </div>
-      {
-        //showAddForm && <AddDistributeurForm onBtnClick={addBtnClick} />
-      }
       <DataTable
         getTableProps={getTableProps}
         getTableBodyProps={getTableBodyProps}
@@ -171,3 +203,12 @@ export default function SADM_distributeurs() {
     </div>
   )
 }
+/*
+        <button
+          onClick={addBtnClick}
+          className="w-[180px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
+        >
+          <Image src="/icons/plus.png" width={35} height={35}></Image>
+          distributeur
+        </button>
+*/

@@ -1,3 +1,4 @@
+import regeneratorRuntime from "regenerator-runtime";
 import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
 import tw from "twin.macro";
