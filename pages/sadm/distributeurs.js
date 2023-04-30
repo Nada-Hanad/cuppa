@@ -1,14 +1,116 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Distributeurs } from '../../components/shared/tableDist'
-import { AddDistributeurForm } from '../../components/shared/addDistributeurForm'
-import { useState } from 'react'
+import { DataTable } from '../../components/shared/table'
+import { useEffect, useState, useMemo } from 'react'
+import axios from 'axios'
+import { useGlobalFilter, useTable } from 'react-table'
+import { Search_bar } from '../../components/shared/search_bar'
+import tw from 'twin.macro'
+
+const Button = tw.button`
+  pl-4
+  pr-4
+  pt-2
+  pb-2
+  text-white
+  rounded-lg
+  bg-[#343A49]
+`
+
 export default function SADM_distributeurs() {
   const [showAddForm, setShowAddForm] = useState(false)
   const addBtnClick = () => {
     setShowAddForm(!showAddForm)
     console.log(showAddForm)
   }
+  ////////////---------------------- Dynamic table -----------------------------------///////////////////////////////////////////////////////////////////////////////////////////////
+  const [distributeurs, setDistributeurs] = useState([])
+
+  const fetchDistributeurs = async () => {
+    const response = await axios
+      .get('http://localhost:8000/distributeurs')
+      .catch((e) => console.log(e))
+    if (response) {
+      const dists = response.data
+      setDistributeurs(dists)
+    }
+  }
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Numéro de séries',
+        accessor: 'numero_serie_distributeur',
+      },
+      {
+        Header: 'Propriétaire',
+        accessor: 'id_client',
+      },
+      {
+        Header: 'Etat',
+        accessor: 'etat_distributeur',
+      },
+    ],
+    []
+  )
+  //////////////////--------------API EXAMPLE----------------------//////////////////////////////////////////////////////////////////////////
+  const distData = useMemo(() => [...distributeurs], [distributeurs])
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const tableHooks = (hooks) => {
+    hooks.visibleColumns.push((columns) => [
+      ...columns,
+      {
+        id: 'Edit',
+        Header: 'actions',
+        Cell: ({ row }) => {
+          if (row.original.etat_distributeur === 'Desactivé') {
+            return (
+              <div className="flex justify-evenly">
+                <button onClick={() => alert('edit ')}>
+                  <Image src="/icons/edit.png" width={40} height={40}></Image>
+                </button>
+                <button onClick={() => alert('delete ')}>
+                  <Image src="/icons/delete.svg" width={40} height={40}></Image>
+                </button>
+                <Button onClick={() => alert('details ')}>details</Button>
+              </div>
+            )
+          } else {
+            return (
+              <div className="flex justify-end">
+                <Button onClick={() => alert('details ')} className="mr-16">
+                  details
+                </Button>
+              </div>
+            )
+          }
+        },
+      },
+    ])
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const tableInstence = useTable(
+    { columns, data: distData },
+    useGlobalFilter,
+    tableHooks
+  )
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state,
+  } = tableInstence
+
+  useEffect(() => {
+    fetchDistributeurs()
+  }, [])
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
     <div className="text-center pt-4 flex flex-col items-center gap-11 overflow-y-scroll overflow-x-hidden">
@@ -23,13 +125,11 @@ export default function SADM_distributeurs() {
         </h1>
       </div>
       <div className="flex w-[1000px] items-center justify-evenly">
-        <input
-          type="text"
-          id="search"
-          name="search"
-          placeholder="distributeur ID"
-          className="w-[650px] h-[60px] p-4 rounded-[15px] text-lg"
-        ></input>
+        <Search_bar
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          setGlobalFilter={setGlobalFilter}
+          globalFilter={state.globalFilter}
+        />
         <button className="w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center">
           <Image src="/icons/search.png" width={30} height={30}></Image>
         </button>
@@ -61,7 +161,13 @@ export default function SADM_distributeurs() {
       {
         //showAddForm && <AddDistributeurForm onBtnClick={addBtnClick} />
       }
-      <Distributeurs />
+      <DataTable
+        getTableProps={getTableProps}
+        getTableBodyProps={getTableBodyProps}
+        headerGroups={headerGroups}
+        rows={rows}
+        prepareRow={prepareRow}
+      />
     </div>
   )
 }

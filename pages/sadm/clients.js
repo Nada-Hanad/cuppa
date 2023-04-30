@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Clients } from '../../components/shared/tableClient'
-import { AddDistributeurForm } from '../../components/shared/addDistributeurForm'
 import { useState } from 'react'
 export default function SADM_clients() {
   const [showAddForm, setShowAddForm] = useState(false)
