@@ -22,7 +22,7 @@
     "react-dom": "18.2.0",
     "react-table": "^7.8.0",
     "styled-components": "^5.3.9",
-    "twin.macro": "^3.1.0"
+    "twin.macro": "^3.1.0",
     "react-toastify": "^9.1.2",
     "use-places-autocomplete": "^4.0.0",
     "yup": "^1.1.1"
