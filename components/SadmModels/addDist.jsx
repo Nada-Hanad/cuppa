@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { async } from 'regenerator-runtime';
 
 export default function AddDistModal({fetchDistributeurs}) {
   const [showModal, setShowModal] = React.useState(false);
@@ -31,13 +32,13 @@ export default function AddDistModal({fetchDistributeurs}) {
     console.log(error);
   }
 } 
-  const handleSave = () => {
-  insertNewDist(numero_serie_distributeur) 
+  const handleSave = async() => {
+  await insertNewDist(numero_serie_distributeur) 
     // Reset the form
     setnumero_serie_distributeur("");
 };
  
-   const handleSubmit = (e) => {
+   const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!numero_serie_distributeur) {
@@ -45,8 +46,8 @@ export default function AddDistModal({fetchDistributeurs}) {
       return;
     }
     // If all validations pass, save the beverage
-    handleSave();
-    fetchDistributeurs()
+  await  handleSave();
+  await  fetchDistributeurs()
     toast.success("Ajouté avec success");
     setShowModal(false);  
     };

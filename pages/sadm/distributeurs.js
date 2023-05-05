@@ -169,14 +169,26 @@ export default function SADM_distributeurs() {
       <div className="flex w-[1000px] items-center justify-evenly">
         <button
           className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
-          /* onClick={() => handleFilterClick('all')}*/
+          onClick={() => {
+            setDistributeurs(defaultData)
+          }}
         >
           Tous
         </button>
-        <button className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly">
+        <button
+          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
+          onClick={() => {
+            setDistributeurs(defaultData.filter((d) => d.id_client != null))
+          }}
+        >
           Affectés
         </button>
-        <button className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly">
+        <button
+          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
+          onClick={() => {
+            setDistributeurs(defaultData.filter((d) => d.id_client === null))
+          }}
+        >
           Non affectés
         </button>
         <button
@@ -189,7 +201,14 @@ export default function SADM_distributeurs() {
         >
           Activés
         </button>
-        <button className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly">
+        <button
+          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
+          onClick={() => {
+            setDistributeurs(
+              defaultData.filter((d) => d.etat_distributeur === 'Desactivé')
+            )
+          }}
+        >
           Désactivés
         </button>
       </div>
