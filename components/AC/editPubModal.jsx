@@ -23,12 +23,14 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
      }, []);
      const [name, setName] = React.useState(drink.name);
      const [unite, setUnite] = React.useState(drink.showTime);
-     const [minAge, setMinAge] = React.useState(drink.minAge);
-     const [maxAge, setMaxAge] = React.useState(drink.maxAge);
+
+     const [minMaxAge, setMminMaxAge] = React.useState([
+          drink.minAge,
+          drink.maxAge,
+     ]);
      const [sexe, setSexe] = React.useState(drink.sexe);
      const [price, setPrice] = React.useState(drink.price);
      const [videoPath, setVideoPath] = React.useState(drink.videoPath);
-     const [value, setValue] = React.useState({ values: [5, 10] });
 
      const handleSave = () => {
           const updatedAds = drinks.map((e) => {
@@ -40,8 +42,8 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                          videoPath,
                          unite,
                          sexe,
-                         minAge,
-                         maxAge,
+                         minAge: minMaxAge[0],
+                         maxAge: minMaxAge[1],
                     };
                } else {
                     return e;
@@ -79,8 +81,6 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
 
     */
 
-     const [minMaxAge, setMminMaxAge] = React.useState([20, 40]);
-
      const handleMinMaxAgeChange = (newValue) => {
           setMminMaxAge(newValue);
      };
@@ -107,10 +107,8 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                     reader.readAsDataURL(file);
                });
                setVideoPath(input);
-               console.log('\n done 2   \n ', reader);
           } else if (input) {
                setVideoPath(input);
-               console.log('\n don \n');
           }
      };
      const handleSubmit = (e) => {
@@ -125,12 +123,14 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                return;
           }
 
-          if (!videoPath) {
+          /* if (!videoPath) {
                toast.error(
                     "Veuillez télécharger une video ou fournir l'URL de l'video"
                );
+
                return;
           }
+          */
 
           // If all validations pass, save the beverage
           handleSave();
@@ -140,48 +140,48 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
      return (
           <>
                <button
-                    className='px-4 py-2  text-dark-grey self-center '
+                    className='self-center px-2 py-2 text-dark-grey '
                     type='button'
                     onClick={() => setShowModal(true)}>
                     <Image
                          className='text-dark-grey'
                          src='/icons/darkeditIcon.svg'
-                         width={32}
-                         height={32}
+                         width={26}
+                         height={26}
                     />
                </button>
                {showModal ? (
                     <>
-                         <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none modal'>
-                              <div className='relative w-auto my-6 mx-auto max-w-3xl'>
+                         <div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none modal'>
+                              <div className='relative w-auto max-w-3xl mx-auto my-6'>
                                    {/*content*/}
                                    <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[600px] w-[600px] overflow-scroll'>
                                         {/*header*/}
-                                        <div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
+                                        <div className='flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200'>
                                              <h3 className='text-3xl font-semibold'>
                                                   Modifier L&apos;annonce
                                              </h3>
                                              <button
-                                                  className='p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none'
+                                                  className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
                                                   onClick={() =>
                                                        setShowModal(false)
                                                   }>
-                                                  <span className='bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none'>
+                                                  <span className='block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
                                                        ×
                                                   </span>
                                              </button>
                                         </div>
                                         {/*body*/}
-                                        <div className='relative p-6 flex-auto'>
+                                        <div className='relative flex-auto p-6'>
                                              <form>
                                                   <div className='mb-4'>
                                                        <label
-                                                            className='block text-gray-700 font-bold mb-2'
+                                                            className='block mb-2 font-bold text-gray-700'
                                                             htmlFor='name'>
                                                             Nom de la annonce
                                                        </label>
                                                        <input
-                                                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                                            className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
                                                             id='name'
                                                             type='text'
                                                             placeholder='Entrez le nom de la annonce'
@@ -197,7 +197,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
 
                                                   <div className='mb-4'>
                                                        <label
-                                                            className='block text-gray-700 font-bold '
+                                                            className='block font-bold text-gray-700 '
                                                             htmlFor='name'>
                                                             Duree d’affichage
                                                        </label>
@@ -210,7 +210,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            name='unite'
                                                                            id='jours'
                                                                            value='jours'
-                                                                           className='appearance-none mr-1'
+                                                                           className='mr-1 appearance-none'
                                                                            onClick={
                                                                                 handleUniteChange
                                                                            }
@@ -220,7 +220,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            className={`flex items-center px-2 py-1 rounded-lg  bg-gray-100 border border-gray-300 rounded-l cursor-pointer ${
                                                                                 unite ===
                                                                                 'jours'
-                                                                                     ? ' bg-[#343A49] text-slate-50'
+                                                                                     ? ' bg-slate-800 text-slate-50'
                                                                                      : ''
                                                                            }`}>
                                                                            jours
@@ -235,14 +235,14 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            onClick={
                                                                                 handleUniteChange
                                                                            }
-                                                                           className='appearance-none mr-1'
+                                                                           className='mr-1 appearance-none'
                                                                       />
                                                                       <label
                                                                            htmlFor='semaines'
                                                                            className={`flex items-center px-2 py-1  rounded-lg bg-gray-100 border border-gray-300  cursor-pointer ${
                                                                                 unite ===
                                                                                 'semaines'
-                                                                                     ? ' bg-[#343A49] text-slate-50'
+                                                                                     ? ' bg-slate-800 text-slate-50'
                                                                                      : ''
                                                                            }`}>
                                                                            semaines
@@ -254,7 +254,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            name='unite'
                                                                            id='mois'
                                                                            value='mois'
-                                                                           className='appearance-none mr-1'
+                                                                           className='mr-1 appearance-none'
                                                                            onClick={
                                                                                 handleUniteChange
                                                                            }
@@ -264,7 +264,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            className={`flex items-center px-2 py-1  rounded-lg bg-gray-100 border border-gray-300 rounded-l cursor-pointer ${
                                                                                 unite ===
                                                                                 'mois'
-                                                                                     ? ' bg-[#343A49] text-slate-50'
+                                                                                     ? ' bg-slate-800 text-slate-50'
                                                                                      : ''
                                                                            }`}>
                                                                            mois
@@ -276,7 +276,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
 
                                                   <div className='mb-4'>
                                                        <label
-                                                            className='block text-gray-700 font-bold '
+                                                            className='block font-bold text-gray-700 '
                                                             htmlFor='name'>
                                                             sexe cible
                                                        </label>
@@ -289,7 +289,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            name='sexe'
                                                                            id='M'
                                                                            value='M'
-                                                                           className='appearance-none mr-1'
+                                                                           className='mr-1 appearance-none'
                                                                            onClick={
                                                                                 handleSexeChange
                                                                            }
@@ -299,7 +299,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            className={`flex items-center px-2 py-1 rounded-lg  bg-gray-100 border border-gray-300 rounded-l cursor-pointer ${
                                                                                 sexe ===
                                                                                 'M'
-                                                                                     ? ' bg-[#343A49] text-slate-50'
+                                                                                     ? ' bg-slate-800 text-slate-50'
                                                                                      : ''
                                                                            }`}>
                                                                            Masculaine
@@ -314,14 +314,14 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            onClick={
                                                                                 handleSexeChange
                                                                            }
-                                                                           className='appearance-none mr-1'
+                                                                           className='mr-1 appearance-none'
                                                                       />
                                                                       <label
                                                                            htmlFor='F'
                                                                            className={`flex items-center px-2 py-1  rounded-lg bg-gray-100 border border-gray-300  cursor-pointer ${
                                                                                 sexe ===
                                                                                 'F'
-                                                                                     ? ' bg-[#343A49] text-slate-50'
+                                                                                     ? ' bg-slate-800 text-slate-50'
                                                                                      : ''
                                                                            }`}>
                                                                            Feminane
@@ -333,7 +333,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            name='sexe'
                                                                            id='B'
                                                                            value='B'
-                                                                           className='appearance-none mr-1'
+                                                                           className='mr-1 appearance-none'
                                                                            onClick={
                                                                                 handleSexeChange
                                                                            }
@@ -343,7 +343,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                            className={`flex items-center px-2 py-1  rounded-lg bg-gray-100 border border-gray-300 rounded-l cursor-pointer ${
                                                                                 sexe ===
                                                                                 'B'
-                                                                                     ? ' bg-[#343A49] text-slate-50'
+                                                                                     ? ' bg-slate-800 text-slate-50'
                                                                                      : ''
                                                                            }`}>
                                                                            Les
@@ -354,8 +354,8 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                        </div>
                                                   </div>
 
-                                                  <div className='flex justify-start items-center my-8 '>
-                                                       <div className='mr-8  text-gray-700 font-bold'>
+                                                  <div className='flex items-center justify-start my-8 '>
+                                                       <div className='mr-8 font-bold text-gray-700'>
                                                             {`Age cible :  ${minMaxAge[0]}
                                                              - ${minMaxAge[1]}`}
                                                        </div>
@@ -405,12 +405,12 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
 
                                                   <div className='mb-4'>
                                                        <label
-                                                            className='block text-gray-700 font-bold mb-2'
+                                                            className='block mb-2 font-bold text-gray-700'
                                                             htmlFor='price'>
                                                             Prix
                                                        </label>
                                                        <input
-                                                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                                            className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
                                                             id='price'
                                                             type='number'
                                                             placeholder='Entrez le prix de la annonce'
@@ -425,12 +425,12 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                   </div>
                                                   <div className='mb-4'>
                                                        <label
-                                                            className='block text-gray-700 font-bold mb-2'
+                                                            className='block mb-2 font-bold text-gray-700'
                                                             htmlFor='picture'>
                                                             Video
                                                        </label>
 
-                                                       <div className='flex justify-between items-center gap-8 '>
+                                                       <div className='flex items-center justify-between gap-8 '>
                                                             {videoPath ? (
                                                                  <video
                                                                       controls
@@ -448,7 +448,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                                                       />
                                                                  </video>
                                                             ) : (
-                                                                 <div className='h-48 w-48 bg-gray-200 rounded' />
+                                                                 <div className='w-48 h-48 bg-gray-200 rounded' />
                                                             )}
                                                             <input
                                                                  id='image'
@@ -463,9 +463,9 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                              </form>
                                         </div>
 
-                                        <div className='flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b'>
+                                        <div className='flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200'>
                                              <button
-                                                  className='bg-dark-grey text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+                                                  className='px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
                                                   type='button'
                                                   onClick={handleSubmit}>
                                                   Sauvegarder
@@ -474,7 +474,7 @@ export default function EditAnnonceModal({ drink, drinks, setDrinks }) {
                                    </div>
                               </div>
                          </div>
-                         <div className='opacity-25 fixed inset-0 z-40 bg-black'></div>
+                         <div className='fixed inset-0 z-40 bg-black opacity-25'></div>
                     </>
                ) : null}
           </>

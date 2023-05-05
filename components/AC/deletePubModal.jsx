@@ -49,33 +49,33 @@ export default function DeleteAnnonceModal({ drink, drinks, setDrinks }) {
      return (
           <>
                <button
-                    className='px-4 py-2  text-dark-grey self-center '
+                    className='self-center px-2 py-2 text-dark-grey '
                     type='button'
                     onClick={() => setShowModal(true)}>
                     <Image
                          className='text-dark-grey'
                          src='/icons/darkDeleteIcon.svg'
-                         width={32}
-                         height={32}
+                         width={26}
+                         height={26}
                     />
                </button>
                {showModal ? (
                     <>
-                         <div className='justify-center items-center flex  overflow-hidden fixed inset-0 z-50 outline-none focus:outline-none modal'>
-                              <div className='relative w-auto my-6 mx-auto max-w-3xl'>
+                         <div className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden outline-none focus:outline-none modal'>
+                              <div className='relative w-auto max-w-3xl mx-auto my-6'>
                                    {/*content*/}
                                    <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[400px] w-[400px] '>
                                         {/*header*/}
-                                        <div className='flex items-start justify-between p-5  rounded-t'>
-                                             <h3 className=' text-3xl font-semibold'>
+                                        <div className='flex items-start justify-between p-5 rounded-t'>
+                                             <h3 className='text-3xl font-semibold '>
                                                   Supprimer L&apos;annonce
                                              </h3>
                                              <button
-                                                  className='p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none'
+                                                  className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
                                                   onClick={() =>
                                                        setShowModal(false)
                                                   }>
-                                                  <span className='bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none'>
+                                                  <span className='block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
                                                        ×
                                                   </span>
                                              </button>
@@ -88,9 +88,9 @@ export default function DeleteAnnonceModal({ drink, drinks, setDrinks }) {
                                              </p>
                                         </div>
 
-                                        <div className='flex items-center justify-between p-6  rounded-b'>
+                                        <div className='flex items-center justify-between p-6 rounded-b'>
                                              <button
-                                                  className='bg-dark-grey text-white w-5/12 font-bold uppercase text-sm px-2 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+                                                  className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
                                                   type='button'
                                                   onClick={() =>
                                                        setShowModal(false)
@@ -98,7 +98,7 @@ export default function DeleteAnnonceModal({ drink, drinks, setDrinks }) {
                                                   Annuler
                                              </button>
                                              <button
-                                                  className='bg-dark-grey text-white w-5/12 font-bold uppercase text-sm px-2 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+                                                  className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
                                                   type='button'
                                                   onClick={handleSubmit}>
                                                   Confirmer
@@ -107,7 +107,7 @@ export default function DeleteAnnonceModal({ drink, drinks, setDrinks }) {
                                    </div>
                               </div>
                          </div>
-                         <div className='opacity-25 fixed inset-0 z-40 bg-black'></div>
+                         <div className='fixed inset-0 z-40 bg-black opacity-25'></div>
                     </>
                ) : null}
           </>
