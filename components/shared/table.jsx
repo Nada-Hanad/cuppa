@@ -1,3 +1,4 @@
+import Image from "next/image";
 import tw from "twin.macro";
 const Table =tw.table`
 w-[1300px]
@@ -79,11 +80,32 @@ return (
             return (
                 <TableRow {...row.getRowProps()}>
                         {
-                row.cells.map((cell,idx)=>(
-                <TableData {...cell.getCellProps()}>
-                {cell.render("Cell")}
-                </TableData>
-            ))}
+                row.cells.map((cell, idx) => {
+    if (cell.column.id === 'type_client' && cell.value === 'person') {
+      return (
+        <TableData {...cell.getCellProps()}>
+          <div className="flex justify-center">
+            <Image src="/icons/user.svg" width={40} height={40} />
+          </div>
+        </TableData>
+      );
+    } else if (cell.column.id === 'type_client' && cell.value === 'enterprise') {
+return (
+        <TableData {...cell.getCellProps()}>
+          <div className="flex justify-center">
+            <Image src="/icons/company.png" width={40} height={40} />
+          </div>
+        </TableData>
+      );
+    }
+    else {
+      return (
+        <TableData {...cell.getCellProps()}>
+          {cell.render('Cell')}
+        </TableData>
+      );
+    }
+  })}
                 </TableRow>
             )
  
