@@ -6,7 +6,9 @@ import { useEffect, useState, useMemo } from 'react'
 import axios from 'axios'
 import { useGlobalFilter, useTable } from 'react-table'
 import { Search_bar } from '../../components/shared/search_bar'
-import AddDistModal from '../../components/SadmModels/addDist'
+import AddClientDistModal from '../../components/SadmModels/addClientDist'
+import AddClientModal from '../../components/SadmModels/addClient'
+
 import tw from 'twin.macro'
 const Button = tw.button`
   pl-4
@@ -111,9 +113,11 @@ export default function SADM_clients() {
         Cell: ({ row }) => {
           return (
             <div className="flex justify-evenly">
-              <button onClick={() => alert('add dist ')}>
-                <Image src="/icons/mug.svg" width={40} height={40}></Image>
-              </button>
+              <AddClientDistModal
+                client_id={row.original.id_client}
+                fetchClients={fetchClients}
+              />
+
               <Button onClick={() => alert('details ')}>details</Button>
             </div>
           )
@@ -165,11 +169,11 @@ const tableInstence = useTable(
         <button className="w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center">
           <Image src="/icons/search.png" width={30} height={30}></Image>
         </button>
-        {/*<AddClientModal fetchClients={fetchClients} /> */}
-        <button className="w-[150px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly">
+        <AddClientModal fetchClients={fetchClients} />
+        {/*<button className="w-[150px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly">
           <Image src="/icons/plus.png" width={35} height={35}></Image>
           Client
-        </button>
+        </button>*/}
       </div>
       <DataTable
         getTableProps={getTableProps}
@@ -178,7 +182,6 @@ const tableInstence = useTable(
         rows={rows}
         prepareRow={prepareRow}
       />
-      {/* <Clients />*/}
     </div>
   )
 }
