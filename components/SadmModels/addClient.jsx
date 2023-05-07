@@ -130,14 +130,28 @@ toast.error("Veuillez ajouter le type de client");
                       >
                         type de client : 
                       </label>
-                      <input
-                        className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="nom_client"
-                        type="text"
-                        placeholder="Entrez le nom de client"
-                        onChange={(e) => set_nom_client(e.target.value)}
-                      />
-
+                      <label className="inline-flex items-center">
+    <input
+      type="radio"
+      className="form-radio"
+      name="type_client"
+      value="individual"
+      onChange={(e) => set_type_client(e.target.value)}
+      checked={type_client === "individual"}
+    />
+    <span className="ml-2">Individuel</span>
+  </label>
+  <label className="inline-flex items-center ml-6">
+    <input
+      type="radio"
+      className="form-radio"
+      name="type_client"
+      value="enterprise"
+      onChange={(e) => set_type_client(e.target.value)}
+      checked={type_client === "enterprise"}
+    />
+    <span className="ml-2">Entreprise</span>
+  </label>
                     </div>
 
                    </form>
