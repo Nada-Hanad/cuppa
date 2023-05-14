@@ -1,7 +1,7 @@
 import { useAsyncDebounce } from 'react-table';
 import Head from 'next/head';
 import Image from 'next/image';
-import { DataTable } from '../../components/shared/table';
+import { DataTable } from '../../components/shared/table copy';
 import { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { useGlobalFilter, useTable } from 'react-table';
@@ -27,7 +27,10 @@ export default function Annonceurs() {
 	////////////---------------------- Dynamic table -----------------------------------///////////////////////////////////////////////////////////////////////////////////////////////
 	const [Annoceurs, setAnnoceurs] = useState([]);
 	const [defaultData, setDefaultData] = useState([]);
-
+	const [selectedAdvertiserDelete, setSelectedAdvertiserDelete] =
+		useState(null);
+	const [selectedAdvertiserModify, setSelectedAdvertiserModify] =
+		useState(null);
 	const fetchAnnoceurs = async () => {
 		const token = localStorage.getItem('token');
 
@@ -87,6 +90,10 @@ export default function Annonceurs() {
 				Header: 'id_annonceur',
 				accessor: 'id_annonceur',
 			},
+			{
+				Header: 'numberOfAds',
+				accessor: 'numberOfAds',
+			},
 		],
 		[]
 	);
@@ -103,17 +110,36 @@ export default function Annonceurs() {
 				Cell: ({ row }) => {
 					return (
 						<div className='flex justify-center'>
-							<ModifyAdvertiserModal
-								Advertiser={row.original}
-								fetchAdvertisers={fetchAnnoceurs}
-							/>
-
-							<DeleteAdvertiserModal
-								AdvertiserId={row.original.id_annonceur}
-								fetchAdvertisers={fetchAnnoceurs}
-								name={row.original.nom_annonceur}
-							/>
-
+							<button
+								className='self-end px-4 py-4 mr-12 text-white  rounded-xl'
+								type='button'
+								onClick={() =>
+									setSelectedAdvertiserModify(
+										row.original
+									)
+								}>
+								<Image
+									src='/icons/darkEditIcon.svg'
+									width={28}
+									height={28}
+									alt='edit Icon'
+								/>
+							</button>
+							<button
+								className='self-center px-2 py-2 text-dark-grey '
+								type='button'
+								onClick={() =>
+									setSelectedAdvertiserDelete(
+										row.original
+									)
+								}>
+								<Image
+									className='text-dark-grey'
+									src='/icons/darkDeleteIcon.svg'
+									width={26}
+									height={26}
+								/>
+							</button>
 							{/*<Button onClick={() => alert('details ')}>details</Button>*/}
 						</div>
 					);
@@ -155,7 +181,7 @@ export default function Annonceurs() {
 
 	////////////////////////////////////////////////////////////////////////////////////
 	return (
-		<div className='flex flex-col items-center pt-4 overflow-x-hidden overflow-y-scroll text-center gap-11'>
+		<div className='relative flex flex-col items-center pt-4 overflow-x-hidden overflow-y-scroll text-center gap-11'>
 			<Head>
 				<title>Gestion des Annonceurs</title>
 				<link rel='icon' href='/favicon.ico' />
@@ -172,13 +198,23 @@ export default function Annonceurs() {
 					setGlobalFilter={setGlobalFilter}
 					globalFilter={state.globalFilter}
 				/>
+
 				<button className='w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center'>
 					<Image
 						src='/icons/search.svg'
 						width={30}
 						height={30}></Image>
 				</button>
-
+				<ModifyAdvertiserModal
+					Advertiser={selectedAdvertiserModify}
+					setSelectedAdvertiser={setSelectedAdvertiserModify}
+					fetchAdvertisers={fetchAnnoceurs}
+				/>
+				<DeleteAdvertiserModal
+					Advertiser={selectedAdvertiserDelete}
+					setSelectedAdvertiser={setSelectedAdvertiserDelete}
+					fetchAdvertisers={fetchAnnoceurs}
+				/>
 				<AddAdvertiserModal fetchAdvertisers={fetchAnnoceurs} />
 			</div>
 

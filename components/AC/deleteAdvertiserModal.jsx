@@ -6,8 +6,8 @@ import axios from 'axios';
 import { API_URL } from '../../config/api';
 
 export default function DeleteAdvertiserModal({
-	name,
-	AdervtiserId,
+	Advertiser,
+	setSelectedAdvertiser,
 	fetchAdvertisers,
 }) {
 	const [showModal, setShowModal] = React.useState(false);
@@ -15,7 +15,7 @@ export default function DeleteAdvertiserModal({
 	useEffect(() => {
 		function handleClickOutside(event) {
 			if (event.target.classList.contains('modal')) {
-				setShowModal(false);
+				setSelectedAdvertiser(null);
 			}
 		}
 
@@ -31,7 +31,7 @@ export default function DeleteAdvertiserModal({
 
 		try {
 			const res = await axios.post(
-				`${API_URL}/api/ads/deleteAdvertiser/${AdervtiserId}`,
+				`${API_URL}/api/ads/deleteAdvertiser/${Advertiser.id_annonceur}`,
 				{}
 			);
 			console.log(`deleted res.data`);
@@ -41,7 +41,7 @@ export default function DeleteAdvertiserModal({
 			console.error(err);
 		}
 		fetchAdvertisers();
-		setShowModal(false);
+		setSelectedAdvertiser(null);
 	};
 
 	const handleSubmit = (e) => {
@@ -54,19 +54,9 @@ export default function DeleteAdvertiserModal({
 
 	return (
 		<>
-			<button
-				className='self-center px-2 py-2 text-dark-grey '
-				type='button'
-				onClick={() => setShowModal(true)}>
-				<Image
-					className='text-dark-grey'
-					src='/icons/darkDeleteIcon.svg'
-					width={26}
-					height={26}
-				/>
-			</button>
-			{showModal ? (
+			{Advertiser ? (
 				<>
+					{console.log(' koooooooooooo : ', Advertiser)}
 					<div className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden outline-none focus:outline-none modal'>
 						<div className='relative w-auto max-w-3xl mx-auto my-6'>
 							{/*content*/}
@@ -79,7 +69,9 @@ export default function DeleteAdvertiserModal({
 									<button
 										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
 										onClick={() =>
-											setShowModal(false)
+											setSelectedAdvertiser(
+												null
+											)
 										}>
 										<span className='block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
 											×
@@ -90,7 +82,7 @@ export default function DeleteAdvertiserModal({
 								<div className='relative p-12 mx-auto flex rounded-[20px] border-slate-800 border-1 border w-8/12 bg-[#EBEEF3]'>
 									<p className='font-bold text-dark-grey text-center text-[20px]'>
 										{` Voulez_vous supprimer
-                                                  l’annonceur  ${name}? `}
+                                                  l’annonceur  ${Advertiser.nom_annonceur}? `}
 									</p>
 								</div>
 
@@ -99,7 +91,9 @@ export default function DeleteAdvertiserModal({
 										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
 										type='button'
 										onClick={() =>
-											setShowModal(false)
+											setSelectedAdvertiser(
+												null
+											)
 										}>
 										Annuler
 									</button>

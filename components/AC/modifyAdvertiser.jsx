@@ -1,26 +1,21 @@
 import React, { useEffect } from 'react';
-import AddIngredients from './addIngredients';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { API_URL } from '../../config/api';
+import { API_URL, PUBLIC_URL } from '../../config/api';
 
 export default function ModifyAdvertiserModal({
 	Advertiser,
+	setSelectedAdvertiser,
 	fetchAdvertisers,
 }) {
-	const [showModal, setShowModal] = React.useState(false);
 	const [selectedFile, setSelectedFile] = React.useState(null);
-	const handleFileChange = (e) => {
-		const file = e.target.files[0];
-		setSelectedFile(file);
-	};
 
 	useEffect(() => {
 		function handleClickOutside(event) {
 			if (event.target.classList.contains('modal')) {
-				setShowModal(false);
+				setSelectedAdvertiser(null);
 			}
 		}
 
@@ -29,12 +24,22 @@ export default function ModifyAdvertiserModal({
 			window.removeEventListener('click', handleClickOutside);
 		};
 	}, []);
-	const [firstName, setFirstName] = React.useState(Advertiser.nom_annonceur);
-	const [familyName, setFamilyName] = React.useState(
-		Advertiser.prenom_annonceur
+
+	useEffect(() => {
+		setFirstName(Advertiser?.nom_annonceur);
+		setFamilyName(Advertiser?.prenom_annonceur);
+		setType(Advertiser?.type_annonceur);
+		setImagePath(Advertiser?.path_annonceur);
+	}, [Advertiser]);
+	const [firstName, setFirstName] = React.useState(
+		Advertiser?.nom_annonceur
 	);
-	const [type, setType] = React.useState(Advertiser.type_annonceur);
+	const [familyName, setFamilyName] = React.useState(
+		Advertiser?.prenom_annonceur
+	);
+	const [type, setType] = React.useState(Advertiser?.type_annonceur);
 	const [image, setImage] = React.useState();
+	const [imagePath, setImagePath] = React.useState(null);
 
 	const handleTypeChange = (e) => {
 		e.preventDefault();
@@ -45,17 +50,20 @@ export default function ModifyAdvertiserModal({
 		const formData = new FormData();
 		formData.append('nom_annonceur', firstName);
 		formData.append('prenom_annonceur', familyName);
-		formData.append('path_annonceur', image);
+		formData.append('type_annonceur', type);
+		formData.append('image', image);
 		try {
 			const res = await axios.post(
-				`${API_URL}/api/ads/updateAdvertiser/${Advertiser.id_annonceur}`,
+				`${API_URL}/api/ads/updateAdvertiser/${Advertiser?.id_annonceur}`,
 				formData
 			);
 			console.log(res.data);
 		} catch (err) {
 			console.error(err);
 		}
+		await fetchAdvertisers();
 	};
+
 	/*
      const handleSave = () => {
           const newDrinks = [
@@ -74,7 +82,7 @@ export default function ModifyAdvertiserModal({
           setFamilyName('');
           setType('');
           setImage('');
-          setShowModal(false);
+          setSelectedAdvertiser(null);
      };
 
      */
@@ -98,43 +106,36 @@ export default function ModifyAdvertiserModal({
 
 		// If all validations pass, save the beverage
 		handleSave();
-		toast.success('Ajouté avec success');
+		toast.success('Modifié avec success');
+		setSelectedAdvertiser(null);
 	};
 
 	// image handling
 
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
-		const input = e.target.value;
-
+		setImage(file);
 		if (file) {
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
 
 			reader.onload = () => {
-				setImage(reader.result);
+				setImagePath(reader.result);
 			};
 			setSelectedFile(true);
-		} else if (input) {
-			setImage(input);
 		}
 	};
 
 	return (
 		<>
-			<button
-				className='self-end px-4 py-4 mr-12 text-white  rounded-xl'
-				type='button'
-				onClick={() => setShowModal(true)}>
-				<Image
-					src='/icons/darkEditIcon.svg'
-					width={28}
-					height={28}
-					alt='edit Icon'
-				/>
-			</button>
-			{showModal ? (
+			{Advertiser ? (
 				<>
+					{console.log('advertiser modufy : ', Advertiser)}
+					{console.log(
+						'advertiser modufy : ',
+						familyName,
+						firstName
+					)}
 					<div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none modal'>
 						<div className='relative w-auto max-w-3xl mx-auto my-6'>
 							{/*content*/}
@@ -145,12 +146,14 @@ export default function ModifyAdvertiserModal({
 								{/*header*/}
 								<div className='flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200'>
 									<h3 className='text-3xl font-semibold'>
-										Modifier un Annonce
+										Modifier l&apos;Annonceur
 									</h3>
 									<button
 										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
 										onClick={() =>
-											setShowModal(false)
+											setSelectedAdvertiser(
+												null
+											)
 										}>
 										<span className='z-10 block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
 											×
@@ -291,10 +294,15 @@ export default function ModifyAdvertiserModal({
 											</label>
 
 											<div className='relative flex items-center justify-between gap-8 '>
-												{image ? (
+												{imagePath ? (
 													<Image
 														src={
-															image
+															imagePath.indexOf(
+																'data'
+															) !=
+															-1
+																? imagePath
+																: `${PUBLIC_URL}${imagePath}`
 														}
 														alt='Boisson'
 														className='object-cover w-full h-48 rounded'

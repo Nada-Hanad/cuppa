@@ -25,10 +25,10 @@ export default function Login() {
 			// Redirect to another page
 			console.log(`role`);
 			console.log(role);
-			if ((role = 'SADM')) {
+			if (role == 'SADM') {
 				router.push('/sadm');
-			} else if ((role = 'AC')) {
-				router.push('/ac');
+			} else if (role == 'AC') {
+				router.push('/ac/ads');
 			} else if (role == 'decideur') {
 				router.push('/decideur');
 			} else if (role == 'ADM') {

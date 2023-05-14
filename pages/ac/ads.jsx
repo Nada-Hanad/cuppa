@@ -12,59 +12,15 @@ import { API_URL } from '../../config/api';
 import axios from 'axios';
 
 export default function Ads() {
-	const defaultData = [
-		{
-			id: 0,
-			name: 'coffee beans',
-			showTime: 'jours',
-			price: 4.99,
-			sexe: 'M',
-			minAge: 10,
-			maxAge: 20,
-			videoPath:
-				'COFFEE COMMERCIAL ADVERTISEMENT - 7 miles roasters coffee beans ad.mp4',
-		},
-		{
-			id: 1,
-			name: 'Kia EV9',
-			showTime: 'semaines',
-			price: 5.99,
-			minAge: 10,
-			maxAge: 20,
-			sexe: 'F',
-			videoPath: 'Introducing the Kia EV9.mp4',
-		},
-		{
-			id: 2,
-			name: 'Diet Coke',
-			showTime: 'mois',
-			price: 3.99,
-			minAge: 10,
-			maxAge: 20,
-			sexe: 'B',
-			videoPath:
-				'Life is Short, Have a Diet Coke _ Because I Can _ Diet Coke GB.mp4',
-		},
-
-		{
-			id: 3,
-			name: 'Earl Grey Tea',
-			showTime: 'jours',
-			sexe: 'M',
-			minAge: 10,
-			maxAge: 20,
-			price: 2.99,
-			videoPath:
-				'Life is Short, Have a Diet Coke _ Because I Can _ Diet Coke GB.mp4',
-		},
-	];
+	const [defaultData, setDefaultData] = useState([]);
 	function handleSearch(enteredWord) {
 		const searchTerms = enteredWord.toLowerCase().split(' ');
 		const filteredAds = defaultData.filter((Ad) => {
-			const nameLower = Ad.name.toLowerCase();
-			return searchTerms.every((term) => nameLower.includes(term));
+			const nameLower = Ad.nom_annonce?.toLowerCase();
+			return searchTerms.every((term) => nameLower?.includes(term));
 		});
-		setAds(filteredAds);
+		console.log(defaultData);
+		enteredWord == '' ? setAds(defaultData) : setAds(filteredAds);
 	}
 	const [Ads, setAds] = useState([]);
 	const [Annoceurs, setAnnoceurs] = useState([
@@ -103,6 +59,10 @@ export default function Ads() {
 		if (response) {
 			const Ads = response.data;
 			setAds(Ads);
+			setDefaultData(Ads);
+			console.log(`Ads-----------------------------`);
+			console.log(Ads);
+			console.log(`Ads-----------------------------`);
 		}
 	};
 
@@ -116,7 +76,7 @@ export default function Ads() {
 	}, []);
 
 	return (
-		<div className='flex flex-col items-center pt-8 text-center'>
+		<div className='flex flex-col items-center pt-8 text-center  '>
 			<Head>
 				<title>Annoces</title>
 				<link rel='icon' href='/favicon.ico' />
@@ -135,12 +95,12 @@ export default function Ads() {
 				/>
 				<FilterSection
 					placeholders={{
-						first: 'Min Age...',
-						second: 'Max Age...',
+						first: 'Min prix...',
+						second: 'Max prix...',
 					}}
 					data={defaultData}
 					setData={setAds}
-					attribute={'price'}
+					attribute={'prix_annonce'}
 				/>
 			</div>
 			<div className='grid grid-cols-3 gap-12'>

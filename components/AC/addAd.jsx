@@ -52,6 +52,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 		setSelectedAdvertiser(selected);
 		setValue(val);
 		console.log('selected ', selected);
+
 		console.log(val);
 	};
 	const filteredAdvertisers = advertisers
@@ -60,7 +61,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 				?.toLowerCase()
 				?.includes(value.toLowerCase())
 		)
-		.slice(0, 2); // Limit the number of items to 3
+		.slice(0, 3); // Limit the number of items to 3
 	const handleSave = async () => {
 		try {
 			const formData = new FormData();
@@ -82,7 +83,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 					},
 				}
 			);
-			return response.data;
+			response.data;
 		} catch (error) {
 			console.error(error);
 		}
@@ -93,7 +94,10 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 		setUnite('');
 		setVideoPath('');
 		setMinMaxAge([10, 20]);
+		console.log(fetchAdvertisements);
+		await fetchAdvertisements();
 		setShowModal(false);
+		console.log(showModal);
 	};
 
 	const handleFileInputChange = async (event) => {

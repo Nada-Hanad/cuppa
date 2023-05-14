@@ -8,7 +8,7 @@ export function DataTable({
 	rows,
 	prepareRow,
 }) {
-	const [nom, setNom] = useState('');
+	let nom = '';
 	return (
 		<div className=''>
 			<table
@@ -31,7 +31,8 @@ p-2'>
 							{headerGroup.headers.map(
 								(column) =>
 									column.id != 'id_annonceur' &&
-									column.id != 'nom_annonce' && (
+									column.id !=
+										'prenom_annonceur' && (
 										<th
 											className='p-2'
 											key={column.render(
@@ -59,7 +60,24 @@ p-2'>
 												  border-[#D27842]'>
 								{row.cells.map((cell, idx) =>
 									cell.column.id ===
-									'path_annonceur' ? (
+									'nom_annonceur' ? (
+										<>{} </>
+									) : cell.column.id ===
+									  'prenom_annonceur' ? (
+										<td
+											className='bg-white
+                                                                                text-[#343A49]
+                                                                                font-bold
+                                                                           
+                                                                                p-2'
+											key={idx}>
+											{row.cells[idx - 1]
+												.value +
+												' ' +
+												cell.value}
+										</td>
+									) : cell.column.id ===
+									  'path_annonceur' ? (
 										<td
 											key={idx}
 											className='bg-white p-3 h-full relative font-bold

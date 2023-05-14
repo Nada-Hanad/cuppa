@@ -5,16 +5,13 @@ import { PUBLIC_URL } from '../../config/api';
 
 export default function AdCard({ Ad, fetchAdvertisements }) {
 	return (
-		<div className='h-[250px] rounded-xl bg-white p-[10px] text-start flex flex-col justify-between shadow-lg'>
+		<div className='h-[270px] rounded-xl bg-white p-[10px] text-start flex flex-col justify-between shadow-lg'>
 			<div className='flex flex-col items-center justify-between gap-4'>
 				<video
 					className='object-cover w-10/12 rounded-lg shadow-md'
 					controls
-					//    autoplay
-					//    muted
-					// poster='/path/to/poster.jpg'
 					width='full'
-					height='120'
+					height='100'
 					loading='lazy'>
 					<source
 						src={`${PUBLIC_URL}${Ad.path_video}`}
