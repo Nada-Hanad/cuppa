@@ -8,6 +8,7 @@ import { useGlobalFilter, useTable } from "react-table";
 import { Search_bar } from "../../components/shared/search/search_bar";
 import AddDistModal from "../../components/SadmModels/addDist";
 import tw from "twin.macro";
+import { API_URL } from "../../config/api";
 
 const Button = tw.button`
   pl-4
@@ -26,7 +27,7 @@ export default function SADM_distributeurs() {
 
   const fetchDistributeurs = async () => {
     const response = await axios
-      .get("http://localhost:8000/distributeurs")
+      .get(API_URL + "/distributeurs")
       .catch((e) => console.log(e));
     if (response) {
       const dists = response.data;
@@ -36,9 +37,7 @@ export default function SADM_distributeurs() {
   };
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8000/distributeurs/${id}`
-      );
+      const response = await axios.delete(API_URL + `/distributeurs/${id}`);
       fetchDistributeurs();
     } catch (error) {
       console.error(error);

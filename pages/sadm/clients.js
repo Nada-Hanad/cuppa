@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from "next/head"; 
 import Image from "next/image";
 import { useAsyncDebounce } from "react-table";
 import { DataTable } from "../../components/shared/tables/table";
@@ -10,6 +10,7 @@ import AddClientDistModal from "../../components/SadmModels/addClientDist";
 import AddClientModal from "../../components/SadmModels/addClient";
 
 import tw from "twin.macro";
+import { API_URL } from "../../config/api";
 const Button = tw.button`
   pl-4
   pr-4
@@ -28,7 +29,7 @@ export default function SADM_clients() {
 
   const fetchClients = async () => {
     const response = await axios
-      .get("http://localhost:8000/distributeurs")
+      .get(API_URL + "/distributeurs")
       .catch((e) => console.log(e));
     if (response) {
       const clients = response.data;
@@ -38,9 +39,7 @@ export default function SADM_clients() {
   };
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8000/distributeurs/${id}`
-      );
+      const response = await axios.delete(API_URL + `/distributeurs/${id}`);
       fetchClients();
     } catch (error) {
       console.error(error);

@@ -13,13 +13,11 @@ config.autoAddCss = false;
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   useEffect(() => {
-    // if (router.pathname === "/login") {
-    //   return;
-    // }
-    //     if (!localStorage.getItem("token")) {
-    //       router.push("/login");
-    //     }
-  }, [router]);
+    console.log(localStorage);
+    if (!localStorage.getItem("token")) {
+      router.push("/login");
+    }
+  }, []);
   if (router.pathname === "/login") {
     return <Login />;
   }

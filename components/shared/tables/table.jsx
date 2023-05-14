@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { PUBLIC_URL } from "../../../config/api";
+import { useState } from "react";
 export function DataTable({
   getTableProps,
   getTableBodyProps,
@@ -7,6 +8,7 @@ export function DataTable({
   rows,
   prepareRow,
 }) {
+  const [nom, setNom] = useState("");
   return (
     <div className="">
       <table
@@ -31,7 +33,8 @@ p-2"
             >
               {headerGroup.headers.map(
                 (column) =>
-                  column.id != "id_annonceur" && (
+                  column.id != "id_annonceur" &&
+                  column.id != "nom_annonce" && (
                     <th
                       className="p-2"
                       key={column.render("Header")}
@@ -73,13 +76,13 @@ p-2"
                       </div>
                     </td>
                   ) : cell.column.id === "type_annonceur" &&
-                    cell.value === "person" ? (
+                    cell.value === "Personne" ? (
                     <td
                       key={idx}
                       className="bg-white p-2  font-bold
                                                                                  flex justify-center"
                     >
-                      <Image src="/icons/user.svg" width={40} height={40} />
+                      <Image src="/icons/man 2.svg" width={40} height={40} />
                     </td>
                   ) : cell.column.id === "type_annonceur" &&
                     cell.value === "Enterprise" ? (
@@ -88,11 +91,8 @@ p-2"
                       className="bg-white p-2  font-bold
                                                                                  flex justify-center"
                     >
-                      <Image
-                        src="/icons/darkDeleteIcon.svg"
-                        width={40}
-                        height={40}
-                      />
+                      <Image src="/icons/office 2.svg" width={40} height={40} />
+                      {console.log(cell.column.id, " :2: ", cell.value)}
                     </td>
                   ) : (
                     cell.column.id != "id_annonceur" && (
@@ -105,7 +105,7 @@ p-2"
                         key={idx}
                         {...cell.getCellProps()}
                       >
-                        {console.log(cell.value)}
+                        {console.log(cell.column.id, "  :1: ", cell.value)}
                         {cell.render("Cell")}
                       </td>
                     )

@@ -26,13 +26,13 @@ export default function Login() {
       console.log(`role`);
       console.log(role);
       if ((role = "SADM")) {
-        router.push("/sadm");
+        router.push("/sadm/clients");
       } else if ((role = "AC")) {
-        router.push("/ac");
+        router.push("/ac/profil");
       } else if (role == "decideur") {
         router.push("/decideur");
       } else if (role == "ADM") {
-        router.push("/adm");
+        router.push("/adm/dashboard");
       }
     } catch (error) {
       console.error(error);
