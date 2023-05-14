@@ -1,6 +1,13 @@
 import Image from "next/image";
 import EditBoissonModal from "./editBoissonModal";
 
+/**
+ * Component for displaying a drink card.
+ * @param {Object} drink - Drink object.
+ * @param {Array} drinks - List of drinks.
+ * @param {function} setDrinks - Function to update the list of drinks.
+ * @returns {JSX.Element} - Drink card component.
+ */
 export default function BoissonCard({ drink, drinks, setDrinks }) {
   return (
     <div className="h-[200px] rounded-xl bg-white p-[10px] text-start flex flex-col justify-between shadow-lg">
@@ -10,9 +17,9 @@ export default function BoissonCard({ drink, drinks, setDrinks }) {
           alt="boissons's pic"
           height={100}
           width={100}
-          className="w-32 h-32 overflow-hidden object-cover rounded "
+          className="w-32 h-32 overflow-hidden object-cover rounded"
         />
-        <div className=" flex flex-col gap-8">
+        <div className="flex flex-col gap-8">
           <h2 className="font-bold py-1 px-2 w-fit text-white rounded flex justify-center items-center bg-dark-grey">
             {drink?.name}
           </h2>

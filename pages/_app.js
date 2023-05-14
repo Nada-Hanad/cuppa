@@ -1,3 +1,5 @@
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
 import { useRouter } from "next/router";
 import Layout from "../components/shared/layout/layout";
 import "../styles/globals.css";
@@ -5,6 +7,9 @@ import "../styles/globals.css";
 import Login from "./login";
 import { useEffect } from "react";
 
+import { config } from "@fortawesome/fontawesome-svg-core";
+
+config.autoAddCss = false;
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   useEffect(() => {

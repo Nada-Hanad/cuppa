@@ -1,15 +1,30 @@
 import Head from "next/head";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTable,
+  faTableCells,
+  faEdit,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import AddBoissonModal from "../../components/AC/boissons/addBoisson";
+import BoissonCard from "../../components/AC/boissons/boissonsCard";
 import DistributorCard from "../../components/ADM/distributorCard";
 import FilterButton from "../../components/shared/filters/filterButton";
+import FilterSection from "../../components/shared/filters/filterSection";
 import Input from "../../components/shared/inputs/input";
 import SearchBar from "../../components/shared/search/searchBar";
 import Title from "../../components/shared/layout/title";
-import BoissonCard from "../../components/AC/boissonsCard";
-import { useState } from "react";
-import FilterSection from "../../components/shared/filters/filterSection";
-import AddBoissonModal from "../../components/AC/addBoisson";
 
 export default function Boissons() {
+  const [tableView, setTableView] = useState(true);
+
+  // Function to toggle between table view and card view
+  const toggleTableView = () => {
+    setTableView((prevState) => !prevState);
+  };
+
+  // Default data for drinks
   const defaultData = [
     {
       id: 0,
@@ -138,6 +153,8 @@ export default function Boissons() {
         "https://images.unsplash.com/photo-1643660089917-3074ad9d046e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8TG9uZG9uJTIwRm9nJTIwZHJpbmt8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
     },
   ];
+
+  // Function to handle search input
   function handleSearch(enteredWord) {
     const searchTerms = enteredWord.toLowerCase().split(" ");
     const filteredDrinks = defaultData.filter((drink) => {
@@ -146,6 +163,7 @@ export default function Boissons() {
     });
     setDrinks(filteredDrinks);
   }
+
   const [drinks, setDrinks] = useState(defaultData);
 
   return (
@@ -158,7 +176,17 @@ export default function Boissons() {
 
       <AddBoissonModal drinks={drinks} setDrinks={setDrinks} />
 
-      <div className="flex my-8 justify-between h-full gap-10">
+      <div className="flex my-8 justify-between h-full gap-10 relative">
+        <button
+          onClick={toggleTableView}
+          className="py-2 px-4 rounded absolute top-[-80px] right-40"
+        >
+          {tableView ? (
+            <FontAwesomeIcon size="2xl" icon={faTable} />
+          ) : (
+            <FontAwesomeIcon size="2xl" icon={faTableCells} />
+          )}
+        </button>
         <SearchBar
           placeholder={"Nom du boisson..."}
           handleSearch={handleSearch}
@@ -170,16 +198,59 @@ export default function Boissons() {
           attribute={"price"}
         />
       </div>
-      <div className="grid grid-cols-3	gap-12">
-        {drinks.map((drink, i) => (
-          <BoissonCard
-            key={i}
-            drink={drink}
-            drinks={drinks}
-            setDrinks={setDrinks}
-          />
-        ))}
-      </div>
+
+      {tableView ? (
+        // Table view
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b">ID</th>
+              <th className="py-2 px-4 border-b">Name</th>
+              <th className="py-2 px-4 border-b">Price</th>
+              <th className="py-2 px-4 border-b">Actions</th>{" "}
+              {/* New column for actions */}
+            </tr>
+          </thead>
+          <tbody>
+            {drinks.map((drink, i) => (
+              <tr key={i}>
+                <td className="py-2 px-4 border-b">{drink.id}</td>
+                <td className="py-2 px-4 border-b">{drink.name}</td>
+                <td className="py-2 px-4 border-b">{drink.price}</td>
+
+                <td className="py-2 px-4 border-b">
+                  <button
+                    onClick={() => {
+                      //editDrink(drink.id)
+                    }}
+                    className="mr-2"
+                  >
+                    <FontAwesomeIcon icon={faEdit} />{" "}
+                  </button>
+                  <button
+                    onClick={() => {
+                      // deleteDrink(drink.id);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />{" "}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="grid grid-cols-3 gap-12">
+          {drinks.map((drink, i) => (
+            <BoissonCard
+              key={i}
+              drink={drink}
+              drinks={drinks}
+              setDrinks={setDrinks}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

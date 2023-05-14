@@ -1,50 +1,77 @@
 import React, { useEffect, useState } from "react";
 
+/**
+ * Component for adding ingredients to a list.
+ * @param {function} setIngredients - Function to update the list of ingredients.
+ * @param {Array} ingredients - List of ingredients.
+ * @returns {JSX.Element} - Ingredient input and list component.
+ */
 export default function AddIngredients({ setIngredients, ingredients }) {
   const [ingredient, setIngredient] = useState("");
-  const [quantity, setQuantity] = useState(1); // added state for quantity
+  const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
 
+  /**
+   * Handler for ingredient input change.
+   * @param {Event} e - Input change event.
+   */
   const handleInputChange = (e) => {
     setIngredient(e.target.value);
   };
 
+  /**
+   * Handler for quantity input change.
+   * @param {Event} e - Input change event.
+   */
   const handleQuantityChange = (e) => {
-    // added handler for quantity change
     setQuantity(e.target.value);
   };
 
+  /**
+   * Handler for adding an ingredient to the list.
+   */
   const handleAddIngredient = () => {
     if (ingredient.trim() !== "") {
       if (ingredients.find((ing) => ing.name === ingredient.trim())) {
-        // updated to use the ingredient object instead of the name
         setError("Cet ingrédient a déjà été ajouté.");
       } else {
         setIngredients((ingredients) => [
           ...ingredients,
           { name: ingredient.trim(), quantity },
-        ]); // updated to include quantity
+        ]);
         setIngredient("");
-        setQuantity(1); // reset quantity to 1 after adding ingredient
+        setQuantity(1);
         setError("");
       }
     }
   };
 
+  /**
+   * Handler for removing an ingredient from the list.
+   * @param {number} index - Index of the ingredient to remove.
+   */
   const handleRemoveIngredient = (index) => {
     setIngredients((ingredients) => ingredients.filter((_, i) => i !== index));
   };
 
+  /**
+   * Handler for submitting the ingredient modal form.
+   * @param {Event} e - Form submit event.
+   */
   const handleModalSubmit = (e) => {
     e.preventDefault();
     if (ingredients.length > 0) {
       setIngredients((ingredients) => [...ingredients]);
       setIngredient("");
-      setQuantity(1); // reset quantity to 1 after submitting form
+      setQuantity(1);
       setError("");
     }
   };
 
+  /**
+   * Handler for submitting the ingredient form.
+   * @param {Event} e - Form submit event.
+   */
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (ingredient.trim() === "") {
@@ -52,16 +79,15 @@ export default function AddIngredients({ setIngredients, ingredients }) {
       return;
     }
     if (ingredients.find((ing) => ing.name === ingredient.trim())) {
-      // updated to use the ingredient object instead of the name
       setError("Cet ingrédient a déjà été ajouté.");
       return;
     }
     setIngredients((ingredients) => [
       ...ingredients,
       { name: ingredient.trim(), quantity },
-    ]); // updated to include quantity
+    ]);
     setIngredient("");
-    setQuantity(1); // reset quantity to 1 after adding ingredient
+    setQuantity(1);
     setError("");
   };
 
