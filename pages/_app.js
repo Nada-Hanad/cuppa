@@ -5,6 +5,7 @@ import '../styles/globals.css';
 import { Ubuntu } from 'next/font/google';
 import Login from './login';
 
+
 const ubuntu = Ubuntu({
      weight: ['300', '400', '500', '700'],
      subsets: ['latin'],
@@ -28,4 +29,4 @@ function MyApp({ Component, pageProps }) {
      }
 }
 
-export default MyApp;
+export default MyApp

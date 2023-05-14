@@ -4,20 +4,8 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function EditBoissonModal({ drink, drinks, setDrinks }) {
+export default function UpdateDistributeurForm({ drink, drinks, setDrinks }) {
   const [showModal, setShowModal] = React.useState(false);
-  const availableIngredients = [
-    "coffee",
-    "tea",
-    "milk",
-    "sugar",
-    "honey",
-    "cinnamon",
-    "nutmeg",
-    "cocoa",
-    "whipped cream",
-    "marshmallows",
-  ];
   useEffect(() => {
     function handleClickOutside(event) {
       if (event.target.classList.contains("modal")) {
