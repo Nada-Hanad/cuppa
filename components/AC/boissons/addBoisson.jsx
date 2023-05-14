@@ -1,14 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AddIngredients from "./addIngredients";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * Modal component for adding a beverage.
+ * @param {Object} props - Component props.
+ * @param {Array} props.drinks - Array of drinks.
+ * @param {Function} props.setDrinks - Function to set the array of drinks.
+ * @returns {JSX.Element} Modal component.
+ */
 export default function AddBoissonModal({ drinks, setDrinks }) {
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
   const availableIngredients = ["Ingredient 1", "Ingredient 2", "Ingredient 3"];
 
   useEffect(() => {
+    /**
+     * Handles click outside the modal to close it.
+     * @param {Event} event - Click event.
+     */
     function handleClickOutside(event) {
       if (event.target.classList.contains("modal")) {
         setShowModal(false);
@@ -20,11 +31,15 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
-  const [name, setName] = React.useState("");
-  const [price, setPrice] = React.useState("");
-  const [image, setImage] = React.useState("");
-  const [ingredients, setIngredients] = React.useState([]);
 
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [image, setImage] = useState("");
+  const [ingredients, setIngredients] = useState([]);
+
+  /**
+   * Saves the beverage to the list of drinks and resets the form.
+   */
   const handleSave = () => {
     const newDrinks = [
       ...drinks,
@@ -45,6 +60,11 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
     setIngredients([]);
     setShowModal(false);
   };
+
+  /**
+   * Handles the change of the beverage image.
+   * @param {Event} e - Change event.
+   */
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const input = e.target.value;
@@ -60,6 +80,11 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
       setImage(input);
     }
   };
+
+  /**
+   * Handles the form submission.
+   * @param {Event} e - Form submit event.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -82,15 +107,10 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
       return;
     }
 
-    if (!ingredients.length) {
-      toast.error("Veuillez ajouter au moins un ingrédient");
-      return;
-    }
     // If all validations pass, save the beverage
     handleSave();
-    toast.success("Ajouté avec success");
+    toast.success("Ajouté avec succès");
   };
-
   return (
     <>
       <button

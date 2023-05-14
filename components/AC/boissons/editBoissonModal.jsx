@@ -1,11 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AddIngredients from "./addIngredients";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * Component for editing a drink.
+ * @param {Object} drink - The drink object to be edited.
+ * @param {Array} drinks - The list of drinks.
+ * @param {function} setDrinks - Function to update the list of drinks.
+ * @returns {JSX.Element} - Edit drink modal component.
+ */
 export default function EditBoissonModal({ drink, drinks, setDrinks }) {
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
   const availableIngredients = [
     "coffee",
     "tea",
@@ -18,6 +25,7 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
     "whipped cream",
     "marshmallows",
   ];
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (event.target.classList.contains("modal")) {
@@ -30,10 +38,12 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
-  const [name, setName] = React.useState(drink.name);
-  const [price, setPrice] = React.useState(drink.price);
-  const [image, setImage] = React.useState(drink.image);
-  const [ingredients, setIngredients] = React.useState(drink.ingredients);
+
+  const [name, setName] = useState(drink.name);
+  const [price, setPrice] = useState(drink.price);
+  const [image, setImage] = useState(drink.image);
+  const [ingredients, setIngredients] = useState(drink.ingredients);
+
   const handleSave = () => {
     const newDrinks = drinks.map((e) => {
       if (e.id === drink.id) {
@@ -51,13 +61,13 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
     setDrinks(newDrinks);
 
     // Reset the form
-
     setName("");
     setPrice("");
     setImage("");
     setIngredients([]);
     setShowModal(false);
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const input = e.target.value;
@@ -73,6 +83,7 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
       setImage(input);
     }
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -95,13 +106,9 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
       return;
     }
 
-    if (!ingredients.length) {
-      toast.error("Veuillez ajouter au moins un ingrédient");
-      return;
-    }
     // If all validations pass, save the beverage
     handleSave();
-    toast.success("Modifié avec success");
+    toast.success("Modifié avec succès");
   };
 
   return (
