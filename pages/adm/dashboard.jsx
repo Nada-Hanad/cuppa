@@ -3,6 +3,7 @@ import StatCard from "../../components/shared/statCard";
 import LineChart from "../../components/shared/lineChart";
 import DoughnutChart from "../../components/shared/doughnut";
 import BarChart from "../../components/shared/barChart";
+import Title from "../../components/shared/title";
 
 export default function ADMDashboard() {
   const stats = [
@@ -28,10 +29,8 @@ export default function ADMDashboard() {
         <title>Tableau de bord</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Title title="Tableau de bord" />
 
-      <div className="border border-solid	border-black rounded-xl bg-header-bg w-fit px-4">
-        <h1 className="text-6xl font-bold ">Tableau de bord</h1>
-      </div>
       <div className="w-full flex">
         <div className="flex flex-col w-2/3 gap-10">
           <div className="w-[90%] mx-auto flex gap-4">
