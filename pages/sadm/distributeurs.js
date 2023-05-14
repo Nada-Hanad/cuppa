@@ -1,13 +1,13 @@
-import { useAsyncDebounce } from 'react-table'
-import Head from 'next/head'
-import Image from 'next/image'
-import { DataTable } from '../../components/shared/table'
-import { useEffect, useState, useMemo } from 'react'
-import axios from 'axios'
-import { useGlobalFilter, useTable } from 'react-table'
-import { Search_bar } from '../../components/shared/search_bar'
-import AddDistModal from '../../components/SadmModels/addDist'
-import tw from 'twin.macro'
+import { useAsyncDebounce } from "react-table";
+import Head from "next/head";
+import Image from "next/image";
+import { DataTable } from "../../components/shared/tables/table";
+import { useEffect, useState, useMemo } from "react";
+import axios from "axios";
+import { useGlobalFilter, useTable } from "react-table";
+import { Search_bar } from "../../components/shared/search/search_bar";
+import AddDistModal from "../../components/SadmModels/addDist";
+import tw from "twin.macro";
 
 const Button = tw.button`
   pl-4
@@ -17,63 +17,63 @@ const Button = tw.button`
   text-white
   rounded-lg
   bg-[#343A49]
-`
+`;
 
 export default function SADM_distributeurs() {
   ////////////---------------------- Dynamic table -----------------------------------///////////////////////////////////////////////////////////////////////////////////////////////
-  const [distributeurs, setDistributeurs] = useState([])
-  const [defaultData, setDefaultData] = useState([])
+  const [distributeurs, setDistributeurs] = useState([]);
+  const [defaultData, setDefaultData] = useState([]);
 
   const fetchDistributeurs = async () => {
     const response = await axios
-      .get('http://localhost:8000/distributeurs')
-      .catch((e) => console.log(e))
+      .get("http://localhost:8000/distributeurs")
+      .catch((e) => console.log(e));
     if (response) {
-      const dists = response.data
-      setDistributeurs(dists)
-      setDefaultData(dists)
+      const dists = response.data;
+      setDistributeurs(dists);
+      setDefaultData(dists);
     }
-  }
+  };
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
         `http://localhost:8000/distributeurs/${id}`
-      )
-      fetchDistributeurs()
+      );
+      fetchDistributeurs();
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const columns = useMemo(
     () => [
       {
-        Header: 'Numéro de séries',
-        accessor: 'numero_serie_distributeur',
+        Header: "Numéro de séries",
+        accessor: "numero_serie_distributeur",
       },
       {
-        Header: 'Propriétaire',
-        accessor: 'id_client',
+        Header: "Propriétaire",
+        accessor: "id_client",
       },
       {
-        Header: 'Etat',
-        accessor: 'etat_distributeur',
+        Header: "Etat",
+        accessor: "etat_distributeur",
       },
     ],
     []
-  )
+  );
   //////////////////--------------API EXAMPLE----------------------//////////////////////////////////////////////////////////////////////////
-  const distData = useMemo(() => [...distributeurs], [distributeurs])
+  const distData = useMemo(() => [...distributeurs], [distributeurs]);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const tableHooks = (hooks) => {
     hooks.visibleColumns.push((columns) => [
       ...columns,
       {
-        id: 'Edit',
-        Header: 'actions',
+        id: "Edit",
+        Header: "actions",
         Cell: ({ row }) => {
-          if (row.original.etat_distributeur === 'Desactivé') {
+          if (row.original.etat_distributeur === "Desactivé") {
             return (
               <div className="flex justify-evenly">
                 {/*
@@ -89,7 +89,7 @@ export default function SADM_distributeurs() {
                 </button>
                 {/*<Button onClick={() => alert('details ')}>details</Button>*/}
               </div>
-            )
+            );
           } else {
             return (
               <div className="flex justify-end">
@@ -97,18 +97,18 @@ export default function SADM_distributeurs() {
                   details
                 </Button>*/}
               </div>
-            )
+            );
           }
         },
       },
-    ])
-  }
+    ]);
+  };
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const tableInstence = useTable(
     { columns, data: distData },
     useGlobalFilter,
     tableHooks
-  )
+  );
 
   const {
     getTableProps,
@@ -119,29 +119,29 @@ export default function SADM_distributeurs() {
     preGlobalFilteredRows,
     setGlobalFilter,
     state,
-  } = tableInstence
+  } = tableInstence;
 
   useEffect(() => {
-    fetchDistributeurs()
-  }, [])
+    fetchDistributeurs();
+  }, []);
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const [value, setValue] = useState(state.globalFilter)
+  const [value, setValue] = useState(state.globalFilter);
   const filterBtn = useAsyncDebounce((value) => {
-    console.log(value)
-    setGlobalFilter(value || undefined)
-  }, 300)
+    console.log(value);
+    setGlobalFilter(value || undefined);
+  }, 300);
 
-  const [filter, setFilter] = useState('all')
+  const [filter, setFilter] = useState("all");
   const filteredData = distributeurs
     ? distributeurs.filter((item) => {
-        if (filter === 'all') {
-          return true
+        if (filter === "all") {
+          return true;
         } else {
-          return item.etat_distributeur === filter
+          return item.etat_distributeur === filter;
         }
       })
-    : []
+    : [];
   ////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className="text-center pt-4 flex flex-col items-center gap-11 overflow-y-scroll overflow-x-hidden">
@@ -170,7 +170,7 @@ export default function SADM_distributeurs() {
         <button
           className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
           onClick={() => {
-            setDistributeurs(defaultData)
+            setDistributeurs(defaultData);
           }}
         >
           Tous
@@ -178,7 +178,7 @@ export default function SADM_distributeurs() {
         <button
           className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
           onClick={() => {
-            setDistributeurs(defaultData.filter((d) => d.id_client != null))
+            setDistributeurs(defaultData.filter((d) => d.id_client != null));
           }}
         >
           Affectés
@@ -186,7 +186,7 @@ export default function SADM_distributeurs() {
         <button
           className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
           onClick={() => {
-            setDistributeurs(defaultData.filter((d) => d.id_client === null))
+            setDistributeurs(defaultData.filter((d) => d.id_client === null));
           }}
         >
           Non affectés
@@ -195,8 +195,8 @@ export default function SADM_distributeurs() {
           className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
           onClick={() => {
             setDistributeurs(
-              defaultData.filter((d) => d.etat_distributeur === 'Activé')
-            )
+              defaultData.filter((d) => d.etat_distributeur === "Activé")
+            );
           }}
         >
           Activés
@@ -205,8 +205,8 @@ export default function SADM_distributeurs() {
           className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
           onClick={() => {
             setDistributeurs(
-              defaultData.filter((d) => d.etat_distributeur === 'Desactivé')
-            )
+              defaultData.filter((d) => d.etat_distributeur === "Desactivé")
+            );
           }}
         >
           Désactivés
@@ -220,7 +220,7 @@ export default function SADM_distributeurs() {
         prepareRow={prepareRow}
       />
     </div>
-  )
+  );
 }
 /*
         <button

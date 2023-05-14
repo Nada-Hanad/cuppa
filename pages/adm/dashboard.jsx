@@ -1,9 +1,9 @@
 import Head from "next/head";
-import StatCard from "../../components/shared/statCard";
-import LineChart from "../../components/shared/lineChart";
-import DoughnutChart from "../../components/shared/doughnut";
-import BarChart from "../../components/shared/barChart";
-import Title from "../../components/shared/title";
+import StatCard from "../../components/shared/cards/statCard";
+import LineChart from "../../components/shared/charts/lineChart";
+import DoughnutChart from "../../components/shared/charts/doughnut";
+import BarChart from "../../components/shared/charts/barChart";
+import Title from "../../components/shared/layout/title";
 
 export default function ADMDashboard() {
   const stats = [

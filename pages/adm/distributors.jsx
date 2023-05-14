@@ -1,9 +1,9 @@
 import Head from "next/head";
 import DistributorCard from "../../components/ADM/distributorCard";
-import FilterButton from "../../components/shared/filterButton";
-import Input from "../../components/shared/input";
-import SearchBar from "../../components/shared/searchBar";
-import Title from "../../components/shared/title";
+import FilterButton from "../../components/shared/filters/filterButton";
+import Input from "../../components/shared/inputs/input";
+import SearchBar from "../../components/shared/search/searchBar";
+import Title from "../../components/shared/layout/title";
 import { useState } from "react";
 import AddDistributorModal from "../../components/ADM/addDistributor";
 

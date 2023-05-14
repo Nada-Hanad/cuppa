@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import LocationMap from "../../../components/ADM/Map";
-import BarChart from "../../../components/shared/barChart";
-import { HorizontalBarChart } from "../../../components/shared/horizontalBarChart";
-import LineChart from "../../../components/shared/lineChart";
+import BarChart from "../../../components/shared/charts/barChart";
+import { HorizontalBarChart } from "../../../components/shared/charts/horizontalBarChart";
+import LineChart from "../../../components/shared/charts/lineChart";
 
-import Title from "../../../components/shared/title";
+import Title from "../../../components/shared/layout/title";
 
 const Distributor = () => {
   const router = useRouter();

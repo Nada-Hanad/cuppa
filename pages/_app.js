@@ -1,32 +1,28 @@
-import { useRouter } from 'next/router';
-import Layout from '../components/shared/layout';
-import '../styles/globals.css';
+import { useRouter } from "next/router";
+import Layout from "../components/shared/layout/layout";
+import "../styles/globals.css";
 // pages/_app.js
-import { Ubuntu } from 'next/font/google';
-import Login from './login';
+import Login from "./login";
+import { useEffect } from "react";
 
-
-const ubuntu = Ubuntu({
-     weight: ['300', '400', '500', '700'],
-     subsets: ['latin'],
-});
 function MyApp({ Component, pageProps }) {
-     const isLoginPage = Component === Login;
-     if (isLoginPage) {
-          return (
-               <main className={ubuntu.className}>
-                    <Component {...pageProps} />
-               </main>
-          );
-     } else {
-          return (
-               <main className={ubuntu.className}>
-                    <Layout>
-                         <Component {...pageProps} />
-                    </Layout>
-               </main>
-          );
-     }
+  const router = useRouter();
+  useEffect(() => {
+    // if (router.pathname === "/login") {
+    //   return;
+    // }
+    //     if (!localStorage.getItem("token")) {
+    //       router.push("/login");
+    //     }
+  }, [router]);
+  if (router.pathname === "/login") {
+    return <Login />;
+  }
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
 
-export default MyApp
+export default MyApp;

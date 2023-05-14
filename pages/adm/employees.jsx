@@ -1,9 +1,9 @@
 import Head from "next/head";
-import Title from "../../components/shared/title";
+import Title from "../../components/shared/layout/title";
 
-import FilterButton from "../../components/shared/filterButton";
-import Input from "../../components/shared/input";
-import SearchBar from "../../components/shared/searchBar";
+import FilterButton from "../../components/shared/filters/filterButton";
+import Input from "../../components/shared/inputs/input";
+import SearchBar from "../../components/shared/search/searchBar";
 import EmployeItem from "../../components/ADM/EmployeItem";
 export default function Employees() {
   return (

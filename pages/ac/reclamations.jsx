@@ -1,9 +1,9 @@
 import Head from "next/head";
-import FilterButton from "../../components/shared/filterButton";
-import Input from "../../components/shared/input";
-import SearchBar from "../../components/shared/searchBar";
-import Title from "../../components/shared/title";
-import FilterItem from "../../components/shared/filterItem";
+import FilterButton from "../../components/shared/filters/filterButton";
+import Input from "../../components/shared/inputs/input";
+import SearchBar from "../../components/shared/search/searchBar";
+import Title from "../../components/shared/layout/title";
+import FilterItem from "../../components/shared/filters/filterItem";
 import ReclamationCard from "../../components/AC/reclamationCard";
 
 export default function Profil() {

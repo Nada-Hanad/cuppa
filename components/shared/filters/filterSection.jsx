@@ -1,6 +1,6 @@
 import { useState } from "react";
 import FilterButton from "./filterButton";
-import Input from "./input";
+import Input from "../inputs/input";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

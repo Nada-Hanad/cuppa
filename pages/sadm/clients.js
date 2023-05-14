@@ -1,15 +1,15 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { useAsyncDebounce } from 'react-table'
-import { DataTable } from '../../components/shared/table'
-import { useEffect, useState, useMemo } from 'react'
-import axios from 'axios'
-import { useGlobalFilter, useTable } from 'react-table'
-import { Search_bar } from '../../components/shared/search_bar'
-import AddClientDistModal from '../../components/SadmModels/addClientDist'
-import AddClientModal from '../../components/SadmModels/addClient'
+import Head from "next/head";
+import Image from "next/image";
+import { useAsyncDebounce } from "react-table";
+import { DataTable } from "../../components/shared/tables/table";
+import { useEffect, useState, useMemo } from "react";
+import axios from "axios";
+import { useGlobalFilter, useTable } from "react-table";
+import { Search_bar } from "../../components/shared/search/search_bar";
+import AddClientDistModal from "../../components/SadmModels/addClientDist";
+import AddClientModal from "../../components/SadmModels/addClient";
 
-import tw from 'twin.macro'
+import tw from "twin.macro";
 const Button = tw.button`
   pl-4
   pr-4
@@ -20,96 +20,96 @@ const Button = tw.button`
   bg-[#343A49]
  // hover:bg-green-200
   //transition-colors
-`
+`;
 
 export default function SADM_clients() {
-  const [clients, setClients] = useState([])
-  const [defaultData, setDefaultData] = useState([])
+  const [clients, setClients] = useState([]);
+  const [defaultData, setDefaultData] = useState([]);
 
   const fetchClients = async () => {
     const response = await axios
-      .get('http://localhost:8000/distributeurs')
-      .catch((e) => console.log(e))
+      .get("http://localhost:8000/distributeurs")
+      .catch((e) => console.log(e));
     if (response) {
-      const clients = response.data
-      setClients(clients)
-      setDefaultData(clients)
+      const clients = response.data;
+      setClients(clients);
+      setDefaultData(clients);
     }
-  }
+  };
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
         `http://localhost:8000/distributeurs/${id}`
-      )
-      fetchClients()
+      );
+      fetchClients();
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
   const columns = useMemo(
     () => [
       {
-        Header: '  Client',
-        accessor: 'client',
+        Header: "  Client",
+        accessor: "client",
       },
       {
-        Header: 'Client type',
-        accessor: 'type_client',
+        Header: "Client type",
+        accessor: "type_client",
       },
       {
-        Header: 'Nombre des distributeurs',
-        accessor: 'nb_distributeurs',
+        Header: "Nombre des distributeurs",
+        accessor: "nb_distributeurs",
       },
     ],
     []
-  )
+  );
   const data = useMemo(
     () => [
       {
-        client: 'Bouchra.co',
-        type_client: 'enterprise',
-        nb_distributeurs: '1',
+        client: "Bouchra.co",
+        type_client: "enterprise",
+        nb_distributeurs: "1",
       },
       {
-        client: 'Safa Zakaria ',
-        type_client: 'person',
-        nb_distributeurs: '10',
+        client: "Safa Zakaria ",
+        type_client: "person",
+        nb_distributeurs: "10",
       },
       {
-        client: 'Rouibi Selsabil',
-        type_client: 'person',
-        nb_distributeurs: '4',
+        client: "Rouibi Selsabil",
+        type_client: "person",
+        nb_distributeurs: "4",
       },
       {
-        client: 'Gouasmia Malak',
-        type_client: 'person',
-        nb_distributeurs: '3',
+        client: "Gouasmia Malak",
+        type_client: "person",
+        nb_distributeurs: "3",
       },
       {
-        client: 'Hanad Nada',
-        type_client: 'person',
-        nb_distributeurs: '12',
+        client: "Hanad Nada",
+        type_client: "person",
+        nb_distributeurs: "12",
       },
       {
-        client: 'Asma.co',
-        type_client: 'enterprise',
-        nb_distributeurs: '5',
+        client: "Asma.co",
+        type_client: "enterprise",
+        nb_distributeurs: "5",
       },
       {
-        client: 'Maissa.co',
-        type_client: 'enterprise',
-        nb_distributeurs: '9',
+        client: "Maissa.co",
+        type_client: "enterprise",
+        nb_distributeurs: "9",
       },
     ],
     []
-  )
-  const clientData = useMemo(() => [...clients], [clients])
+  );
+  const clientData = useMemo(() => [...clients], [clients]);
   const tableHooks = (hooks) => {
     hooks.visibleColumns.push((columns) => [
       ...columns,
       {
-        id: 'Edit',
-        Header: '',
+        id: "Edit",
+        Header: "",
         Cell: ({ row }) => {
           return (
             <div className="flex justify-evenly">
@@ -118,14 +118,18 @@ export default function SADM_clients() {
                 fetchClients={fetchClients}
               />
 
-              <Button onClick={() => alert('details ')}>details</Button>
+              <Button onClick={() => alert("details ")}>details</Button>
             </div>
-          )
+          );
         },
       },
-    ])
-  }
-  const tableInstence = useTable({ columns, data }, useGlobalFilter, tableHooks)
+    ]);
+  };
+  const tableInstence = useTable(
+    { columns, data },
+    useGlobalFilter,
+    tableHooks
+  );
   /*
 const tableInstence = useTable(
   { columns, data: clientData },
@@ -142,11 +146,11 @@ const tableInstence = useTable(
     preGlobalFilteredRows,
     setGlobalFilter,
     state,
-  } = tableInstence
+  } = tableInstence;
 
   useEffect(() => {
-    fetchClients()
-  }, [])
+    fetchClients();
+  }, []);
 
   return (
     <div className="text-center pt-4 flex flex-col items-center gap-11 overflow-y-scroll overflow-x-hidden">
@@ -183,5 +187,5 @@ const tableInstence = useTable(
         prepareRow={prepareRow}
       />
     </div>
-  )
+  );
 }

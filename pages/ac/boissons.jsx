@@ -1,12 +1,12 @@
 import Head from "next/head";
 import DistributorCard from "../../components/ADM/distributorCard";
-import FilterButton from "../../components/shared/filterButton";
-import Input from "../../components/shared/input";
-import SearchBar from "../../components/shared/searchBar";
-import Title from "../../components/shared/title";
+import FilterButton from "../../components/shared/filters/filterButton";
+import Input from "../../components/shared/inputs/input";
+import SearchBar from "../../components/shared/search/searchBar";
+import Title from "../../components/shared/layout/title";
 import BoissonCard from "../../components/AC/boissonsCard";
 import { useState } from "react";
-import FilterSection from "../../components/shared/filterSection";
+import FilterSection from "../../components/shared/filters/filterSection";
 import AddBoissonModal from "../../components/AC/addBoisson";
 
 export default function Boissons() {
