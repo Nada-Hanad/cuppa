@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import Layout from "../components/shared/layout";
 import "../styles/globals.css";
-// pages/_app.js
 import { Ubuntu } from "next/font/google";
 
 const ubuntu = Ubuntu({
@@ -18,4 +17,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default MyApp
