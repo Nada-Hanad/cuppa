@@ -72,9 +72,9 @@ export default function DeleteAdvertiserModal({
 							{/*content*/}
 							<div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[400px] w-[400px] '>
 								{/*header*/}
-								<div className='flex items-start justify-between p-5 rounded-t'>
-									<h3 className='text-3xl font-semibold '>
-										Supprimer L&apos;annonceur
+								<div className='flex  items-start justify-center  mx-auto p-5 rounded-t'>
+									<h3 className='text-3xl font-semibold  text-dark-grey'>
+										Supprimer l&apos;annonceur
 									</h3>
 									<button
 										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'

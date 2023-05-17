@@ -41,7 +41,7 @@ export function SearchTableBar({
 			type='text'
 			id='search'
 			name='search'
-			className='w-[650px] h-[60px] p-4 rounded-[15px] text-lg'
+			className='w-[650px] h-[60px] p-4 rounded-[15px] text-lg shadow-xl '
 			value={value || ''}
 			onChange={(e) => {
 				setValue(e.target.value);
