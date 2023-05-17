@@ -1,13 +1,10 @@
 import Head from 'next/head';
-import DistributorCard from '../../components/ADM/distributorCard';
-import FilterButton from '../../components/shared/filters/filterButton';
-import Input from '../../components/shared/inputs/input';
 import SearchBar from '../../components/shared/search/searchBar';
 import Title from '../../components/shared/layout/title';
-import BoissonCard from '../../components/AC/pubsCard';
+import BoissonCard from '../../components/AC/annonces/pubsCard';
 import { useEffect, useState } from 'react';
 import FilterSection from '../../components/shared/filters/filterSection';
-import AddAdModal from '../../components/AC/addAd';
+import AddAdModal from '../../components/AC/annonces/addAd';
 import { API_URL } from '../../config/api';
 import axios from 'axios';
 
@@ -72,7 +69,7 @@ export default function Ads() {
 	}, []);
 
 	return (
-		<div className='flex flex-col items-center pt-8 text-center  '>
+		<div className='flex flex-col items-center pt-8 text-center '>
 			<Head>
 				<title>Annoces</title>
 				<link rel='icon' href='/favicon.ico' />

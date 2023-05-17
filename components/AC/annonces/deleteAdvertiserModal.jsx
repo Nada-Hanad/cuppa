@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import RangeInput from './RangeInput';
-import { Range } from 'react-range';
 import axios from 'axios';
-import { API_URL } from '../../config/api';
+import { API_URL } from '../../../config/api';
 
-export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
+export default function DeleteAdvertiserModal({
+	name,
+	AdervtiserId,
+	fetchAdvertisers,
+}) {
 	const [showModal, setShowModal] = React.useState(false);
 
 	useEffect(() => {
@@ -24,9 +26,12 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 	}, []);
 
 	const handleSave = async () => {
+		// const updatedAds = drinks.filter((e) => e.id !== drink.id);
+		//  setDrinks(updatedAds);
+
 		try {
 			const res = await axios.post(
-				`${API_URL}/api/ads/deleteAdvertisement/${Ad.id_annonce}`,
+				`${API_URL}/api/ads/deleteAdvertiser/${AdervtiserId}`,
 				{}
 			);
 			console.log(`deleted res.data`);
@@ -35,7 +40,7 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 		} catch (err) {
 			console.error(err);
 		}
-		fetchAdvertisements();
+		fetchAdvertisers();
 		setShowModal(false);
 	};
 
@@ -67,9 +72,9 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 							{/*content*/}
 							<div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[400px] w-[400px] '>
 								{/*header*/}
-								<div className='flex items-start justify-center mx-auto p-5 rounded-t'>
-									<h3 className='text-3xl font-semibold  text-dark-grey'>
-										Supprimer l&apos;annonce
+								<div className='flex items-start justify-center p-5 mx-auto rounded-t'>
+									<h3 className='text-3xl font-semibold text-dark-grey'>
+										Supprimer l&apos;annonceur
 									</h3>
 									<button
 										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
@@ -85,7 +90,7 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 								<div className='relative p-12 mx-auto flex rounded-[20px] border-slate-800 border-1 border w-8/12 bg-[#EBEEF3]'>
 									<p className='font-bold text-dark-grey text-center text-[20px]'>
 										{` Voulez_vous supprimer
-                                                  l’annonce de ${Ad.nom_annonce} ? `}
+                                                  l’annonceur  ${name}? `}
 									</p>
 								</div>
 

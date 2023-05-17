@@ -17,6 +17,18 @@ export default function Login() {
 		e.preventDefault();
 		setError(null);
 		setIsLoading(true); // Set loading state to true
+		if (!username) {
+			setError("Entrez le username s'il vous plait");
+			setIsLoading(false);
+			return;
+		}
+		if (!password) {
+			setError("Entrez le motepass s'il vous plait");
+			setIsLoading(false);
+
+			return;
+		}
+
 		console.log();
 		try {
 			const response = await axios.post(`${API_URL}/login`, {
@@ -72,7 +84,7 @@ export default function Login() {
 							<div className='flex items-center justify-center'>
 								<img
 									src='icons/whiteLogo.svg'
-									className='w-48 h-48'
+									className='w-48 h-48 animate-roll-in '
 								/>
 								<h2 className='font-bold tracking-widest mt-8 text-[70px] text-white'>
 									CUPPA
@@ -100,7 +112,11 @@ export default function Login() {
 										setUsername(e.target.value)
 									}
 									value={username}
-									className='px-4 py-2 border-2 rounded-xl border-dark-gray '
+									className={`px-4 py-2 border-2  rounded-xl  ${
+										error
+											? ' border-red-500 '
+											: ' border-dark-grey '
+									}  `}
 								/>
 								<label className='my-1 font-normal text-dark-gray '>
 									Password
@@ -111,13 +127,17 @@ export default function Login() {
 										setPassword(e.target.value);
 									}}
 									value={password}
-									className='px-4 py-2 border-2 rounded-xl border-dark-gray '
+									className={`px-4 py-2 border-2 rounded-xl 	${
+										error
+											? ' border-red-500 '
+											: ' border-dark-grey '
+									}	`}
 								/>
 								<div className='flex items-center justify-start '>
 									<input
 										type='checkbox'
 										onClick={setRememberMe}
-										className='w-4 h-4'
+										className='w-4 h-4 border-gray-300 rounded-sm form-checkbox text-emerald-700 focus:text-red-500 focus:border-red-800'
 									/>
 									<label className='my-1 ml-3 font-normal text-dark-gray '>
 										Se Souvenir de moi

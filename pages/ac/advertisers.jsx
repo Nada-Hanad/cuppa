@@ -1,15 +1,13 @@
-import { useAsyncDebounce } from 'react-table';
 import Head from 'next/head';
 import Image from 'next/image';
 import { DataTable } from '../../components/shared/tables/table';
 import { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { useGlobalFilter, useTable } from 'react-table';
-import SearchBar from '../../components/shared/search/searchBar';
-import AddAdvertiserModal from '../../components/AC/addAdvertiser';
+import AddAdvertiserModal from '../../components/AC/annonces/addAdvertiser';
 import { API_URL } from '../../config/api';
-import DeleteAdvertiserModal from '../../components/AC/deleteAdvertiserModal';
-import ModifyAdvertiserModal from '../../components/AC/modifyAdvertiser';
+import DeleteAdvertiserModal from '../../components/AC/annonces/deleteAdvertiserModal';
+import ModifyAdvertiserModal from '../../components/AC/annonces/modifyAdvertiser';
 import { SearchTableBar } from '../../components/shared/search/searchTableBar';
 import Title from '../../components/shared/layout/title';
 
@@ -53,8 +51,8 @@ export default function Annonceurs() {
 				accessor: 'id_annonceur',
 			},
 			{
-				Header: 'Nombre des annoces',
-				accessor: 'nomberOfAds',
+				Header: 'Nombre des annonces',
+				accessor: 'numberOfAds',
 			},
 		],
 		[]
@@ -109,19 +107,11 @@ export default function Annonceurs() {
 	} = tableInstence;
 
 	useEffect(() => {
-		console.log('hiiiiiiiiiiii');
 		fetchAnnoceurs();
-		console.log('********************************');
 	}, []);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	const [value, setValue] = useState(state.globalFilter);
-	/*  const filterBtn = useAsyncDebounce((value) => {
-          console.log(value);
-          setGlobalFilter(value || undefined);
-     }, 300);
-*/
-
 	////////////////////////////////////////////////////////////////////////////////////
 	return (
 		<div className='flex flex-col items-center pt-4 overflow-x-hidden text-center gap-11'>
@@ -157,12 +147,3 @@ export default function Annonceurs() {
 		</div>
 	);
 }
-/*
-        <button
-          onClick={addBtnClick}
-          className="w-[180px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
-        >
-          <Image src="/icons/plus.png" width={35} height={35}></Image>
-          distributeur
-        </button>
-*/

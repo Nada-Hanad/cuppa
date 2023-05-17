@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Range } from 'react-range';
 import axios from 'axios';
-import { API_URL, PUBLIC_URL } from '../../config/api.js';
+import { API_URL, PUBLIC_URL } from '../../../config/api';
 import Autocomplete from 'react-autocomplete';
 
 export default function AddAdModal({ fetchAdvertisements, advertisers }) {
@@ -23,7 +22,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 		};
 	}, []);
 	const [name, setName] = React.useState('');
-	const [unite, setUnite] = React.useState('');
+	const [showTime, setShowTime] = React.useState('');
 	const [sexe, setSexe] = React.useState('');
 	const [price, setPrice] = React.useState('');
 	const [minMaxAge, setMinMaxAge] = React.useState([20, 40]);
@@ -35,10 +34,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 	const handleMinMaxAgeChange = (newValue) => {
 		setMinMaxAge(newValue);
 	};
-	const handleUniteChange = (e) => {
-		e.preventDefault();
-		setUnite(e.target.value);
-	};
+
 	const handleSexeChange = (e) => {
 		e.preventDefault();
 		setSexe(e.target.value);
@@ -63,7 +59,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 			const formData = new FormData();
 			formData.append('nom_annonce', name);
 			formData.append('id_annonceur', selectedAdvertiser.id_annonceur);
-			formData.append('duree_affichage', unite);
+			formData.append('duree_affichage', showTime);
 			formData.append('ageMax', minMaxAge[1]);
 			formData.append('ageMin', minMaxAge[0]);
 			formData.append('sexeCible', sexe);
@@ -87,7 +83,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 		setName('');
 		setPrice('');
 		setSexe('');
-		setUnite('');
+		setShowTime('');
 		setVideoPath('');
 		setMinMaxAge([10, 20]);
 		console.log(fetchAdvertisements);
@@ -159,7 +155,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 								{/*header*/}
 								<div className='flex justify-center p-5 mx-auto border-b border-solid rounded-t border-slate-200'>
 									<h3 className='text-3xl font-semibold text-dark-grey'>
-										Ajouter un Annonce
+										Ajouter un annonce
 									</h3>
 									<button
 										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
@@ -185,7 +181,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
 												id='name'
 												type='text'
-												placeholder='Entrez le nom de la Annonce'
+												placeholder="Entrez le nom de l'annonce"
 												value={name}
 												onChange={(e) =>
 													setName(
@@ -205,9 +201,9 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 												inputProps={{
 													id: 'advertiser',
 													placeholder:
-														"Enter nom de l'annonceur",
+														"Entrez nom de l'annonceur",
 													className:
-														'w-full    px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline',
+														'w-full  px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline',
 												}}
 												getItemValue={(
 													item
@@ -244,7 +240,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 														}
 														className={` cursor-pointer  mb-2  text-gray-700 item ${
 															isHighlighted
-																? 'highlighted'
+																? 'highlighted bg-dark-grey text-white'
 																: ''
 														}`}>
 														{
@@ -261,77 +257,19 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 												Durée
 												d&apos;affichage
 											</label>
-
-											<div className='flex items-center justify-center'>
-												<div className='flex items-center ml-2 '>
-													<div className='mr-2'>
-														<input
-															type='radio'
-															name='unite'
-															id='jours'
-															value='jours'
-															className='mr-1 appearance-none'
-															onClick={
-																handleUniteChange
-															}
-														/>
-														<label
-															htmlFor='jours'
-															className={`flex items-center px-2 py-1 rounded-lg  bg-gray-200 border border-gray-300 rounded-l cursor-pointer ${
-																unite ===
-																'jours'
-																	? ' bg-slate-800 text-slate-50'
-																	: ''
-															}`}>
-															jours
-														</label>
-													</div>
-													<div className='mr-2'>
-														<input
-															type='radio'
-															name='unite'
-															id='semaines'
-															value='semaines'
-															onClick={
-																handleUniteChange
-															}
-															className='mr-1 appearance-none'
-														/>
-														<label
-															htmlFor='semaines'
-															className={`flex items-center px-2 py-1  rounded-lg bg-gray-200 border border-gray-300  cursor-pointer ${
-																unite ===
-																'semaines'
-																	? ' bg-slate-800 text-slate-50'
-																	: ''
-															}`}>
-															semaines
-														</label>
-													</div>
-													<div>
-														<input
-															type='radio'
-															name='unite'
-															id='mois'
-															value='mois'
-															className='mr-1 appearance-none'
-															onClick={
-																handleUniteChange
-															}
-														/>
-														<label
-															htmlFor='mois'
-															className={`flex items-center px-2 py-1  rounded-lg bg-gray-200 border border-gray-300 rounded-l cursor-pointer ${
-																unite ===
-																'mois'
-																	? ' bg-slate-800 text-slate-50'
-																	: ''
-															}`}>
-															mois
-														</label>
-													</div>
-												</div>
-											</div>
+											<input
+												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+												id='price'
+												type='number'
+												placeholder="Entrez le durée de l'annonce en jours"
+												value={showTime}
+												onChange={(e) =>
+													setShowTime(
+														e.target
+															.value
+													)
+												}
+											/>
 										</div>
 
 										<div className='mb-4'>

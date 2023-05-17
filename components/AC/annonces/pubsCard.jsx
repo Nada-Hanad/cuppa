@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import EditBoissonModal from './editPubModal';
 import DeleteAnnonceModal from './deleteAdModal';
-import { PUBLIC_URL } from '../../config/api';
+import { PUBLIC_URL } from '../../../config/api';
 
 export default function AdCard({ Ad, fetchAdvertisements }) {
 	return (
