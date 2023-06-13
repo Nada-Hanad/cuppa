@@ -80,7 +80,7 @@ export default function SADM_distributeurs() {
       ...columns,
       {
         id: 'Edit',
-        Header: 'actions',
+        Header: 'Actions',
         Cell: ({ row }) => {
           if (
             row.original.etat_distributeur === 'Inactive' &&

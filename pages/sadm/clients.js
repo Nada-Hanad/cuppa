@@ -131,7 +131,7 @@ export default function SADM_clients() {
                   router.push(`/sadm/client/${row.original.id_client}`)
                 }
               >
-                details
+                Details
               </Button>
             </div>
           )

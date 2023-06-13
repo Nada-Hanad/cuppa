@@ -74,10 +74,10 @@ toast.error("Veuillez ajouter le type de client");
     <button
         type="button"
         onClick={() => setShowModal(true)}
-        className="w-[180px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
+        className="w-[60px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
     >
     <Image src="/icons/plus.png" width={35} height={35}></Image>
-        client
+        {/*client*/}
     </button>
 
       {showModal ? (

@@ -110,7 +110,22 @@ p-2'>
 									) 
 									
 									:
-									
+									cell.column.id === 'type_client' && cell.value === 'person'? 
+      (
+        <td>
+          <div className="flex justify-center">
+            <Image src="/icons/user.svg" width={40} height={40} />
+          </div>
+        </td>
+      ):cell.column.id === 'type_client' && cell.value === 'enterprise'? 
+      (
+        <td>
+          <div className="flex justify-center">
+            <Image src="/icons/company.png" width={40} height={40} />
+          </div>
+        </td>
+      )
+									:
 									(
 										cell.column.id !=
 											'id_annonceur' && (
