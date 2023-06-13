@@ -26,9 +26,13 @@ export default function AddClientModal({fetchClients}) {
   const [type_client, set_type_client] = React.useState("");
  const insertNewClient = async (nom_client,prenom_client,type_client) => {
   try {
-    const response = await axios.post('http://localhost:8000/distributeurs', {
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    const response = await axios.post('http://localhost:5000/api/account.management/createClientAccount/', {
       nom_client:nom_client,prenom_client:prenom_client,type_client:type_client
-    });
+    },config);
     console.log(response.data);
   } catch (error) {
     console.log(error);
@@ -59,7 +63,7 @@ toast.error("Veuillez ajouter le type de client");
     }
     // If all validations pass, save the beverage
   await  handleSave();
-  await  fetchClients()
+ // await  fetchClients()
     toast.success("Ajouté avec success");
     setShowModal(false);  
     };

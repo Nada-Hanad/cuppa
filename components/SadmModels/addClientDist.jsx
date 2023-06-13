@@ -22,18 +22,23 @@ export default function AddClientDistModal({id_client ,fetchClients}) {
   }, []);
 
   const [numero_serie_distributeur, setnumero_serie_distributeur] = React.useState("");
- const addClientNewDist = async (client_id,numero_serie_distributeur) => {
+ const addClientNewDist = async (id_client,numero_serie_distributeur) => {
   try {
-    const response = await axios.post( `http://localhost:8000/distributeurs/${client_id}`, {
-      numero_serie_distributeur: numero_serie_distributeur
-    });
+    
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    const response = await axios.post( `http://localhost:5000/distributeurs/${numero_serie_distributeur}/client`, {
+      id_client: id_client
+    },config);
     console.log(response.data);
   } catch (error) {
     console.log(error);
   }
 } 
   const handleSave = async() => {
-  await addClientNewDist(client_id,numero_serie_distributeur) 
+  await addClientNewDist(id_client,numero_serie_distributeur) 
     // Reset the form
     setnumero_serie_distributeur("");
 };
@@ -47,14 +52,13 @@ export default function AddClientDistModal({id_client ,fetchClients}) {
     }
     // If all validations pass, save the beverage
   await  handleSave();
-  await  fetchClients()
+  //await  fetchClients()
     toast.success("Ajouté avec success");
     setShowModal(false);  
     };
 
   return (
-    <>
-        
+    <>        
     <button
         type="button"
         onClick={() => setShowModal(true)}
