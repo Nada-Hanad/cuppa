@@ -96,7 +96,22 @@ p-2'>
 												height={40}
 											/>
 										</td>
-									) : (
+									) :
+									 cell.column.id ===
+											'id_client' &&
+									  !(cell.value) ? (
+										<td
+											key={idx}
+											className=' p-2  font-bold text-[#343A49]  
+
+                                                                                 '>
+											Pas de propriétaire
+										</td>
+									) 
+									
+									:
+									
+									(
 										cell.column.id !=
 											'id_annonceur' && (
 											<td

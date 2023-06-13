@@ -4,6 +4,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { async } from 'regenerator-runtime';
+import { API_URL } from '../../config/api'
 
 export default function AddDistModal({fetchDistributeurs}) {
   const [showModal, setShowModal] = React.useState(false);
@@ -22,11 +23,17 @@ export default function AddDistModal({fetchDistributeurs}) {
   }, []);
 
   const [numero_serie_distributeur, setnumero_serie_distributeur] = React.useState("");
- const insertNewDist = async (numero_serie_distributeur) => {
+ 
+  const insertNewDist = async (numero_serie_distributeur) => {
   try {
-    const response = await axios.post('http://localhost:8000/distributeurs', {
+		const token = localStorage.getItem('token');
+		const config = {
+			headers: { Authorization: `Bearer ${token}` },
+		};
+
+    const response = await axios.post(API_URL +'/distributeurs',  {
       numero_serie_distributeur: numero_serie_distributeur
-    });
+    },config);
     console.log(response.data);
   } catch (error) {
     console.log(error);
