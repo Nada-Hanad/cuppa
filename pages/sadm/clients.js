@@ -27,6 +27,8 @@ const Button = tw.button`
 export default function SADM_clients() {
   const [clients, setClients] = useState([])
   const [defaultData, setDefaultData] = useState([])
+  const [selectedClient, setSelectedClient] = useState(null)
+
   const router = useRouter()
 
   const fetchClients = async () => {
@@ -77,10 +79,17 @@ export default function SADM_clients() {
         Cell: ({ row }) => {
           return (
             <div className="flex justify-evenly">
-              <AddClientDistModal
+              {/*  <AddClientDistModal
                 id_client={row.original.id_client}
                 fetchClients={fetchClients}
-              />
+              />*/}
+              <button
+                type="button"
+                onClick={() => setSelectedClient(row.original)}
+                className="rounded-[15px] bg-transparent flex items-center justify-evenly"
+              >
+                <Image src="/icons/mug.svg" width={35} height={35}></Image>
+              </button>
 
               <Button
                 onClick={() =>
@@ -135,6 +144,11 @@ export default function SADM_clients() {
           <Image src="/icons/search.png" width={30} height={30}></Image>
         </button>
         <AddClientModal fetchClients={fetchClients} />
+        <AddClientDistModal
+          selectedClient={selectedClient}
+          setSelectedClient={setSelectedClient}
+          fetchClients={fetchClients}
+        />
         {/*<button className="w-[150px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly">
           <Image src="/icons/plus.png" width={35} height={35}></Image>
           Client
