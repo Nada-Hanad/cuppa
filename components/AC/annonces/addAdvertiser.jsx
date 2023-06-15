@@ -25,6 +25,9 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 		};
 	}, []);
 	const [name, setName] = React.useState('');
+	const [phone, setPhone] = React.useState('');
+	const [RCS, setRCS] = React.useState('');
+	const [fiscal, setFiscal] = React.useState('');
 
 	const [type, setType] = React.useState('');
 	const [image, setImage] = React.useState('');
@@ -38,6 +41,9 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 		const formData = new FormData();
 		formData.append('nom_annonceur', name);
 		formData.append('type_annonceur', type);
+		formData.append('telephone_annonceur', phone);
+		formData.append('fiscal_annonceur', fiscal);
+		formData.append('rcf_annonceur', RCS);
 		formData.append('image', ImgaeFile);
 		try {
 			const res = await axios.post(
@@ -140,7 +146,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 									<form>
 										<div className='mb-4'>
 											<label
-												className='block mb-2 font-bold text-gray-700'
+												className='block mb-2 text-left font-bold text-gray-700'
 												htmlFor='Name'>
 												Nom de l&apos;
 												Annonceur
@@ -162,7 +168,82 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 										</div>
 										<div className='mb-4'>
 											<label
-												className='block font-bold text-gray-700 '
+												className='block mb-2 font-bold text-left text-gray-700'
+												htmlFor='price'>
+												Numéros de telephone
+											</label>
+											<div className='flex items-center gap-x-4'>
+												<input
+													className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+													id='price'
+													type='number'
+													placeholder='Entrez le Numéros de telephone '
+													value={phone}
+													onChange={(
+														e
+													) =>
+														setPhone(
+															e
+																.target
+																.value
+														)
+													}
+												/>
+											</div>
+										</div>
+										<div className='mb-4'>
+											<label
+												className='block mb-2 font-bold text-left text-gray-700'
+												htmlFor='price'>
+												Numéro fiscal
+											</label>
+											<div className='flex items-center gap-x-4'>
+												<input
+													className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+													id='price'
+													type='number'
+													placeholder='Entrez le Numéro fiscal'
+													value={fiscal}
+													onChange={(
+														e
+													) =>
+														setFiscal(
+															e
+																.target
+																.value
+														)
+													}
+												/>
+											</div>
+										</div>
+										<div className='mb-4'>
+											<label
+												className='block mb-2 font-bold text-left text-gray-700'
+												htmlFor='RCS'>
+												Numéro RCS
+											</label>
+											<div className='flex items-center gap-x-4'>
+												<input
+													className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+													id='price'
+													type='number'
+													placeholder='Entrez le Numéro RCS'
+													value={RCS}
+													onChange={(
+														e
+													) =>
+														setRCS(
+															e
+																.target
+																.value
+														)
+													}
+												/>
+											</div>
+										</div>
+										<div className='mb-4 flex items-center justify-start gap-x-12'>
+											<label
+												className='mt-4 block font-bold text-gray-700 '
 												htmlFor='name'>
 												Le type
 											</label>
@@ -186,7 +267,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 																type ===
 																'Personne'
 																	? ' bg-slate-800 text-slate-50'
-																	: ''
+																	: ' bg-gray-50 text-gray-500'
 															}`}>
 															Personne
 														</label>
@@ -204,11 +285,11 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 														/>
 														<label
 															htmlFor='Enterprise'
-															className={`flex items-center px-2 py-1  rounded-lg bg-gray-100 border border-gray-300  cursor-pointer ${
+															className={`flex items-center  px-2 py-1  rounded-lg bg-gray-100 border border-gray-300  cursor-pointer ${
 																type ===
 																'Enterprise'
 																	? ' bg-slate-800 text-slate-50'
-																	: ''
+																	: ' bg-gray-50 text-gray-500'
 															}`}>
 															Enterprise
 														</label>
@@ -217,7 +298,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 											</div>
 										</div>
 
-										<div className='mb-4'>
+										<div className='mb-4 '>
 											<label
 												className='block mb-2 font-bold text-gray-700'
 												htmlFor='picture'>
@@ -245,20 +326,25 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 												<input
 													id='image'
 													type='file'
-													className='absolute inset-0 opacity-0 cursor-pointer'
+													className='absolute inset-0 w-full opacity-0 cursor-pointer'
 													accept='.jpg, .jpeg, .png'
 													onChange={
 														handleImageChange
 													}
 												/>
 												<button
+													onClick={(
+														e
+													) => {
+														e.preventDefault();
+													}}
 													className={`px-4 py-2 text-dark-gray ${
 														selectedFile
 															? 'bg-scrollbarThumb text-white'
 															: 'bg-gray-200'
 													}  rounded hover:bg-blue-600 focus:outline-none`}>
 													Sélectionner un
-													Image
+													image
 												</button>
 											</div>
 										</div>

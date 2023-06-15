@@ -65,3 +65,46 @@ video::-webkit-media-controls-panel {
 .animate-roll-in {
 	animation: roll-in 1.5s ease-out;
 }
+
+.logo-container {
+	position: relative;
+	width: 200px; /* Adjust the width and height according to your logo size */
+	height: 200px;
+}
+/*
+.logo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	z-index: 1;
+}
+
+.smoke {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to right,
+		rgba(255, 255, 255, 0.4) 10%,
+		rgba(255, 255, 255, 0) 80%
+	);
+	z-index: 2;
+	animation: smokeAnimation 3s infinite;
+}
+
+@keyframes smokeAnimation {
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}
+*/

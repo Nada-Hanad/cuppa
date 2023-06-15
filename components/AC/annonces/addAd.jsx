@@ -7,6 +7,8 @@ import { API_URL, PUBLIC_URL } from '../../../config/api';
 import Autocomplete from 'react-autocomplete';
 
 export default function AddAdModal({ fetchAdvertisements, advertisers }) {
+	const [selectedOption, setSelectedOption] = React.useState('');
+
 	const [showModal, setShowModal] = React.useState(false);
 
 	useEffect(() => {
@@ -22,9 +24,12 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 		};
 	}, []);
 	const [name, setName] = React.useState('');
-	const [showTime, setShowTime] = React.useState('');
-	const [sexe, setSexe] = React.useState('');
-	const [price, setPrice] = React.useState('');
+	const [showTime, setShowTime] = React.useState(0);
+	const [showTimeUnite, setShowTimeUnite] = React.useState('jours');
+	const [sexe, setSexe] = React.useState('M');
+	const [price, setPrice] = React.useState(0);
+	const [type, setType] = React.useState('forfait');
+	const [startDate, setStartDate] = React.useState(new Date());
 	const [minMaxAge, setMinMaxAge] = React.useState([20, 40]);
 	const [videoFile, setVideoFile] = React.useState(null);
 	const [videoPath, setVideoPath] = React.useState('');
@@ -35,6 +40,14 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 		setMinMaxAge(newValue);
 	};
 
+	const handleshowTimeUnitChange = (e) => {
+		e.preventDefault();
+		setShowTimeUnite(e.target.value);
+	};
+	const handleTypeChange = (e) => {
+		e.preventDefault();
+		setType(e.target.value);
+	};
 	const handleSexeChange = (e) => {
 		e.preventDefault();
 		setSexe(e.target.value);
@@ -56,14 +69,21 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 		.slice(0, 3); // Limit the number of items to 3
 	const handleSave = async () => {
 		try {
+			const duree_affichage =
+				showTimeUnite == 'jours'
+					? showTime
+					: showTimeUnite == 'semaines'
+					? showTime * 7
+					: showTime * 30;
 			const formData = new FormData();
 			formData.append('nom_annonce', name);
 			formData.append('id_annonceur', selectedAdvertiser.id_annonceur);
-			formData.append('duree_affichage', showTime);
+			formData.append('duree_affichage', duree_affichage);
+			formData.append('type_forfait', type);
 			formData.append('ageMax', minMaxAge[1]);
 			formData.append('ageMin', minMaxAge[0]);
-			formData.append('sexeCible', sexe);
-			formData.append('prix_annonce', price);
+			formData.append('sexe_cible', sexe);
+			formData.append('tarif_annonce', price);
 			formData.append('videoFile', videoFile);
 
 			const response = await axios.post(
@@ -83,7 +103,9 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 		setName('');
 		setPrice('');
 		setSexe('');
-		setShowTime('');
+		setShowTime(0);
+		setShowTimeUnite('jours');
+		setType('forfait');
 		setVideoPath('');
 		setMinMaxAge([10, 20]);
 		console.log(fetchAdvertisements);
@@ -127,7 +149,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 			(advertiser) => advertiser?.nom_annonceur === value
 		);
 		if (selected == -1) {
-			toast.error('Veuillez choisir un prix positif');
+			toast.error('Veuillez choisir un annonceur');
 			return;
 		}
 
@@ -147,7 +169,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 			{showModal ? (
 				<>
 					<div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none modal'>
-						<div className='relative w-auto max-w-3xl mx-auto my-6'>
+						<div className='relative w-1/2 max-w-3xl mx-auto my-6 '>
 							{/*content*/}
 							<div
 								className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[600px] w-[600px] overflow-scroll
@@ -155,7 +177,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 								{/*header*/}
 								<div className='flex justify-center p-5 mx-auto border-b border-solid rounded-t border-slate-200'>
 									<h3 className='text-3xl font-semibold text-dark-grey'>
-										Ajouter un annonce
+										Ajouter annonce
 									</h3>
 									<button
 										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
@@ -170,9 +192,9 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 								{/*body*/}
 								<div className='relative flex-auto p-6'>
 									<form>
-										<div className='mb-4'>
+										<div className='mb-4 '>
 											<label
-												className='block mb-2 font-bold text-gray-700'
+												className='block mb-2 ml-2 font-bold text-left text-gray-700'
 												htmlFor='name'>
 												Nom de
 												l&apos;annonce
@@ -193,7 +215,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 										</div>
 										<div className='relative w-full mb-4'>
 											<label
-												className='block mb-2 font-bold text-gray-700'
+												className='block mb-2 ml-2 font-bold text-left text-gray-700'
 												htmlFor='advertiser'>
 												Annonceur :
 											</label>
@@ -203,7 +225,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 													placeholder:
 														"Entrez nom de l'annonceur",
 													className:
-														'w-full  px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline',
+														'w-full ml-0  px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline',
 												}}
 												getItemValue={(
 													item
@@ -252,108 +274,105 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 										</div>
 										<div className='mb-4'>
 											<label
-												className='block font-bold text-gray-700 '
+												className='block ml-2 font-bold text-left text-gray-700 '
 												htmlFor='name'>
 												Durée
 												d&apos;affichage
 											</label>
-											<input
-												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
-												id='price'
-												type='number'
-												placeholder="Entrez le durée de l'annonce en jours"
-												value={showTime}
-												onChange={(e) =>
-													setShowTime(
-														e.target
-															.value
-													)
-												}
-											/>
-										</div>
-
-										<div className='mb-4'>
-											<label
-												className='block font-bold text-gray-700 '
-												htmlFor='name'>
-												Genre cible
-											</label>
-
-											<div className='flex items-center justify-center'>
-												<div className='flex ml-2'>
-													<div className='mr-2'>
-														<input
-															type='radio'
-															name='sexe'
-															id='M'
-															value='M'
-															className='mr-1 appearance-none'
-															onClick={
-																handleSexeChange
-															}
-														/>
-														<label
-															htmlFor='M'
-															className={`flex items-center px-2 py-1 rounded-lg  bg-gray-200 border border-gray-300 rounded-l cursor-pointer ${
-																sexe ===
-																'M'
-																	? ' bg-slate-800 text-slate-50'
-																	: ''
-															}`}>
-															Hommes
-														</label>
-													</div>
-													<div className='mr-2'>
-														<input
-															type='radio'
-															name='sexe'
-															id='F'
-															value='F'
-															onClick={
-																handleSexeChange
-															}
-															className='mr-1 appearance-none'
-														/>
-														<label
-															htmlFor='F'
-															className={`flex items-center px-2 py-1  rounded-lg bg-gray-200 border border-gray-300  cursor-pointer ${
-																sexe ===
-																'F'
-																	? ' bg-slate-800 text-slate-50'
-																	: ''
-															}`}>
-															Femmes
-														</label>
-													</div>
-													<div>
-														<input
-															type='radio'
-															name='sexe'
-															id='B'
-															value='B'
-															className='mr-1 appearance-none'
-															onClick={
-																handleSexeChange
-															}
-														/>
-														<label
-															htmlFor='B'
-															className={`flex items-center px-2 py-1  rounded-lg bg-gray-200 border border-gray-300 rounded-l cursor-pointer ${
-																sexe ===
-																'B'
-																	? ' bg-slate-800 text-slate-50'
-																	: ''
-															}`}>
-															Les
-															deux
-														</label>
+											<div>
+												<div className='flex items-center justify-start'>
+													<input
+														className='w-20 px-3 py-2 mt-6 leading-tight text-gray-700 border rounded appearance-none lg:mr-8 focus:outline-none focus:shadow-outline'
+														id='price'
+														type='number'
+														placeholder=''
+														value={
+															showTime
+														}
+														onChange={(
+															e
+														) =>
+															setShowTime(
+																e
+																	.target
+																	.value
+															)
+														}
+													/>
+													<div className='flex ml-2'>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='duree'
+																id='jours'
+																value='jours'
+																className='mr-1 appearance-none '
+																onClick={
+																	handleshowTimeUnitChange
+																}
+															/>
+															<label
+																htmlFor='jours'
+																className={`flex items-center px-5 py-1 rounded-xl border border-gray-300  cursor-pointer ${
+																	showTimeUnite ===
+																	'jours'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Jours
+															</label>
+														</div>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='duree'
+																id='semaines'
+																value='semaines'
+																onClick={
+																	handleshowTimeUnitChange
+																}
+																className='mr-1 appearance-none'
+															/>
+															<label
+																htmlFor='semaines'
+																className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300  cursor-pointer ${
+																	showTimeUnite ===
+																	'semaines'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Semaines
+															</label>
+														</div>
+														<div>
+															<input
+																type='radio'
+																name='duree'
+																id='mois'
+																value='mois'
+																className='mr-1 appearance-none'
+																onClick={
+																	handleshowTimeUnitChange
+																}
+															/>
+															<label
+																htmlFor='mois'
+																className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300 cursor-pointer ${
+																	showTimeUnite ===
+																	'mois'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Mois
+															</label>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 
 										<div className='flex items-center justify-start my-8 '>
-											<div className='mr-8 font-bold text-gray-700'>
+											<div className='mr-8 ml-2 font-bold text-gray-700'>
 												{`Age cible :  ${minMaxAge[0]}
                                                              - ${minMaxAge[1]}`}
 											</div>
@@ -400,27 +419,194 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 												)}
 											/>
 										</div>
+										<div className='mb-4 flex'>
+											<label
+												className='block ml-2 mr-8 mt-[28px] font-bold text-left text-gray-700 '
+												htmlFor='name'>
+												Sexe
+											</label>
+											<div>
+												<div className='flex items-center justify-start'>
+													<div className='flex ml-2'>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='sexe'
+																id='M'
+																value='M'
+																className='mr-1 appearance-none '
+																onClick={
+																	handleSexeChange
+																}
+															/>
+															<label
+																htmlFor='M'
+																className={`flex items-center px-5 py-1 rounded-xl border border-gray-300  cursor-pointer ${
+																	sexe ===
+																	'M'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Hommes
+															</label>
+														</div>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='sexe'
+																id='F'
+																value='F'
+																onClick={
+																	handleSexeChange
+																}
+																className='mr-1 appearance-none'
+															/>
+															<label
+																htmlFor='F'
+																className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300  cursor-pointer ${
+																	sexe ===
+																	'F'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Femmes
+															</label>
+														</div>
+														<div>
+															<input
+																type='radio'
+																name='sexe'
+																id='B'
+																value='B'
+																className='mr-1 appearance-none'
+																onClick={
+																	handleSexeChange
+																}
+															/>
+															<label
+																htmlFor='B'
+																className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300 cursor-pointer ${
+																	sexe ===
+																	'B'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Les
+																deux
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div className='mb-4 flex items-center'>
+											<label
+												className='block ml-2 mr-8 mt-4 font-bold text-left text-gray-700 '
+												htmlFor='name'>
+												Type
+											</label>
+											<div>
+												<div className='flex items-center justify-start'>
+													<div className='flex ml-2'>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='type'
+																id='forfait'
+																value='forfait'
+																className='mr-1 appearance-none '
+																onClick={
+																	handleTypeChange
+																}
+															/>
+															<label
+																htmlFor='forfait'
+																className={`flex items-center px-5 py-1 rounded-xl border border-gray-300  cursor-pointer ${
+																	type ===
+																	'forfait'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Forfait
+															</label>
+														</div>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='type'
+																id='reel'
+																value='reel'
+																onClick={
+																	handleTypeChange
+																}
+																className='mr-1 appearance-none'
+															/>
+															<label
+																htmlFor='reel'
+																className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300  cursor-pointer ${
+																	type ===
+																	'reel'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Réel
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 
 										<div className='mb-4'>
 											<label
-												className='block mb-2 font-bold text-gray-700'
+												className='block mb-2 ml-2 font-bold text-left text-gray-700'
 												htmlFor='price'>
-												Prix
+												Tarif
+											</label>
+											<div className='flex items-center gap-x-4'>
+												<input
+													className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+													id='price'
+													type='number'
+													placeholder='Entrez le prix de la Annonce'
+													value={price}
+													onChange={(
+														e
+													) =>
+														setPrice(
+															e
+																.target
+																.value
+														)
+													}
+												/>
+												<p className='text-dark-grey text-bold text-[18px]'>
+													DA
+												</p>
+											</div>
+										</div>
+
+										<div className='mb-4'>
+											<label
+												className='block mb-2 ml-2 font-bold text-left text-gray-700'
+												htmlFor='start-date'>
+												Date de début
 											</label>
 											<input
 												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
-												id='price'
-												type='number'
-												placeholder='Entrez le prix de la Annonce'
-												value={price}
+												id='start-date'
+												type='date' // Change the type to 'date'
+												placeholder='Entrez la date de début'
+												value={startDate}
 												onChange={(e) =>
-													setPrice(
+													setStartDate(
 														e.target
 															.value
 													)
 												}
 											/>
 										</div>
+
 										<div className='mb-4'>
 											<label
 												className='block mb-2 font-bold text-gray-700'
@@ -454,17 +640,23 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 												<input
 													id='videoInput'
 													type='file'
+													accept='.mp4'
 													onChange={
 														handleFileInputChange
 													}
-													className='absolute inset-0 mt-2 opacity-0 cursor-pointer'
+													className='absolute inset-0 mt-2 w-full  opacity-0 cursor-pointer'
 												/>
 												<button
 													className={`px-4 py-2 text-dark-gray ${
 														videoFile
 															? 'bg-scrollbarThumb text-white'
 															: 'bg-gray-200'
-													}  rounded hover:bg-blue-600 focus:outline-none`}>
+													}  rounded hover:bg-blue-600 focus:outline-none`}
+													onClick={(
+														e
+													) => {
+														e.preventDefault();
+													}}>
 													Sélectionner un
 													fichier
 												</button>

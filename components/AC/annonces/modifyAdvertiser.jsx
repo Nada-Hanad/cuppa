@@ -3,23 +3,19 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { API_URL } from '../../../config/api';
+import { API_URL, PUBLIC_URL } from '../../../config/api';
 
 export default function ModifyAdvertiserModal({
 	Advertiser,
+	setSelectedAdvertiser,
 	fetchAdvertisers,
 }) {
-	const [showModal, setShowModal] = React.useState(false);
 	const [selectedFile, setSelectedFile] = React.useState(null);
-	const handleFileChange = (e) => {
-		const file = e.target.files[0];
-		setSelectedFile(file);
-	};
 
 	useEffect(() => {
 		function handleClickOutside(event) {
 			if (event.target.classList.contains('modal')) {
-				setShowModal(false);
+				setSelectedAdvertiser(null);
 			}
 		}
 
@@ -28,8 +24,21 @@ export default function ModifyAdvertiserModal({
 			window.removeEventListener('click', handleClickOutside);
 		};
 	}, []);
-	const [name, setName] = React.useState(Advertiser.nom_annonceur);
-	const [type, setType] = React.useState(Advertiser.type_annonceur);
+
+	useEffect(() => {
+		setName(Advertiser?.nom_annonceur);
+		setPhone(Advertiser?.telephone_annonceur);
+		setRCS(Advertiser?.rcf_annonceur);
+		setFiscal(Advertiser?.fiscal_annonceur);
+
+		setType(Advertiser?.type_annonceur);
+		setImage(Advertiser?.path_annonceur);
+	}, [Advertiser]);
+	const [name, setName] = React.useState();
+	const [phone, setPhone] = React.useState('');
+	const [RCS, setRCS] = React.useState('');
+	const [fiscal, setFiscal] = React.useState('');
+	const [type, setType] = React.useState();
 	const [image, setImage] = React.useState();
 
 	const handleTypeChange = (e) => {
@@ -39,8 +48,10 @@ export default function ModifyAdvertiserModal({
 
 	const handleSave = async () => {
 		const formData = new FormData();
-		formData.append('nom_annonceur', firstName);
-		formData.append('prenom_annonceur', familyName);
+		formData.append('nom_annonceur', name);
+		formData.append('telephone_annonceur', phone);
+		formData.append('fiscal_annonceur', fiscal);
+		formData.append('rcf_annonceur', RCS);
 		formData.append('path_annonceur', image);
 		try {
 			const res = await axios.post(
@@ -52,28 +63,6 @@ export default function ModifyAdvertiserModal({
 			console.error(err);
 		}
 	};
-	/*
-     const handleSave = () => {
-          const newDrinks = [
-               ...drinks,
-               {
-                    id: drinks.length + 1,
-                    firstName,
-                    familyName,
-                    type,
-               },
-          ];
-          setDrinks(newDrinks);
-
-          // Reset the form
-          setFirstName('');
-          setFamilyName('');
-          setType('');
-          setImage('');
-          setShowModal(false);
-     };
-
-     */
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -113,18 +102,7 @@ export default function ModifyAdvertiserModal({
 
 	return (
 		<>
-			<button
-				className='self-end px-4 py-4 mr-12 text-white rounded-xl'
-				type='button'
-				onClick={() => setShowModal(true)}>
-				<Image
-					src='/icons/darkEditIcon.svg'
-					width={28}
-					height={28}
-					alt='edit Icon'
-				/>
-			</button>
-			{showModal ? (
+			{Advertiser ? (
 				<>
 					<div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none modal'>
 						<div className='relative w-auto max-w-3xl mx-auto my-6'>
@@ -141,7 +119,9 @@ export default function ModifyAdvertiserModal({
 									<button
 										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
 										onClick={() =>
-											setShowModal(false)
+											setSelectedAdvertiser(
+												null
+											)
 										}>
 										<span className='z-10 block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
 											×
@@ -158,6 +138,7 @@ export default function ModifyAdvertiserModal({
 												Nom de l&apos;
 												Annonceur
 											</label>
+
 											<input
 												name='Name'
 												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
@@ -174,6 +155,81 @@ export default function ModifyAdvertiserModal({
 											/>
 										</div>
 										<div className='mb-4'>
+											<label
+												className='block mb-2 font-bold text-left text-gray-700'
+												htmlFor='price'>
+												Numéros de telephone
+											</label>
+											<div className='flex items-center gap-x-4'>
+												<input
+													className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+													id='price'
+													type='number'
+													placeholder='Entrez le Numéros de telephone '
+													value={phone}
+													onChange={(
+														e
+													) =>
+														setPhone(
+															e
+																.target
+																.value
+														)
+													}
+												/>
+											</div>
+										</div>
+										<div className='mb-4'>
+											<label
+												className='block mb-2 font-bold text-left text-gray-700'
+												htmlFor='price'>
+												Numéro fiscal
+											</label>
+											<div className='flex items-center gap-x-4'>
+												<input
+													className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+													id='price'
+													type='number'
+													placeholder='Entrez le Numéro fiscal'
+													value={fiscal}
+													onChange={(
+														e
+													) =>
+														setFiscal(
+															e
+																.target
+																.value
+														)
+													}
+												/>
+											</div>
+										</div>
+										<div className='mb-4'>
+											<label
+												className='block mb-2 font-bold text-left text-gray-700'
+												htmlFor='RCS'>
+												Numéro RCS
+											</label>
+											<div className='flex items-center gap-x-4'>
+												<input
+													className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+													id='price'
+													type='number'
+													placeholder='Entrez le Numéro RCS'
+													value={RCS}
+													onChange={(
+														e
+													) =>
+														setRCS(
+															e
+																.target
+																.value
+														)
+													}
+												/>
+											</div>
+										</div>
+										<div className='mb-4 flex items-center'>
 											<label
 												className='block font-bold text-gray-700 '
 												htmlFor='name'>
@@ -195,11 +251,11 @@ export default function ModifyAdvertiserModal({
 														/>
 														<label
 															htmlFor='Personne'
-															className={`flex items-center px-2 py-1 rounded-lg  bg-gray-100 border border-gray-300 cursor-pointer ${
+															className={`flex items-center px-2 py-1 rounded-lg  bg-gray-100 border border-gray-300  cursor-pointer ${
 																type ===
 																'Personne'
 																	? ' bg-slate-800 text-slate-50'
-																	: ''
+																	: ' bg-gray-50 text-gray-500'
 															}`}>
 															Personne
 														</label>
@@ -217,11 +273,11 @@ export default function ModifyAdvertiserModal({
 														/>
 														<label
 															htmlFor='Enterprise'
-															className={`flex items-center px-2 py-1  rounded-lg bg-gray-100 border border-gray-300  cursor-pointer ${
+															className={`flex items-center  px-2 py-1  rounded-lg bg-gray-100 border border-gray-300  cursor-pointer ${
 																type ===
 																'Enterprise'
 																	? ' bg-slate-800 text-slate-50'
-																	: ''
+																	: ' bg-gray-50 text-gray-500'
 															}`}>
 															Enterprise
 														</label>
@@ -261,9 +317,7 @@ export default function ModifyAdvertiserModal({
 											<div className='relative flex items-center justify-between gap-8 '>
 												{image ? (
 													<Image
-														src={
-															image
-														}
+														src={`${PUBLIC_URL}${image}`}
 														alt='Boisson'
 														className='object-cover w-full h-48 rounded'
 														height={

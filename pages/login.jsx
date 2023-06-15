@@ -60,8 +60,11 @@ export default function Login() {
 		} catch (error) {
 			console.error(error);
 			if (error?.response?.status == 401) {
-				setError('username ou motpasse errone ');
-			} else setError('Internal server errore ,please try later'); // Set error message
+				setError(`Nom d'utilisateur ou mot de passe incorrect`);
+			} else
+				setError(
+					'Erreur de serveur interne, veuillez réessayer plus tard'
+				); // Set error message
 			setIsLoadingPage(false);
 		} finally {
 			setIsLoading(false); // Set loading state to false
@@ -100,11 +103,11 @@ export default function Login() {
 								className='w-20 h-24'
 							/>
 							<h3 className='text-black my-4 font-bold text-[20px]'>
-								Welcome To CUPPA
+								Bienvenue !
 							</h3>
 							<form className='flex flex-col'>
 								<label className='my-1 font-normal text-dark-gray '>
-									Username
+									Nom d&apos;utilisateur
 								</label>
 								<input
 									type='text '
@@ -119,7 +122,7 @@ export default function Login() {
 									}  `}
 								/>
 								<label className='my-1 font-normal text-dark-gray '>
-									Password
+									Mot de passe
 								</label>
 								<input
 									type='password'
