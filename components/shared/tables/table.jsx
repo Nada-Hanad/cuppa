@@ -110,7 +110,7 @@ p-2'>
 									) 
 									
 									:
-									cell.column.id === 'type_client' && cell.value === 'person'? 
+									cell.column.id === 'type_client' && cell.value === 'individual'? 
       (
         <td>
           <div className="flex justify-center">

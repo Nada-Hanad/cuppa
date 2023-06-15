@@ -29,7 +29,7 @@ export default function AddClientDistModal({id_client ,fetchClients}) {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       }
-    const response = await axios.post( `http://localhost:5000/distributeurs/${numero_serie_distributeur}/client`, {
+    const response = await axios.post( API_URL +`/distributeurs/${numero_serie_distributeur}/client`, {
       id_client: id_client
     },config);
     console.log(response.data);

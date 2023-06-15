@@ -29,26 +29,47 @@ export default function SADM_clientDetails() {
   const [defaultData, setDefaultData] = useState([])
   const [client, setClient] = useState([])
   const router = useRouter()
-  const id_client = router.query
+  const id_client = router.query.id
 
   const fetchClient = async () => {
-    const response = await axios
-      .get(`${API_URL}/client/${id_client}`)
-      .catch((e) => console.log(e))
-    if (response) {
-      const client = response.data
-      setClient(client)
+    try {
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+      const response = await axios
+        .get(
+          API_URL + '/api/account.management/getClientByID/' + id_client,
+          config
+        )
+        .catch((e) => console.log(e))
+      if (response) {
+        const client = response.data.data
+        setClient(client)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
   const fetchDistributeurs = async () => {
-    const response = await axios
-      .get(API_URL + '/distributeurs')
-      .catch((e) => console.log(e))
-    if (response) {
-      const dists = response.data
-      setDistributeurs(dists)
-      setDefaultData(dists)
+    try {
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+
+      const response = await axios
+        .get(API_URL + '/distributeurs/getAllByClient/' + id_client, config)
+        .catch((e) => console.log(e))
+      if (response) {
+        const dists = response.data
+        setDistributeurs(dists)
+        setDefaultData(dists)
+        console.log('hhhhhh')
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -83,14 +104,8 @@ export default function SADM_clientDetails() {
   } = tableInstence
 
   useEffect(() => {
+    fetchClient()
     fetchDistributeurs()
-    //fetchClient()
-    setClient({
-      id_client: 1,
-      client: 'Bouchra.co',
-      type_client: 'enterprise',
-      nb_distributeurs: '1',
-    })
   }, [])
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////

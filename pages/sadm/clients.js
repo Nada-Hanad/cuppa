@@ -30,28 +30,30 @@ export default function SADM_clients() {
   const router = useRouter()
 
   const fetchClients = async () => {
-    const response = await axios
-      .get(API_URL + '/clients')
-      .catch((e) => console.log(e))
-    if (response) {
-      const clients = response.data
-      setClients(clients)
-      setDefaultData(clients)
-    }
-  }
-  const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(API_URL + `/distributeurs/${id}`)
-      fetchClients()
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+
+      const response = await axios
+        .get(API_URL + '/api/account.management/getAllClients', config)
+        .catch((e) => console.log(e))
+      if (response) {
+        const clients = response.data.data
+        console.log(clients)
+        setClients(clients)
+        setDefaultData(clients)
+      }
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
   const columns = useMemo(
     () => [
       {
         Header: '  Client',
-        accessor: 'client',
+        accessor: 'nom_client',
       },
       {
         Header: 'Client type',
@@ -64,53 +66,7 @@ export default function SADM_clients() {
     ],
     []
   )
-  const data = useMemo(
-    () => [
-      {
-        id_client: 1,
-        client: 'Bouchra.co',
-        type_client: 'enterprise',
-        nb_distributeurs: '1',
-      },
-      {
-        id_client: 1,
-        client: 'Safa Zakaria ',
-        type_client: 'person',
-        nb_distributeurs: '10',
-      },
-      {
-        id_client: 1,
-        client: 'Rouibi Selsabil',
-        type_client: 'person',
-        nb_distributeurs: '4',
-      },
-      {
-        id_client: 1,
-        client: 'Gouasmia Malak',
-        type_client: 'person',
-        nb_distributeurs: '3',
-      },
-      {
-        id_client: 1,
-        client: 'Hanad Nada',
-        type_client: 'person',
-        nb_distributeurs: '12',
-      },
-      {
-        id_client: 1,
-        client: 'Asma.co',
-        type_client: 'enterprise',
-        nb_distributeurs: '5',
-      },
-      {
-        id_client: 1,
-        client: 'Maissa.co',
-        type_client: 'enterprise',
-        nb_distributeurs: '9',
-      },
-    ],
-    []
-  )
+
   const clientData = useMemo(() => [...clients], [clients])
   const tableHooks = (hooks) => {
     hooks.visibleColumns.push((columns) => [
@@ -139,14 +95,13 @@ export default function SADM_clients() {
       },
     ])
   }
-  const tableInstence = useTable({ columns, data }, useGlobalFilter, tableHooks)
-  /*
-const tableInstence = useTable(
-  { columns, data: clientData },
-  useGlobalFilter,
-  tableHooks
-)
-*/
+  //const tableInstence = useTable({ columns, data }, useGlobalFilter, tableHooks)
+  const tableInstence = useTable(
+    { columns, data: clientData },
+    useGlobalFilter,
+    tableHooks
+  )
+
   const {
     getTableProps,
     getTableBodyProps,
