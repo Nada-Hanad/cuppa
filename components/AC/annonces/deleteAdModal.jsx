@@ -52,6 +52,7 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 				type='button'
 				onClick={() => setShowModal(true)}>
 				<Image
+					alt='deleteIcon'
 					className='text-dark-grey'
 					src='/icons/darkDeleteIcon.svg'
 					width={26}

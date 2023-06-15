@@ -85,15 +85,19 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 			formData.append('sexe_cible', sexe);
 			formData.append('tarif_annonce', price);
 			formData.append('videoFile', videoFile);
+			const token = localStorage.getItem('token');
+
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'multipart/form-data',
+				},
+			};
 
 			const response = await axios.post(
 				`${API_URL}/api/ads/createAdvertisement/`,
 				formData,
-				{
-					headers: {
-						'Content-Type': 'multipart/form-data',
-					},
-				}
+				config
 			);
 			response.data;
 		} catch (error) {
@@ -372,7 +376,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 										</div>
 
 										<div className='flex items-center justify-start my-8 '>
-											<div className='mr-8 ml-2 font-bold text-gray-700'>
+											<div className='ml-2 mr-8 font-bold text-gray-700'>
 												{`Age cible :  ${minMaxAge[0]}
                                                              - ${minMaxAge[1]}`}
 											</div>
@@ -419,7 +423,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 												)}
 											/>
 										</div>
-										<div className='mb-4 flex'>
+										<div className='flex mb-4'>
 											<label
 												className='block ml-2 mr-8 mt-[28px] font-bold text-left text-gray-700 '
 												htmlFor='name'>
@@ -499,9 +503,9 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 												</div>
 											</div>
 										</div>
-										<div className='mb-4 flex items-center'>
+										<div className='flex items-center mb-4'>
 											<label
-												className='block ml-2 mr-8 mt-4 font-bold text-left text-gray-700 '
+												className='block mt-4 ml-2 mr-8 font-bold text-left text-gray-700 '
 												htmlFor='name'>
 												Type
 											</label>
@@ -644,7 +648,7 @@ export default function AddAdModal({ fetchAdvertisements, advertisers }) {
 													onChange={
 														handleFileInputChange
 													}
-													className='absolute inset-0 mt-2 w-full  opacity-0 cursor-pointer'
+													className='absolute inset-0 w-full mt-2 opacity-0 cursor-pointer'
 												/>
 												<button
 													className={`px-4 py-2 text-dark-gray ${

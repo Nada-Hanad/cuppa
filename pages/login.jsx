@@ -108,7 +108,7 @@ export default function Login() {
 							<h3 className='text-black my-4 font-bold text-[20px]'>
 								Bienvenue !
 							</h3>
-							<form className='flex flex-col'>
+							<form className='flex flex-col px-12'>
 								<label className='my-1 font-normal text-dark-gray '>
 									Nom d&apos;utilisateur
 								</label>
@@ -133,7 +133,7 @@ export default function Login() {
 										setPassword(e.target.value);
 									}}
 									value={password}
-									className={`px-4 py-2 border-2 rounded-xl 	${
+									className={`px-4 py-2 border-2  rounded-xl 	${
 										error
 											? ' border-red-500 '
 											: ' border-dark-grey '
@@ -149,11 +149,14 @@ export default function Login() {
 										Se Souvenir de moi
 									</label>
 								</div>
-								{error && (
-									<p className='text-red-500'>
-										{error}
-									</p>
-								)}
+								<div className='w-64'>
+									{error && (
+										<p className='w-2/3 text-red-500'>
+											{error}
+										</p>
+									)}
+								</div>
+
 								<button
 									type='submit'
 									className='my-2 w-full h-10 bg-[#F18C4F] rounded-lg font-bold cursor-pointer '

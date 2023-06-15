@@ -10,7 +10,7 @@ export default function DeleteAdvertiserModal({
 	setSelectedAdvertiser,
 	fetchAdvertisers,
 }) {
-	const [showModal, setShowModal] = React.useState(false);
+	//const [showModal, setShowModal] = React.useState(false);
 
 	useEffect(() => {
 		function handleClickOutside(event) {

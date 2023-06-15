@@ -44,6 +44,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 		formData.append('telephone_annonceur', phone);
 		formData.append('fiscal_annonceur', fiscal);
 		formData.append('rcf_annonceur', RCS);
+		formData.append('id_client', 1);
 		formData.append('image', ImgaeFile);
 		try {
 			const res = await axios.post(
@@ -146,7 +147,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 									<form>
 										<div className='mb-4'>
 											<label
-												className='block mb-2 text-left font-bold text-gray-700'
+												className='block mb-2 font-bold text-left text-gray-700'
 												htmlFor='Name'>
 												Nom de l&apos;
 												Annonceur
@@ -241,9 +242,9 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 												/>
 											</div>
 										</div>
-										<div className='mb-4 flex items-center justify-start gap-x-12'>
+										<div className='flex items-center justify-start mb-4 gap-x-12'>
 											<label
-												className='mt-4 block font-bold text-gray-700 '
+												className='block mt-4 font-bold text-gray-700 '
 												htmlFor='name'>
 												Le type
 											</label>
