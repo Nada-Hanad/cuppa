@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { API_URL } from '../../config/api';
 import Head from 'next/head';
 import Title from '../../components/shared/layout/title';
+import Image from 'next/image';
 
 const InfoLine = ({ title, value }) => {
 	return (
@@ -47,8 +48,10 @@ export default function Profil() {
 				className='flex flex-col  pl-8  items-start justify-start mx-auto bg-slate-50 my-24 pt-8 text-center shadow-lg sm:w-full md:2/3 lg:w-1/3 
         min-h-96 '>
 				<div className='w-full mb-12'>
-					<img
+					<Image
 						alt='profile'
+						height={48}
+						width={48}
 						className='object-cover rounded-sm w-48 h-48 mx-auto '
 						src='/icons/userIcon.png'
 					/>

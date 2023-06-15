@@ -145,9 +145,9 @@ export function Clients(props) {
 			{
 				id: 'Edit',
 				Header: '',
-				Cell: ({ row }) => {
+				Cell: ({ row, idx }) => {
 					return (
-						<div className='flex justify-evenly'>
+						<div key={idx} className='flex justify-evenly'>
 							<button onClick={() => alert('add dist ')}>
 								<Image
 									alt='mug'
@@ -184,10 +184,13 @@ export function Clients(props) {
 		<div className=''>
 			<Table {...getTableProps()}>
 				<TableHead>
-					{headerGroups.map((headerGroup) => (
-						<TableRow {...headerGroup.getHeaderGroupProps()}>
-							{headerGroup.headers.map((column) => (
+					{headerGroups.map((headerGroup, idx) => (
+						<TableRow
+							key={idx}
+							{...headerGroup.getHeaderGroupProps()}>
+							{headerGroup.headers.map((column, idx) => (
 								<TableHeader
+									key={idx}
 									{...column.getHeaderProps()}>
 									{column.render('Header')}
 								</TableHeader>
@@ -196,11 +199,11 @@ export function Clients(props) {
 					))}
 				</TableHead>
 				<TableBody {...getTableBodyProps()}>
-					{rows.map((row) => {
+					{rows.map((row, idx) => {
 						prepareRow(row);
 
 						return (
-							<TableRow {...row.getRowProps()}>
+							<TableRow key={idx} {...row.getRowProps()}>
 								{row.cells.map((cell, idx) => {
 									if (
 										cell.column.id ===
@@ -209,6 +212,7 @@ export function Clients(props) {
 									) {
 										return (
 											<TableData
+												key={idx}
 												{...cell.getCellProps()}>
 												<div className='flex justify-center'>
 													<Image
@@ -229,6 +233,7 @@ export function Clients(props) {
 									) {
 										return (
 											<TableData
+												key={idx}
 												{...cell.getCellProps()}>
 												<div className='flex justify-center'>
 													<Image
@@ -245,6 +250,7 @@ export function Clients(props) {
 									} else {
 										return (
 											<TableData
+												key={idx}
 												{...cell.getCellProps()}>
 												{cell.render(
 													'Cell'
