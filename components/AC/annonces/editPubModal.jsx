@@ -156,6 +156,7 @@ export default function EditAnnonceModal({
 				type='button'
 				onClick={() => setShowModal(true)}>
 				<Image
+					alt='edit icon'
 					className='text-dark-grey'
 					src='/icons/darkeditIcon.svg'
 					width={26}

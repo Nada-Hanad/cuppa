@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }) {
 			{isLoading && (
 				<div className='z-30 flex items-center justify-center w-full h-screen bg-white'>
 					<div className='fixed z-50 custom-loading-indicator animate-ping'>
-						<img src='/icons/blackLogo.svg' />
+						<img src='/icons/blackLogo.svg' alt='logo' />
 					</div>
 				</div>
 			)}

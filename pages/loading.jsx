@@ -5,6 +5,7 @@ const LoadingPage = () => {
 		<div className='flex flex-col items-center justify-center h-screen'>
 			<div className='w-24 h-24 rounded-full animate-bounce '>
 				<img
+					alt='logo'
 					src='icons/blacklogo.svg'
 					className='text-dark-grey'></img>
 			</div>

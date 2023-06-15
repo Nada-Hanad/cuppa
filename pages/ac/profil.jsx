@@ -48,6 +48,7 @@ export default function Profil() {
         min-h-96 '>
 				<div className='w-full mb-12'>
 					<img
+						alt='profile'
 						className='object-cover rounded-sm w-48 h-48 mx-auto '
 						src='/icons/userIcon.png'
 					/>

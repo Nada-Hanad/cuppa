@@ -81,6 +81,7 @@ p-2'>
 												src='/icons/man 2.svg'
 												width={40}
 												height={40}
+												alt='men'
 											/>
 										</td>
 									) : cell.column.id ===
@@ -94,6 +95,7 @@ p-2'>
 												src='/icons/office 2.svg'
 												width={40}
 												height={40}
+												alt='office'
 											/>
 										</td>
 									) : (

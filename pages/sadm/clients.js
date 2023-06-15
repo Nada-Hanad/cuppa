@@ -171,6 +171,7 @@ const tableInstence = useTable(
 				/>
 				<button className='w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center'>
 					<Image
+						alt='search'
 						src='/icons/search.png'
 						width={30}
 						height={30}></Image>

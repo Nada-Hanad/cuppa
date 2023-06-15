@@ -77,6 +77,7 @@ export default function Login() {
 			) : (
 				<div className='relative w-full h-screen'>
 					<img
+						alt='bg'
 						className='absolute w-full h-full -z-20 '
 						src='/icons/loginBg.png'
 					/>
@@ -86,6 +87,7 @@ export default function Login() {
 						<div className='flex flex-col items-center justify-center'>
 							<div className='flex items-center justify-center'>
 								<img
+									alt='logo'
 									src='icons/whiteLogo.svg'
 									className='w-48 h-48 animate-roll-in '
 								/>
@@ -99,6 +101,7 @@ export default function Login() {
 						</div>
 						<div className='flex w-3/12 bg-white rounded-[20px] h-2/3 justify-center items-center flex-col'>
 							<img
+								alt='logo'
 								src='icons/blackLogo.svg'
 								className='w-20 h-24'
 							/>

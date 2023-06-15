@@ -134,6 +134,7 @@ export default function Annonceurs() {
 									src='/icons/darkDeleteIcon.svg'
 									width={26}
 									height={26}
+									alt='delete Icon'
 								/>
 							</button>
 							{/*<Button onClick={() => alert('details ')}>details</Button>*/}
@@ -185,6 +186,7 @@ export default function Annonceurs() {
 
 				<button className='w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center'>
 					<Image
+						alt='search Icon'
 						src='/icons/search.svg'
 						width={30}
 						height={30}></Image>
