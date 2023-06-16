@@ -1,5 +1,7 @@
 import { useAsyncDebounce } from 'react-table'
 import Head from 'next/head'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Image from 'next/image'
 import { DataTable } from '../../components/shared/tables/table'
 import { useEffect, useState, useMemo } from 'react'
@@ -49,6 +51,7 @@ export default function SADM_distributeurs() {
         config
       )
       fetchDistributeurs()
+      toast.success('supprimer avec success')
     } catch (error) {
       console.error(error)
     }

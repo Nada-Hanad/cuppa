@@ -63,7 +63,7 @@ toast.error("Veuillez ajouter le type de client");
     }
     // If all validations pass, save the beverage
   await  handleSave();
- // await  fetchClients()
+     await  fetchClients()
     toast.success("Ajouté avec success");
     setShowModal(false);  
     };
