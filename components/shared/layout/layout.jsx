@@ -81,19 +81,19 @@ export default function Layout({ children }) {
       case "decideur":
         setMenuItems([
           {
-            href: "/decideur/profil",
-            title: "Profil",
-            icon: "/icons/user.svg",
-          },
-          {
             href: "/decideur/distributeurs",
             title: "Distributeurs",
             icon: "/icons/mug.svg",
           },
           {
-            href: "/decideur/clients",
+            href: "/decideur/dashboard",
             title: "Tableau de bord",
-            icon: "/icons/user.svg",
+            icon: "/icons/dashboard.svg",
+          },
+          {
+            href: "/decideur/finance",
+            title: "Finance",
+            icon: "/icons/finance.svg",
           },
         ]);
         break;
