@@ -78,6 +78,25 @@ export default function Layout({ children }) {
 					},
 				]);
 				break;
+			case 'decideur':
+				setMenuItems([
+					{
+						href: '/decideur/distributeurs',
+						title: 'Distributeurs',
+						icon: '/icons/mug.svg',
+					},
+					{
+						href: '/decideur/dashboard',
+						title: 'Tableau de bord',
+						icon: '/icons/dashboard.svg',
+					},
+					{
+						href: '/decideur/finance',
+						title: 'Finance',
+						icon: '/icons/finance.svg',
+					},
+				]);
+				break;
 		}
 		!role && setRole(localStorage.getItem('role'));
 		!username && setUsername(localStorage.getItem('name'));
