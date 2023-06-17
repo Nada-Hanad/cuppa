@@ -43,13 +43,22 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 		formData.append('type_annonceur', type);
 		formData.append('telephone_annonceur', phone);
 		formData.append('fiscal_annonceur', fiscal);
-		formData.append('rcf_annonceur', RCS);
+		formData.append('rcs_annonceur', RCS);
 		formData.append('id_client', 1);
 		formData.append('image', ImgaeFile);
+		const token = localStorage.getItem('token');
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'multipart/form-data',
+			},
+		};
 		try {
 			const res = await axios.post(
 				`${API_URL}/api/ads/createAdvertiser/`,
-				formData
+				formData,
+				config
 			);
 			console.log(res.data);
 		} catch (err) {

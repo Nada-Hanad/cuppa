@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 const InfoLine = ({ title, value }) => {
 	return (
-		<div className='flex pb-4 text-dark-grey font-bold w-full   items-center justify-start '>
+		<div className='flex items-center justify-start w-full pb-4 font-bold text-dark-grey '>
 			<label className='relative flex w-2/3 '>{title} :</label>
 			<p>{value}</p>
 		</div>
@@ -15,7 +15,7 @@ const InfoLine = ({ title, value }) => {
 };
 
 export default function Profil() {
-	const [prfile, setProfile] = useState({});
+	const [profil, setProfile] = useState({});
 	const fetchProfile = async () => {
 		const token = localStorage.getItem('token');
 		console.log(token);
@@ -24,12 +24,15 @@ export default function Profil() {
 			headers: { Authorization: `Bearer ${token}` },
 		};
 		const response = await axios
-			.get(`${API_URL}/api/account.management/getProfil/`, config)
+			.get(
+				`${API_URL}/api/account.management/getProfileWithClient/`,
+				config
+			)
 			.catch((e) => console.log(e));
 		if (response) {
-			const profile = response.data;
-			console.log(profile.data);
-			setProfile(profile.data);
+			const profil = response.data;
+			console.log(profil.data);
+			setProfile(profil.data);
 		}
 	};
 	useEffect(() => {
@@ -38,32 +41,58 @@ export default function Profil() {
 
 	return (
 		<div>
-			<div className='flex flex-col items-center justify-center   pt-8 text-center'>
+			<div className='flex flex-col items-center justify-center pt-8 text-center'>
 				<Head>
 					<title>Profil</title>
 				</Head>
 				<Title title='Profile' />
 			</div>
-			<div
-				className='flex flex-col  pl-8  items-start justify-start mx-auto bg-slate-50 my-24 pt-8 text-center shadow-lg sm:w-full md:2/3 lg:w-1/3 
-        min-h-96 '>
+			<div className='flex flex-col items-start justify-start pt-8 pl-8 mx-auto mt-8 mb-24 text-center shadow-lg bg-slate-50 sm:w-full md:2/3 lg:w-1/3 min-h-96 '>
 				<div className='w-full mb-12'>
 					<Image
 						alt='profile'
 						height={48}
 						width={48}
-						className='object-cover rounded-sm w-48 h-48 mx-auto '
+						className='object-cover w-48 h-48 mx-auto rounded-sm '
 						src='/icons/userIcon.png'
 					/>
 				</div>
 
 				<InfoLine
 					title='Identifient   '
-					value={prfile.id_utilisateur}
+					value={profil?.id_utilisateur}
 				/>
 				<InfoLine
 					title="Nom d 'utilisateur   "
-					value={prfile.username_utilisateur}
+					value={profil?.username_utilisateur}
+				/>
+				<InfoLine
+					title='Role   '
+					value={profil?.role?.libelle_role}
+				/>
+				<InfoLine
+					title='Nom   '
+					value={profil?.profil?.nom_utilisateur}
+				/>
+				<InfoLine
+					title='Prénom   '
+					value={profil?.profil?.prenom_utilisateur}
+				/>
+				<InfoLine
+					title='Sexe   '
+					value={
+						profil?.profil?.sexe_utilisateur == 'M'
+							? 'Homme'
+							: 'Femme'
+					}
+				/>
+				<InfoLine
+					title='Clinet  '
+					value={profil?.client?.nom_client}
+				/>
+				<InfoLine
+					title='Superviseur  '
+					value={profil?.supervisor?.profil?.nom_utilisateur}
 				/>
 			</div>
 		</div>

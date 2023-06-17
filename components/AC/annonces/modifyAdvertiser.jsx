@@ -54,9 +54,18 @@ export default function ModifyAdvertiserModal({
 		formData.append('rcf_annonceur', RCS);
 		formData.append('path_annonceur', image);
 		try {
+			const token = localStorage.getItem('token');
+
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'multipart/form-data',
+				},
+			};
 			const res = await axios.post(
 				`${API_URL}/api/ads/updateAdvertiser/${Advertiser.id_annonceur}`,
-				formData
+				formData,
+				config
 			);
 			console.log(res.data);
 		} catch (err) {
@@ -229,9 +238,9 @@ export default function ModifyAdvertiserModal({
 												/>
 											</div>
 										</div>
-										<div className='mb-4 flex items-center'>
+										<div className='flex items-center justify-start mb-4 gap-x-12'>
 											<label
-												className='block font-bold text-gray-700 '
+												className='block mt-4 font-bold text-gray-700 '
 												htmlFor='name'>
 												Le type
 											</label>
@@ -285,28 +294,7 @@ export default function ModifyAdvertiserModal({
 												</div>
 											</div>
 										</div>
-										{/*
-                                                  <div className='mb-4'>
-                                                       <label
-                                                            className='block mb-2 font-bold text-gray-700'
-                                                            htmlFor='price'>
-                                                            Prix
-                                                       </label>
-                                                       <input
-                                                            className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
-                                                            id='price'
-                                                            type='number'
-                                                            placeholder='Entrez le prix de la Annonce'
-                                                            value={price}
-                                                            onChange={(e) =>
-                                                                 setPrice(
-                                                                      e.target
-                                                                           .value
-                                                                 )
-                                                            }
-                                                       />
-                                                  </div>
-               */}
+
 										<div className='mb-4'>
 											<label
 												className='block mb-2 font-bold text-gray-700'
