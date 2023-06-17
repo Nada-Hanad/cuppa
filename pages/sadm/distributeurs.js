@@ -1,5 +1,7 @@
 import { useAsyncDebounce } from 'react-table';
 import Head from 'next/head';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
 import { DataTable } from '../../components/shared/tables/table';
 import { useEffect, useState, useMemo } from 'react';
@@ -38,10 +40,18 @@ export default function SADM_distributeurs() {
 	};
 	const handleDelete = async (id) => {
 		try {
-			const response = await axios.delete(
-				API_URL + `/distributeurs/${id}`
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: { Authorization: `Bearer ${token}` },
+			};
+
+			const response = await axios.post(
+				API_URL + `/distributeurs/delete/${id}`,
+				{},
+				config
 			);
 			fetchDistributeurs();
+			toast.success('supprimer avec success');
 		} catch (error) {
 			console.error(error);
 		}
@@ -73,15 +83,14 @@ export default function SADM_distributeurs() {
 			...columns,
 			{
 				id: 'Edit',
-				Header: 'actions',
+				Header: 'Actions',
 				Cell: ({ row }) => {
-					if (row.original.etat_distributeur === 'Desactivé') {
+					if (
+						row.original.etat_distributeur === 'Inactive' &&
+						row.original.id_client === null
+					) {
 						return (
 							<div className='flex justify-evenly'>
-								{/*
-                  <button onClick={() => alert('edit ')}>
-                    <Image src="/icons/edit.png" width={40} height={40}></Image>
-                  </button>*/}
 								<button
 									onClick={() =>
 										handleDelete(
@@ -90,12 +99,10 @@ export default function SADM_distributeurs() {
 										)
 									}>
 									<Image
-										alt='delete'
 										src='/icons/delete.svg'
 										width={40}
 										height={40}></Image>
 								</button>
-								{/*<Button onClick={() => alert('details ')}>details</Button>*/}
 							</div>
 						);
 					} else {
@@ -167,7 +174,6 @@ export default function SADM_distributeurs() {
 				/>
 				<button className='w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center'>
 					<Image
-						alt='search'
 						src='/icons/search.png'
 						width={30}
 						height={30}></Image>
@@ -209,7 +215,7 @@ export default function SADM_distributeurs() {
 					onClick={() => {
 						setDistributeurs(
 							defaultData.filter(
-								(d) => d.etat_distributeur === 'Activé'
+								(d) => d.etat_distributeur === 'Active'
 							)
 						);
 					}}>
@@ -221,7 +227,7 @@ export default function SADM_distributeurs() {
 						setDistributeurs(
 							defaultData.filter(
 								(d) =>
-									d.etat_distributeur === 'Desactivé'
+									d.etat_distributeur === 'Inactive'
 							)
 						);
 					}}>
@@ -238,12 +244,3 @@ export default function SADM_distributeurs() {
 		</div>
 	);
 }
-/*
-        <button
-          onClick={addBtnClick}
-          className="w-[180px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
-        >
-          <Image src="/icons/plus.png" width={35} height={35}></Image>
-          distributeur
-        </button>
-*/

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { async } from 'regenerator-runtime';
+import { API_URL } from '../../config/api';
 
 export default function AddClientModal({ fetchClients }) {
 	const [showModal, setShowModal] = React.useState(false);
@@ -26,14 +27,20 @@ export default function AddClientModal({ fetchClients }) {
 	const [type_client, set_type_client] = React.useState('');
 	const insertNewClient = async (nom_client, prenom_client, type_client) => {
 		try {
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: { Authorization: `Bearer ${token}` },
+			};
 			const response = await axios.post(
-				'http://localhost:8000/distributeurs',
+				API_URL + '/api/account.management/createClientAccount/',
 				{
 					nom_client: nom_client,
 					prenom_client: prenom_client,
 					type_client: type_client,
-				}
+				},
+				config
 			);
+			console.log(token);
 			console.log(response.data);
 		} catch (error) {
 			console.log(error);
@@ -53,9 +60,6 @@ export default function AddClientModal({ fetchClients }) {
 		if (!nom_client) {
 			toast.error('Veuillez ajouter le nom de client');
 			return;
-		} else if (!prenom_client) {
-			toast.error('Veuillez ajouter le prenom de client');
-			return;
 		} else if (!type_client) {
 			toast.error('Veuillez ajouter le type de client');
 			return;
@@ -72,47 +76,45 @@ export default function AddClientModal({ fetchClients }) {
 			<button
 				type='button'
 				onClick={() => setShowModal(true)}
-				className='w-[180px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly'>
-				<Image
-					alt='plusIcon'
-					src='/icons/plus.png'
-					width={35}
-					height={35}></Image>
-				client
+				className='w-[160px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly'>
+				{/*
+    <Image src="/icons/plus.png" width={35} height={35}></Image>
+        */}
+				Ajouter client
 			</button>
 
 			{showModal ? (
 				<>
-					<div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none modal'>
-						<div className='relative w-auto my-6 mx-auto max-w-3xl'>
+					<div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none modal'>
+						<div className='relative w-auto max-w-3xl mx-auto my-6'>
 							{/*content*/}
 							<div className='border-0 rounded-lg shadow-lg relative flex flex-col  bg-white outline-none focus:outline-none  h-[450px] w-[400px] overflow-hidden'>
 								{/*header*/}
-								<div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
+								<div className='flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200'>
 									<h3 className='text-3xl font-semibold'>
 										Ajouter un client
 									</h3>
 									<button
-										className='p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none'
+										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
 										onClick={() =>
 											setShowModal(false)
 										}>
-										<span className='bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none'>
+										<span className='block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
 											×
 										</span>
 									</button>
 								</div>
 								{/*body*/}
-								<div className='relative p-6 flex-auto'>
+								<div className='relative flex-auto p-6'>
 									<form>
 										<div className='mb-4'>
 											<label
-												className='block text-gray-700 font-bold mb-2'
+												className='block mb-2 font-bold text-gray-700'
 												htmlFor='name'>
 												nom de client :
 											</label>
 											<input
-												className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
 												id='nom_client'
 												type='text'
 												placeholder='Entrez le nom de client'
@@ -123,25 +125,22 @@ export default function AddClientModal({ fetchClients }) {
 													)
 												}
 											/>
+											{/*
+                    <label
+                        className="block mb-2 font-bold text-gray-700"
+                        htmlFor="name"
+                      >
+                        prenom de client : 
+                      </label>
+                      <input
+                        className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+                        id="prenom_client"
+                        type="text"
+                        placeholder="Entrez le prenom de client"
+                        onChange={(e) => set_prenom_client(e.target.value)}
+                      />*/}
 											<label
-												className='block text-gray-700 font-bold mb-2'
-												htmlFor='name'>
-												prenom de client :
-											</label>
-											<input
-												className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-												id='prenom_client'
-												type='text'
-												placeholder='Entrez le prenom de client'
-												onChange={(e) =>
-													set_prenom_client(
-														e.target
-															.value
-													)
-												}
-											/>
-											<label
-												className='block text-gray-700 font-bold mb-2'
+												className='block mt-8 mb-2 font-bold text-gray-700'
 												htmlFor='name'>
 												type de client :
 											</label>
@@ -197,9 +196,9 @@ export default function AddClientModal({ fetchClients }) {
 									</form>
 								</div>
 
-								<div className='flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b'>
+								<div className='flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200'>
 									<button
-										className='bg-dark-grey text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+										className='px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
 										type='button'
 										onClick={handleSubmit}>
 										Ajouter
@@ -208,7 +207,7 @@ export default function AddClientModal({ fetchClients }) {
 							</div>
 						</div>
 					</div>
-					<div className='opacity-25 fixed inset-0 z-40 bg-black'></div>
+					<div className='fixed inset-0 z-40 bg-black opacity-25'></div>
 				</>
 			) : null}
 		</>
