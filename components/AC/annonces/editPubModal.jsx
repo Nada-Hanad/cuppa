@@ -42,6 +42,7 @@ export default function EditAnnonceModal({
 				: showTime * 30;
 		let data;
 		let link;
+		let config;
 		const formData = new FormData();
 		formData.append('nom_annonce', name);
 		//	formData.append('id_annonceur', 6500);
@@ -52,10 +53,12 @@ export default function EditAnnonceModal({
 		formData.append('sexe_cible', sexe);
 		formData.append('tarif_annonce', price);
 		formData.append('videoFile', videoFile);
-		/*videoFile && formData.append('videoFile', videoFile);
+		videoFile && formData.append('videoFile', videoFile);
+		const token = localStorage.getItem('token');
+
 		if (!videoFile) {
 			data = {
-				name,
+				nom_annonce: name,
 				duree_affichage,
 				type_forfait: type,
 				ageMax: minMaxAge[0],
@@ -64,28 +67,36 @@ export default function EditAnnonceModal({
 				tarif_annonce: price,
 			};
 			link = 'updateAdvertisementWithoutTheFile';
+			config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			};
 		} else {
 			data = formData;
 			link = 'updateAdvertisement';
+
+			config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'multipart/form-data',
+				},
+			};
 		}
-		*/
-
-		const token = localStorage.getItem('token');
-
-		const config = {
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'multipart/form-data',
-			},
-		};
-		videoFile && formData.append('videoFile', videoFile);
 		try {
+			console.log('---------------------------');
+
+			console.log(data);
+			console.log('---------------------------');
+
 			const res = await axios.post(
-				`${API_URL}/api/ads/updateAdvertisement/${Ad.id_annonce}`,
-				formData,
+				`${API_URL}/api/ads/${link}/${Ad.id_annonce}`,
+				data,
 				config
 			);
-			console.log(res.data);
+			console.log(data);
+			console.log('*********************************************');
+			console.log(res);
 		} catch (err) {
 			console.error(err);
 		}
