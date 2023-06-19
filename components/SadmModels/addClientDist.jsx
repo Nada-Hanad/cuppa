@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { async } from 'regenerator-runtime';
+import { API_URL } from '../../config/api';
 
 export default function AddClientDistModal({ id_client, fetchClients }) {
 	const [showModal, setShowModal] = React.useState(false);
@@ -15,11 +16,13 @@ export default function AddClientDistModal({ id_client, fetchClients }) {
 			}
 		}
 
+
 		window.addEventListener('click', handleClickOutside);
 		return () => {
 			window.removeEventListener('click', handleClickOutside);
 		};
 	}, []);
+
 
 	const [numero_serie_distributeur, setnumero_serie_distributeur] =
 		React.useState('');
@@ -68,6 +71,7 @@ export default function AddClientDistModal({ id_client, fetchClients }) {
 					width={35}
 					height={35}></Image>
 			</button>
+
 
 			{showModal ? (
 				<>

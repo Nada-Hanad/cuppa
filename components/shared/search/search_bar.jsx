@@ -37,6 +37,7 @@ export function Search_bar({
 		setGlobalFilter(value || undefined);
 	}, 300);
 
+
 	return (
 		<input
 			type='text'
@@ -51,3 +52,4 @@ export function Search_bar({
 			placeholder={`${count} enregistrements...`}></input>
 	);
 }
+

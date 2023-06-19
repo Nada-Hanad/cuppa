@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { async } from 'regenerator-runtime';
+import { API_URL } from '../../config/api';
 
 export default function AddClientModal({ fetchClients }) {
 	const [showModal, setShowModal] = React.useState(false);

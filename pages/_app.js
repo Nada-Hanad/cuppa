@@ -1,3 +1,4 @@
+
 import '@fortawesome/fontawesome-svg-core/styles.css';
 
 import { useRouter } from 'next/router';
@@ -51,6 +52,7 @@ function MyApp({ Component, pageProps }) {
 			<Component {...pageProps} />
 		</Layout>
 	);
+
 }
 
-export default MyApp;
+export default MyApp

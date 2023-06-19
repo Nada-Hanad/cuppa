@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { async } from 'regenerator-runtime';
+import { API_URL } from '../../config/api'
 
 export default function AddDistModal({ fetchDistributeurs }) {
 	const [showModal, setShowModal] = React.useState(false);
@@ -20,6 +21,7 @@ export default function AddDistModal({ fetchDistributeurs }) {
 			window.removeEventListener('click', handleClickOutside);
 		};
 	}, []);
+
 
 	const [numero_serie_distributeur, setnumero_serie_distributeur] =
 		React.useState('');
@@ -42,8 +44,10 @@ export default function AddDistModal({ fetchDistributeurs }) {
 		setnumero_serie_distributeur('');
 	};
 
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 
 		if (!numero_serie_distributeur) {
 			toast.error('Veuillez ajouter le numero serie');
@@ -55,6 +59,7 @@ export default function AddDistModal({ fetchDistributeurs }) {
 		toast.success('Ajouté avec success');
 		setShowModal(false);
 	};
+
 
 	return (
 		<>
