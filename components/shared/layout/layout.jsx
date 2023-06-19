@@ -84,13 +84,12 @@ export default function Layout({ children }) {
 	}, [route]);
 
 	return (
-		<div className='w-full min-h-screen '>
+		<div className='relative w-full min-h-screen'>
 			<aside className='h-[calc(100%-32px)] bg-dark-grey rounded-2xl w-[250px] fixed top-4 left-4'>
 				<div className='flex items-center justify-center h-24 gap-4 my-10 text-white'>
 					<div>
 						<h2 className='font-bold text-[26px] -mt-8'>
-							{' '}
-							Bouchra{' '}
+							{' ' + username + ' '}
 						</h2>
 						<p className='font-bold text-[20px]'>{role}</p>
 					</div>
@@ -123,7 +122,7 @@ export default function Layout({ children }) {
 						<li
 							onClick={() => {
 								localStorage.removeItem('token');
-								router.push('/');
+								router.push('/login');
 							}}
 							className='absolute flex justify-center w-full gap-4 text-white cursor-pointer bottom-12'>
 							<Image

@@ -17,6 +17,18 @@ export default function Login() {
 		e.preventDefault();
 		setError(null);
 		setIsLoading(true); // Set loading state to true
+		if (!username) {
+			setError("Entrez le username s'il vous plait");
+			setIsLoading(false);
+			return;
+		}
+		if (!password) {
+			setError("Entrez le motepass s'il vous plait");
+			setIsLoading(false);
+
+			return;
+		}
+
 		console.log();
 		try {
 			const response = await axios.post(`${API_URL}/login`, {
@@ -48,8 +60,11 @@ export default function Login() {
 		} catch (error) {
 			console.error(error);
 			if (error?.response?.status == 401) {
-				setError('username ou motpasse errone ');
-			} else setError('Internal server errore ,please try later'); // Set error message
+				setError(`Nom d'utilisateur ou mot de passe incorrect`);
+			} else
+				setError(
+					'Erreur de serveur interne, veuillez réessayer plus tard'
+				); // Set error message
 			setIsLoadingPage(false);
 		} finally {
 			setIsLoading(false); // Set loading state to false
@@ -62,6 +77,7 @@ export default function Login() {
 			) : (
 				<div className='relative w-full h-screen'>
 					<img
+						alt='bg'
 						className='absolute w-full h-full -z-20 '
 						src='/icons/loginBg.png'
 					/>
@@ -71,8 +87,9 @@ export default function Login() {
 						<div className='flex flex-col items-center justify-center'>
 							<div className='flex items-center justify-center'>
 								<img
+									alt='logo'
 									src='icons/whiteLogo.svg'
-									className='w-48 h-48'
+									className='w-48 h-48 animate-roll-in '
 								/>
 								<h2 className='font-bold tracking-widest mt-8 text-[70px] text-white'>
 									CUPPA
@@ -84,15 +101,16 @@ export default function Login() {
 						</div>
 						<div className='flex w-3/12 bg-white rounded-[20px] h-2/3 justify-center items-center flex-col'>
 							<img
+								alt='logo'
 								src='icons/blackLogo.svg'
 								className='w-20 h-24'
 							/>
 							<h3 className='text-black my-4 font-bold text-[20px]'>
-								Welcome To CUPPA
+								Bienvenue !
 							</h3>
-							<form className='flex flex-col'>
+							<form className='flex flex-col px-12'>
 								<label className='my-1 font-normal text-dark-gray '>
-									Username
+									Nom d&apos;utilisateur
 								</label>
 								<input
 									type='text '
@@ -100,10 +118,14 @@ export default function Login() {
 										setUsername(e.target.value)
 									}
 									value={username}
-									className='px-4 py-2 border-2 rounded-xl border-dark-gray '
+									className={`px-4 py-2 border-2  rounded-xl  ${
+										error
+											? ' border-red-500 '
+											: ' border-dark-grey '
+									}  `}
 								/>
 								<label className='my-1 font-normal text-dark-gray '>
-									Password
+									Mot de passe
 								</label>
 								<input
 									type='password'
@@ -111,23 +133,30 @@ export default function Login() {
 										setPassword(e.target.value);
 									}}
 									value={password}
-									className='px-4 py-2 border-2 rounded-xl border-dark-gray '
+									className={`px-4 py-2 border-2  rounded-xl 	${
+										error
+											? ' border-red-500 '
+											: ' border-dark-grey '
+									}	`}
 								/>
 								<div className='flex items-center justify-start '>
 									<input
 										type='checkbox'
 										onClick={setRememberMe}
-										className='w-4 h-4'
+										className='w-4 h-4 border-gray-300 rounded-sm form-checkbox text-emerald-700 focus:text-red-500 focus:border-red-800'
 									/>
 									<label className='my-1 ml-3 font-normal text-dark-gray '>
 										Se Souvenir de moi
 									</label>
 								</div>
-								{error && (
-									<p className='text-red-500'>
-										{error}
-									</p>
-								)}
+								<div className='w-64'>
+									{error && (
+										<p className='w-2/3 text-red-500'>
+											{error}
+										</p>
+									)}
+								</div>
+
 								<button
 									type='submit'
 									className='my-2 w-full h-10 bg-[#F18C4F] rounded-lg font-bold cursor-pointer '

@@ -91,65 +91,24 @@ export default function SADM_clients() {
                 <Image src="/icons/mug.svg" width={35} height={35}></Image>
               </button>
 
-              <Button
-                onClick={() =>
-                  router.push(`/sadm/client/${row.original.id_client}`)
-                }
-              >
-                Details
-              </Button>
-            </div>
-          )
-        },
-      },
-    ])
-  }
-  //const tableInstence = useTable({ columns, data }, useGlobalFilter, tableHooks)
-  const tableInstence = useTable(
-    { columns, data: clientData },
-    useGlobalFilter,
-    tableHooks
-  )
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-    state,
-  } = tableInstence
+			<Title title='Gestion des clients' />
+			<div className='flex w-[1000px] items-center justify-evenly'>
+				<Search_bar
+					preGlobalFilteredRows={preGlobalFilteredRows}
+					setGlobalFilter={setGlobalFilter}
+					globalFilter={state.globalFilter}
+				/>
+				<button className='w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center'>
+					<Image
+						alt='search'
+						src='/icons/search.png'
+						width={30}
+						height={30}></Image>
+				</button>
+				<AddClientModal fetchClients={fetchClients} />
+				{/*<button className="w-[150px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly">
 
-  useEffect(() => {
-    fetchClients()
-  }, [])
-
-  return (
-    <div className="flex flex-col items-center pt-4 overflow-x-hidden text-center gap-11">
-      <Head>
-        <title>Gestion des clients</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Title title="Gestion des clients" />
-      <div className="flex w-[1000px] items-center justify-evenly">
-        <Search_bar
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          setGlobalFilter={setGlobalFilter}
-          globalFilter={state.globalFilter}
-        />
-        <button className="w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center">
-          <Image src="/icons/search.png" width={30} height={30}></Image>
-        </button>
-        <AddClientModal fetchClients={fetchClients} />
-        <AddClientDistModal
-          selectedClient={selectedClient}
-          setSelectedClient={setSelectedClient}
-          fetchClients={fetchClients}
-        />
-        {/*<button className="w-[150px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly">
           <Image src="/icons/plus.png" width={35} height={35}></Image>
           Client
         </button>*/}

@@ -57,53 +57,43 @@ export default function SADM_distributeurs() {
     }
   }
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Numéro de séries',
-        accessor: 'numero_serie_distributeur',
-      },
-      {
-        Header: 'Propriétaire',
-        accessor: 'id_client',
-      },
-      {
-        Header: 'Etat',
-        accessor: 'etat_distributeur',
-      },
-    ],
-    []
-  )
-  //////////////////--------------API EXAMPLE----------------------//////////////////////////////////////////////////////////////////////////
-  const distData = useMemo(() => [...distributeurs], [distributeurs])
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const tableHooks = (hooks) => {
-    hooks.visibleColumns.push((columns) => [
-      ...columns,
-      {
-        id: 'Edit',
-        Header: 'Actions',
-        Cell: ({ row }) => {
-          if (
-            row.original.etat_distributeur === 'Inactive' &&
-            row.original.id_client === null
-          ) {
-            return (
-              <div className="flex justify-evenly">
-                <button
-                  onClick={() =>
-                    handleDelete(row.original.numero_serie_distributeur)
-                  }
-                >
-                  <Image src="/icons/delete.svg" width={40} height={40}></Image>
-                </button>
-              </div>
-            )
-          } else {
-            return (
-              <div className="flex justify-end">
-                {/*<Button onClick={() => alert('details ')} className="mr-16">
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	const tableHooks = (hooks) => {
+		hooks.visibleColumns.push((columns) => [
+			...columns,
+			{
+				id: 'Edit',
+				Header: 'actions',
+				Cell: ({ row }) => {
+					if (row.original.etat_distributeur === 'Desactivé') {
+						return (
+							<div className='flex justify-evenly'>
+								{/*
+                  <button onClick={() => alert('edit ')}>
+                    <Image src="/icons/edit.png" width={40} height={40}></Image>
+                  </button>*/}
+								<button
+									onClick={() =>
+										handleDelete(
+											row.original
+												.numero_serie_distributeur
+										)
+									}>
+									<Image
+										alt='delete'
+										src='/icons/delete.svg'
+										width={40}
+										height={40}></Image>
+								</button>
+								{/*<Button onClick={() => alert('details ')}>details</Button>*/}
+							</div>
+						);
+					} else {
+						return (
+							<div className='flex justify-end'>
+								{/*<Button onClick={() => alert('details ')} className="mr-16">
+
                   details
                 </Button>*/}
               </div>
@@ -160,43 +150,88 @@ export default function SADM_distributeurs() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Title title="Gestion des distributeurs" />
-      <div className="flex w-[1000px] items-center justify-evenly">
-        <Search_bar
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          setGlobalFilter={setGlobalFilter}
-          globalFilter={state.globalFilter}
-        />
-        <button className="w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center">
-          <Image src="/icons/search.png" width={30} height={30}></Image>
-        </button>
-        <AddDistModal fetchDistributeurs={fetchDistributeurs} />
-      </div>
-      <div className="flex w-[1000px] items-center justify-evenly">
-        <button
-          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
-          onClick={() => {
-            setDistributeurs(defaultData)
-          }}
-        >
-          Tous
-        </button>
-        <button
-          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
-          onClick={() => {
-            setDistributeurs(defaultData.filter((d) => d.id_client != null))
-          }}
-        >
-          Affectés
-        </button>
-        <button
-          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
-          onClick={() => {
-            setDistributeurs(defaultData.filter((d) => d.id_client === null))
-          }}
-        >
-          Non affectés
-        </button>
+			<Title title='Gestion des distributeurs' />
+			<div className='flex w-[1000px] items-center justify-evenly'>
+				<Search_bar
+					preGlobalFilteredRows={preGlobalFilteredRows}
+					setGlobalFilter={setGlobalFilter}
+					globalFilter={state.globalFilter}
+				/>
+				<button className='w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center'>
+					<Image
+						alt='search'
+						src='/icons/search.png'
+						width={30}
+						height={30}></Image>
+				</button>
+				<AddDistModal fetchDistributeurs={fetchDistributeurs} />
+			</div>
+			<div className='flex w-[1000px] items-center justify-evenly'>
+				<button
+					className='w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly'
+					onClick={() => {
+						setDistributeurs(defaultData);
+					}}>
+					Tous
+				</button>
+				<button
+					className='w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly'
+					onClick={() => {
+						setDistributeurs(
+							defaultData.filter(
+								(d) => d.id_client != null
+							)
+						);
+					}}>
+					Affectés
+				</button>
+				<button
+					className='w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly'
+					onClick={() => {
+						setDistributeurs(
+							defaultData.filter(
+								(d) => d.id_client === null
+							)
+						);
+					}}>
+					Non affectés
+				</button>
+				<button
+					className='w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly'
+					onClick={() => {
+						setDistributeurs(
+							defaultData.filter(
+								(d) => d.etat_distributeur === 'Activé'
+							)
+						);
+					}}>
+					Activés
+				</button>
+				<button
+					className='w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly'
+					onClick={() => {
+						setDistributeurs(
+							defaultData.filter(
+								(d) =>
+									d.etat_distributeur === 'Desactivé'
+							)
+						);
+					}}>
+					Désactivés
+				</button>
+			</div>
+			<DataTable
+				getTableProps={getTableProps}
+				getTableBodyProps={getTableBodyProps}
+				headerGroups={headerGroups}
+				rows={rows}
+				prepareRow={prepareRow}
+			/>
+		</div>
+	);
+}
+/*
+
         <button
           className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
           onClick={() => {
