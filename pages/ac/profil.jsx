@@ -45,21 +45,21 @@ export default function Profil() {
 				<Head>
 					<title>Profil</title>
 				</Head>
-				<Title title='Profile' />
+				<Title title='Profil' />
 			</div>
 			<div className='flex flex-col items-start justify-start pt-8 pl-8 mx-auto mt-8 mb-24 text-center shadow-lg bg-slate-50 sm:w-full md:2/3 lg:w-1/3 min-h-96 '>
 				<div className='w-full mb-12'>
-					<Image
+					<img
 						alt='profile'
 						height={48}
 						width={48}
 						className='object-cover w-48 h-48 mx-auto rounded-sm '
-						src='/icons/userIcon.png'
+						src='/icons/profilePicture.png'
 					/>
 				</div>
 
 				<InfoLine
-					title='Identifient   '
+					title='Identifiant   '
 					value={profil?.id_utilisateur}
 				/>
 				<InfoLine
