@@ -4,7 +4,7 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const data = {
+let chartData = {
   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
   datasets: [
     {
@@ -31,6 +31,27 @@ const data = {
   ],
 };
 
-export default function DoughnutChart() {
-  return <Doughnut data={data} />;
+export default function DoughnutChart({ data, title }) {
+  const options = {
+    indexAxis: "y",
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: title,
+      },
+    },
+  };
+  if (data !== undefined) {
+    chartData = data;
+  }
+  return <Doughnut data={chartData} options={options} />;
 }

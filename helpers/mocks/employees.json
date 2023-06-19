@@ -1,0 +1,26 @@
+{
+  "employees": [
+    {
+      "name": "Ahmed Ali",
+      "email": "ahmed.ali@example.com",
+      "phone": "1234567890",
+      "password": "password123",
+      "role": "AC"
+    },
+    {
+      "name": "Fatima Hassan",
+      "email": "fatima.hassan@example.com",
+      "phone": "9876543210",
+      "password": "pass123",
+      "role": "Decideur"
+    },
+    {
+      "name": "Youssef Khalid",
+      "email": "youssef.khalid@example.com",
+      "phone": "5555555555",
+      "password": "secret",
+      "role": "AM",
+      "distributors": ["D001", "D004", "D003"]
+    }
+  ]
+}

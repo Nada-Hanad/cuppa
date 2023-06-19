@@ -12,7 +12,7 @@ export default function SearchBar({ placeholder, handleSearch }) {
       <input
         type="text"
         placeholder={placeholder}
-        className="rounded-md p-2 w-96 shadow"
+        className="rounded-md p-2 w-96 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
         value={value}
         onChange={handleChange}
       />

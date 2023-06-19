@@ -29,7 +29,7 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "right",
+      position: "top",
     },
     title: {
       display: true,
@@ -40,7 +40,7 @@ export const options = {
 
 const labels = ["January"];
 
-const data = {
+let dataDef = {
   labels,
   datasets: [
     {
@@ -74,6 +74,10 @@ const data = {
   ],
 };
 
-export function HorizontalBarChart() {
-  return <Bar options={options} data={data} />;
+export function HorizontalBarChart({ data }) {
+  if (data !== undefined) {
+    dataDef = data;
+  }
+
+  return <Bar options={options} data={dataDef} />;
 }
