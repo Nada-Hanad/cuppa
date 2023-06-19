@@ -110,9 +110,13 @@ export default function SADM_distributeurs() {
 							<div className='flex justify-end'>
 								{/*<Button onClick={() => alert('details ')} className="mr-16">
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> fcbd69d635fc28cbfca0c32c74560e6bda911cac
+=======
+
+>>>>>>> origin
                   details
                 </Button>*/}
 							</div>
