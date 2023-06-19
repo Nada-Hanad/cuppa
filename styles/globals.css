@@ -1,23 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 * {
-  font-family: "Ubuntu", sans-serif;
-  box-sizing: border-box;
+	font-family: 'Ubuntu', sans-serif;
+	box-sizing: border-box;
 }
 
 /* Hide the default video player controls */
@@ -33,19 +33,78 @@ video::-webkit-media-controls-panel {
 
 /* Style the custom controls */
 .video-controls {
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
+	z-index: 20;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
 }
 
 .video-controls button {
-  background-color: red;
-  border: none;
-  color: #fff;
-  font-size: 1.2rem;
-  cursor: pointer;
+	background-color: red;
+	border: none;
+	color: #fff;
+	font-size: 1.2rem;
+	cursor: pointer;
 }
+
+@keyframes roll-in {
+	0% {
+		transform: translateX(-300%) rotate(0deg);
+
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(0) rotate(360deg);
+		opacity: 1;
+	}
+}
+
+.animate-roll-in {
+	animation: roll-in 1.5s ease-out;
+}
+
+.logo-container {
+	position: relative;
+	width: 200px; /* Adjust the width and height according to your logo size */
+	height: 200px;
+}
+/*
+.logo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	z-index: 1;
+}
+
+.smoke {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to right,
+		rgba(255, 255, 255, 0.4) 10%,
+		rgba(255, 255, 255, 0) 80%
+	);
+	z-index: 2;
+	animation: smokeAnimation 3s infinite;
+}
+
+@keyframes smokeAnimation {
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+}
+*/
