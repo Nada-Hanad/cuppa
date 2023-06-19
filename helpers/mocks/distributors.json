@@ -1,0 +1,194 @@
+[
+  {
+    "_id": "1",
+    "numero_serie_distributeur": "D001",
+    "localisation_statique_distributeur": "Alger",
+    "etat_distributeur": "Actif",
+    "date_installation_distributeur": "2023-06-01",
+    "ingredients": [
+      {
+        "name": "Lait",
+        "level": 70
+      },
+      {
+        "name": "Café",
+        "level": 50
+      },
+      {
+        "name": "Sucre",
+        "level": 80
+      },
+      {
+        "name": "Thé",
+        "level": 60
+      }
+    ],
+    "water_temperature": 25,
+    "utilizationRate": 0.8,
+    "maintenanceRequests": 2,
+    "revenue": 5000,
+    "costs": 3500,
+    "profit": 1500,
+    "salesGrowth": 0.1
+  },
+  {
+    "_id": "2",
+    "numero_serie_distributeur": "D002",
+    "localisation_statique_distributeur": "Oran",
+    "etat_distributeur": "Inactif",
+    "date_installation_distributeur": "2023-06-02",
+    "ingredients": [
+      {
+        "name": "Lait",
+        "level": 60
+      },
+      {
+        "name": "Café",
+        "level": 40
+      },
+      {
+        "name": "Sucre",
+        "level": 70
+      },
+      {
+        "name": "Thé",
+        "level": 50
+      }
+    ],
+    "water_temperature": 28,
+    "utilizationRate": 0.6,
+    "maintenanceRequests": 1,
+    "revenue": 3000,
+    "costs": 2500,
+    "profit": 500,
+    "salesGrowth": 0.05
+  },
+  {
+    "_id": "3",
+    "numero_serie_distributeur": "D003",
+    "localisation_statique_distributeur": "Constantine",
+    "etat_distributeur": "Actif",
+    "date_installation_distributeur": "2023-06-03",
+    "ingredients": [
+      {
+        "name": "Lait",
+        "level": 90
+      },
+      {
+        "name": "Café",
+        "level": 60
+      },
+      {
+        "name": "Sucre",
+        "level": 75
+      },
+      {
+        "name": "Thé",
+        "level": 70
+      }
+    ],
+    "water_temperature": 22,
+    "utilizationRate": 0.9,
+    "maintenanceRequests": 3,
+    "revenue": 7000,
+    "costs": 5500,
+    "profit": 1500,
+    "salesGrowth": 0.15
+  },
+  {
+    "_id": "4",
+    "numero_serie_distributeur": "D004",
+    "localisation_statique_distributeur": "Annaba",
+    "etat_distributeur": "Actif",
+    "date_installation_distributeur": "2023-06-04",
+    "ingredients": [
+      {
+        "name": "Lait",
+        "level": 80
+      },
+      {
+        "name": "Café",
+        "level": 55
+      },
+      {
+        "name": "Sucre",
+        "level": 85
+      },
+      {
+        "name": "Thé",
+        "level": 65
+      }
+    ],
+    "water_temperature": 26,
+    "utilizationRate": 0.7,
+    "maintenanceRequests": 4,
+    "revenue": 5500,
+    "costs": 4000,
+    "profit": 1500,
+    "salesGrowth": 0.12
+  },
+  {
+    "_id": "5",
+    "numero_serie_distributeur": "D005",
+    "localisation_statique_distributeur": "Tlemcen",
+    "etat_distributeur": "Inactif",
+    "date_installation_distributeur": "2023-06-05",
+    "ingredients": [
+      {
+        "name": "Lait",
+        "level": 75
+      },
+      {
+        "name": "Café",
+        "level": 45
+      },
+      {
+        "name": "Sucre",
+        "level": 65
+      },
+      {
+        "name": "Thé",
+        "level": 55
+      }
+    ],
+    "water_temperature": 27,
+    "utilizationRate": 0.5,
+    "maintenanceRequests": 2,
+    "revenue": 2000,
+    "costs": 1800,
+    "profit": 200,
+    "salesGrowth": 0.02
+  },
+  {
+    "_id": "6",
+    "numero_serie_distributeur": "D006",
+    "localisation_statique_distributeur": "Setif",
+    "etat_distributeur": "Actif",
+    "date_installation_distributeur": "2023-06-06",
+    "ingredients": [
+      {
+        "name": "Lait",
+        "level": 85
+      },
+      {
+        "name": "Café",
+        "level": 65
+      },
+      {
+        "name": "Sucre",
+        "level": 90
+      },
+      {
+        "name": "Thé",
+        "level": 75
+      }
+    ],
+    "water_temperature": 24,
+    "utilizationRate": 0.8,
+    "maintenanceRequests": 1,
+    "revenue": 4500,
+    "costs": 3800,
+    "profit": 700,
+    "salesGrowth": 0.08
+  }
+]

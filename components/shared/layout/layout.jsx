@@ -29,6 +29,11 @@ export default function Layout({ children }) {
             icon: "/icons/mug.svg",
           },
           {
+            href: "/adm/finance",
+            title: "Finance",
+            icon: "/icons/finance.svg",
+          },
+          {
             href: "/adm/employees",
             title: "Employes",
             icon: "/icons/user.svg",

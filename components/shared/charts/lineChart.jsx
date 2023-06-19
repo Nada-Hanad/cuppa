@@ -23,7 +23,7 @@ ChartJS.register(
 
 const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
-const data = {
+let chartData = {
   labels,
   datasets: [
     {
@@ -57,6 +57,9 @@ const data = {
   ],
 };
 
-export default function LineChart() {
-  return <Line data={data} className="w-full h-full" />;
+export default function LineChart({ data }) {
+  if (data !== undefined) {
+    chartData = data;
+  }
+  return <Line data={chartData} className="w-full h-full" />;
 }

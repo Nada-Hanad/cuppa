@@ -5,13 +5,16 @@ const StateFilter = ({ onSelect, states }) => {
 
   const handleStateToggle = (state) => {
     if (selectedStates.includes(state)) {
-      setSelectedStates(
-        selectedStates.filter((selected) => selected !== state)
-      );
+      let newOnes = selectedStates.filter((selected) => selected !== state);
+      setSelectedStates(newOnes);
+      onSelect(newOnes);
     } else {
-      setSelectedStates([...selectedStates, state]);
+      let newOnes = [...selectedStates, state];
+      setSelectedStates(newOnes);
+      onSelect(newOnes);
     }
-    onSelect(selectedStates); // Trigger the callback with the updated selected states
+
+    // Trigger the callback with the updated selected states
   };
 
   return (
@@ -24,7 +27,10 @@ const StateFilter = ({ onSelect, states }) => {
               ? "bg-blue-500 text-white"
               : "bg-white text-gray-700"
           }`}
-          onClick={() => handleStateToggle(state.value)}
+          onClick={() => {
+            handleStateToggle(state.value);
+            console.log(selectedStates);
+          }}
         >
           {state.label}
         </button>
