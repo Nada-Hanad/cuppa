@@ -1,0 +1,66 @@
+{
+  "lineChartData": {
+    "revenue": {
+      "month": {
+        "data": [5000, 6000, 5500, 7000, 6500, 7500, 8000],
+        "labels": ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil"]
+      },
+      "quarter": {
+        "data": [15000, 17000, 16000],
+        "labels": ["T1", "T2", "T3"]
+      }
+    },
+    "maintenanceRequests": {
+      "month": {
+        "data": [20, 15, 25, 18, 22, 28, 30],
+        "labels": ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil"]
+      },
+      "quarter": {
+        "data": [60, 55, 65],
+        "labels": ["T1", "T2", "T3"]
+      }
+    },
+    "complaints": {
+      "month": {
+        "data": [5, 7, 6, 8, 10, 9, 12],
+        "labels": ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil"]
+      },
+      "quarter": {
+        "data": [18, 20, 22],
+        "labels": ["T1", "T2", "T3"]
+      }
+    }
+  },
+  "barChartData": {
+    "revenueByRegion": {
+      "data": [45000, 38000, 42000, 50000],
+      "labels": ["Région 1", "Région 2", "Région 3", "Région 4"]
+    },
+    "costByCategory": {
+      "data": [25000, 18000, 22000, 19000],
+      "labels": ["Maintenance", "Fournitures", "Marketing", "Services"]
+    },
+    "complaintsByType": {
+      "data": [12, 8, 10, 15],
+      "labels": [
+        "Payments",
+        "Qualité du produit",
+        "Service client",
+        "Facturation"
+      ]
+    }
+  },
+  "doughnutChartData": {
+    "activeInactiveDistributors": {
+      "data": [80, 20, 10, 5],
+      "labels": ["Actifs", "Inactifs", "Hors Service", "Deconnéctés"]
+    },
+    "maintenanceType": {
+      "data": [40, 30, 20, 10],
+      "labels": ["Électrique", "Mécanique", "Connexion", "Autre"]
+    }
+  },
+  "distributorMonitoring": {
+    "activeDistributors": 32
+  }
+}

@@ -56,7 +56,7 @@ let data = {
 };
 
 export default function BarChart({ chartData }) {
-  if (chartData != undefined) {
+  if (chartData !== undefined) {
     data = chartData;
   }
 
