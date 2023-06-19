@@ -4,6 +4,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { async } from 'regenerator-runtime';
+import { API_URL } from '../../config/api';
 
 export default function AddClientModal({fetchClients}) {
   const [showModal, setShowModal] = React.useState(false)
@@ -26,9 +27,16 @@ export default function AddClientModal({fetchClients}) {
   const [type_client, set_type_client] = React.useState("");
  const insertNewClient = async (nom_client,prenom_client,type_client) => {
   try {
-    const response = await axios.post('http://localhost:8000/distributeurs', {
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    const response = await axios.post(API_URL + '/api/account.management/createClientAccount/', {
       nom_client:nom_client,prenom_client:prenom_client,type_client:type_client
-    });
+    },config);
+    console.log(
+      token
+    )
     console.log(response.data);
   } catch (error) {
     console.log(error);
@@ -48,10 +56,6 @@ export default function AddClientModal({fetchClients}) {
     if (!nom_client) {
       toast.error("Veuillez ajouter le nom de client");
       return;
-    }else if (!prenom_client){
-toast.error("Veuillez ajouter le prenom de client");
-      return;
- 
     }else if (!type_client){
 toast.error("Veuillez ajouter le type de client");
       return;
@@ -59,7 +63,7 @@ toast.error("Veuillez ajouter le type de client");
     }
     // If all validations pass, save the beverage
   await  handleSave();
-  await  fetchClients()
+     await  fetchClients()
     toast.success("Ajouté avec success");
     setShowModal(false);  
     };
@@ -70,10 +74,12 @@ toast.error("Veuillez ajouter le type de client");
     <button
         type="button"
         onClick={() => setShowModal(true)}
-        className="w-[180px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
+        className="w-[160px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
     >
+      {/*
     <Image src="/icons/plus.png" width={35} height={35}></Image>
-        client
+        */}
+        Ajouter client
     </button>
 
       {showModal ? (
@@ -111,6 +117,7 @@ toast.error("Veuillez ajouter le type de client");
                         placeholder="Entrez le nom de client"
                         onChange={(e) => set_nom_client(e.target.value)}
                       />
+                    {/*
                     <label
                         className="block text-gray-700 font-bold mb-2"
                         htmlFor="name"
@@ -123,9 +130,9 @@ toast.error("Veuillez ajouter le type de client");
                         type="text"
                         placeholder="Entrez le prenom de client"
                         onChange={(e) => set_prenom_client(e.target.value)}
-                      />
+                      />*/}
                     <label
-                        className="block text-gray-700 font-bold mb-2"
+                        className="block text-gray-700 font-bold mb-2 mt-8"
                         htmlFor="name"
                       >
                         type de client : 

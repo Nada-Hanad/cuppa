@@ -4,14 +4,15 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { async } from 'regenerator-runtime';
+import { API_URL } from '../../config/api';
 
-export default function AddClientDistModal({id_client ,fetchClients}) {
+export default function AddClientDistModal({selectedClient,setSelectedClient,fetchClients}) {
   const [showModal, setShowModal] = React.useState(false);
 
   useEffect(() => {
     function handleClickOutside(event) {
       if (event.target.classList.contains("modal")) {
-        setShowModal(false);
+        setSelectedClient(null);
       }
     }
 
@@ -22,18 +23,23 @@ export default function AddClientDistModal({id_client ,fetchClients}) {
   }, []);
 
   const [numero_serie_distributeur, setnumero_serie_distributeur] = React.useState("");
- const addClientNewDist = async (client_id,numero_serie_distributeur) => {
+ const addClientNewDist = async (selectedClient,numero_serie_distributeur) => {
   try {
-    const response = await axios.post( `http://localhost:8000/distributeurs/${client_id}`, {
-      numero_serie_distributeur: numero_serie_distributeur
-    });
+    
+      const token = localStorage.getItem('token')
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    const response = await axios.post( API_URL +`/distributeurs/${numero_serie_distributeur}/client`, {
+      id_client:"4"
+    },config);
     console.log(response.data);
   } catch (error) {
     console.log(error);
   }
 } 
   const handleSave = async() => {
-  await addClientNewDist(client_id,numero_serie_distributeur) 
+  await addClientNewDist(selectedClient,numero_serie_distributeur) 
     // Reset the form
     setnumero_serie_distributeur("");
 };
@@ -47,23 +53,23 @@ export default function AddClientDistModal({id_client ,fetchClients}) {
     }
     // If all validations pass, save the beverage
   await  handleSave();
-  await  fetchClients()
+  //await  fetchClients()
     toast.success("Ajouté avec success");
-    setShowModal(false);  
+    fetchClients();
+		setSelectedClient(null);  
     };
 
   return (
-    <>
-        
-    <button
+    <>        
+    {/*<button
         type="button"
         onClick={() => setShowModal(true)}
         className="rounded-[15px] bg-transparent flex items-center justify-evenly"
-    >
+  >
     <Image src="/icons/mug.svg" width={35} height={35}></Image>
     </button>
-
-      {showModal ? (
+  */}
+      {selectedClient ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none modal">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
