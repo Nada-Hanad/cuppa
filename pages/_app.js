@@ -8,6 +8,8 @@ import Login from "./login";
 import { useEffect } from "react";
 
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 config.autoAddCss = false;
 function MyApp({ Component, pageProps }) {
@@ -23,6 +25,8 @@ function MyApp({ Component, pageProps }) {
   // }
   return (
     <Layout>
+      <ToastContainer />
+
       <Component {...pageProps} />
     </Layout>
   );

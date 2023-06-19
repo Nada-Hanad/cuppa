@@ -1,0 +1,75 @@
+{
+  "financialOverview": {
+    "revenue": 250000,
+    "expenses": 180000,
+    "profits": 70000
+  },
+  "financialStatements": {
+    "balanceSheet": {
+      "assets": {
+        "cash": 50000,
+        "accountsReceivable": 30000,
+        "inventory": 20000
+      },
+      "liabilities": {
+        "accountsPayable": 25000,
+        "loansPayable": 50000
+      },
+      "equity": 75000
+    },
+    "incomeStatement": {
+      "revenue": {
+        "sales": 250000,
+        "otherIncome": 5000
+      },
+      "expenses": {
+        "costOfGoodsSold": 120000,
+        "operatingExpenses": 50000,
+        "interestExpense": 5000
+      },
+      "netIncome": 78000
+    },
+    "cashFlowStatement": {
+      "operatingActivities": {
+        "netIncome": 78000,
+        "depreciation": 10000,
+        "changesInWorkingCapital": 5000
+      },
+      "investingActivities": {
+        "capitalExpenditures": -20000,
+        "investments": -10000
+      },
+      "financingActivities": {
+        "loans": 30000,
+        "dividends": -10000
+      },
+      "netCashFlow": 58000
+    }
+  },
+  "expenseTracker": {
+    "categories": [
+      { "name": "Marketing", "total": 2000 },
+      { "name": "Maintenance", "total": 1500 },
+      { "name": "Insurance", "total": 800 },
+      { "name": "Supplies", "total": 500 }
+    ],
+    "expenses": [
+      { "category": "Marketing", "amount": 200 },
+      { "category": "Maintenance", "amount": 150 },
+      { "category": "Insurance", "amount": 80 },
+      { "category": "Supplies", "amount": 50 }
+    ]
+  },
+  "financialForecast": {
+    "revenueForecast": [
+      { "year": 2022, "amount": 280000 },
+      { "year": 2023, "amount": 320000 },
+      { "year": 2024, "amount": 360000 }
+    ],
+    "profitForecast": [
+      { "year": 2022, "amount": 85000 },
+      { "year": 2023, "amount": 90000 },
+      { "year": 2024, "amount": 95000 }
+    ]
+  }
+}
