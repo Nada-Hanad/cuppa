@@ -107,6 +107,7 @@ export default function Layout({ children }) {
     !username && setUsername(localStorage.getItem("name"));
   }, [route]);
 
+<<<<<<< HEAD
   return (
     <div className="w-full min-h-screen ">
       <aside className="h-[calc(100%-32px)] bg-dark-grey rounded-2xl w-[250px] fixed top-4 left-4">
@@ -158,4 +159,63 @@ export default function Layout({ children }) {
       </main>
     </div>
   );
+=======
+	return (
+		<div className='relative w-full min-h-screen'>
+			<aside className='h-[calc(100%-32px)] bg-dark-grey rounded-2xl w-[250px] fixed top-4 left-4'>
+				<div className='flex items-center justify-center h-24 gap-4 my-10 text-white'>
+					<div>
+						<h2 className='font-bold text-[26px] -mt-8'>
+							{' ' + username + ' '}
+						</h2>
+						<p className='font-bold text-[20px]'>{role}</p>
+					</div>
+				</div>
+
+				<nav>
+					<ul>
+						{menuItems?.map(({ href, title, icon }) => (
+							<li className='m-2' key={title}>
+								<Link href={href}>
+									<span
+										className={`gap-4 flex p-4 bg-bg-grey rounded-xl hover:bg-white cursor-pointer ${
+											(router.asPath ===
+												href ||
+												router.pathname ===
+													href +
+														'/[pid]') &&
+											'bg-white  '
+										}`}>
+										<Image
+											height={24}
+											width={24}
+											src={icon}
+											alt='icon'></Image>
+										{title}
+									</span>
+								</Link>
+							</li>
+						))}
+						<li
+							onClick={() => {
+								localStorage.removeItem('token');
+								router.push('/login');
+							}}
+							className='absolute flex justify-center w-full gap-4 text-white cursor-pointer bottom-12'>
+							<Image
+								width={24}
+								height={24}
+								src='/icons/logout.svg'
+								alt='icon'></Image>
+							Se deconnecter
+						</li>
+					</ul>
+				</nav>
+			</aside>
+			<main className='flex-1 ml-[300px] w-[calc(100%-360px)] '>
+				{children}
+			</main>
+		</div>
+	);
+>>>>>>> fcbd69d635fc28cbfca0c32c74560e6bda911cac
 }

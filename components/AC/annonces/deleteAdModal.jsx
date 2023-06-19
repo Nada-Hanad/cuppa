@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import RangeInput from './RangeInput';
-import { Range } from 'react-range';
 import axios from 'axios';
-import { API_URL } from '../../config/api';
+import { API_URL } from '../../../config/api';
 
 export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 	const [showModal, setShowModal] = React.useState(false);
@@ -54,6 +52,7 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 				type='button'
 				onClick={() => setShowModal(true)}>
 				<Image
+					alt='deleteIcon'
 					className='text-dark-grey'
 					src='/icons/darkDeleteIcon.svg'
 					width={26}
@@ -67,8 +66,8 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 							{/*content*/}
 							<div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[400px] w-[400px] '>
 								{/*header*/}
-								<div className='flex items-start justify-center mx-auto p-5 rounded-t'>
-									<h3 className='text-3xl font-semibold  text-dark-grey'>
+								<div className='flex items-start justify-center p-5 mx-auto rounded-t'>
+									<h3 className='text-3xl font-semibold text-dark-grey'>
 										Supprimer l&apos;annonce
 									</h3>
 									<button
@@ -91,7 +90,7 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 
 								<div className='flex items-center justify-between p-6 rounded-b'>
 									<button
-										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
+										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-green-500 hover:shadow-lg focus:outline-none'
 										type='button'
 										onClick={() =>
 											setShowModal(false)
@@ -99,7 +98,7 @@ export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 										Annuler
 									</button>
 									<button
-										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
+										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-red-500 hover:shadow-lg focus:outline-none'
 										type='button'
 										onClick={handleSubmit}>
 										Confirmer

@@ -81,6 +81,7 @@ p-2'>
 												src='/icons/man 2.svg'
 												width={40}
 												height={40}
+												alt='men'
 											/>
 										</td>
 									) : cell.column.id ===
@@ -94,9 +95,40 @@ p-2'>
 												src='/icons/office 2.svg'
 												width={40}
 												height={40}
+												alt='office'
 											/>
 										</td>
-									) : (
+									) :
+									 cell.column.id ===
+											'id_client' &&
+									  !(cell.value) ? (
+										<td
+											key={idx}
+											className=' p-2  font-bold text-[#343A49]  
+
+                                                                                 '>
+											Pas de propriétaire
+										</td>
+									) 
+									
+									:
+									cell.column.id === 'type_client' && cell.value === 'individual'? 
+      (
+        <td>
+          <div className="flex justify-center">
+            <Image src="/icons/user.svg" width={40} height={40} />
+          </div>
+        </td>
+      ):cell.column.id === 'type_client' && cell.value === 'enterprise'? 
+      (
+        <td>
+          <div className="flex justify-center">
+            <Image src="/icons/company.png" width={40} height={40} />
+          </div>
+        </td>
+      )
+									:
+									(
 										cell.column.id !=
 											'id_annonceur' && (
 											<td
