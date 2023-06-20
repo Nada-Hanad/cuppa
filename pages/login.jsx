@@ -1,87 +1,86 @@
-import axios from 'axios';
-import Image from 'next/image';
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import { API_URL } from '../config/api';
-import LoadingPage from './loading';
+import axios from "axios";
+import Image from "next/image";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { DEPLOY_URL } from "../config/api";
+import LoadingPage from "./loading";
 export default function Login() {
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
-	const [rememberMe, setRememberMe] = useState('');
-	const [isLoading, setIsLoading] = useState(false);
-	const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
 
-	const [error, setError] = useState(null);
-	const router = useRouter();
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		setError(null);
-		setIsLoading(true); // Set loading state to true
-		if (!username) {
-			setError("Entrez le username s'il vous plait");
-			setIsLoading(false);
-			return;
-		}
-		if (!password) {
-			setError("Entrez le motepass s'il vous plait");
-			setIsLoading(false);
+  const [error, setError] = useState(null);
+  const router = useRouter();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true); // Set loading state to true
+    if (!username) {
+      setError("Entrez le username s'il vous plait");
+      setIsLoading(false);
+      return;
+    }
+    if (!password) {
+      setError("Entrez le motepass s'il vous plait");
+      setIsLoading(false);
 
-			return;
-		}
+      return;
+    }
 
-		console.log();
-		try {
-			const response = await axios.post(`${API_URL}/login`, {
-				username,
-				password,
-				rememberMe,
-			});
+    console.log();
+    try {
+      const response = await axios.post(`${DEPLOY_URL}/login`, {
+        username,
+        password,
+        rememberMe,
+      });
 
-			setIsLoadingPage(true);
-			let token = response.data.token;
-			let role = response.data.role;
-			let name = response.data.name;
-			// Store the token in local storage or cookies
-			localStorage.setItem('token', token);
-			localStorage.setItem('role', role);
-			localStorage.setItem('name', name);
-			// Redirect to another page
-			console.log(`role`);
-			//	console.log(response);
-			if (role === 'SADM') {
-				router.push('/sadm/clients');
-			} else if (role === 'AC') {
-				router.push('/ac/profil');
-			} else if (role === 'decideur') {
-				router.push('/decideur');
-			} else if (role === 'ADM') {
-				router.push('/adm/dashboard');
-			}
-		} catch (error) {
-			console.error(error);
-			if (error?.response?.status == 401) {
-				setError(`Nom d'utilisateur ou mot de passe incorrect`);
-			} else
-				setError(
-					'Erreur de serveur interne, veuillez réessayer plus tard'
-				); // Set error message
-			setIsLoadingPage(false);
-		} finally {
-			setIsLoading(false); // Set loading state to false
-		}
-	};
-	return (
-		<>
-			{isLoadingPage ? (
-				<LoadingPage />
-			) : (
-				<div className='relative w-full h-screen'>
-					<img
-						alt='bg'
-						className='absolute w-full h-full -z-20 '
-						src='/icons/loginBg.png'
-					/>
-					<div className='absolute w-full h-full bg-black bg-opacity-70 -z-10 ' />
+      setIsLoadingPage(true);
+      let token = response.data.token;
+      let role = response.data.role;
+      let name = response.data.name;
+      // Store the token in local storage or cookies
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("name", name);
+      // Redirect to another page
+      console.log(`role`);
+      //	console.log(response);
+      if (role === "SADM") {
+        router.push("/sadm/clients");
+      } else if (role === "AC") {
+        router.push("/ac/profil");
+      } else if (role === "decideur") {
+        router.push("/decideur");
+      } else if (role === "ADM") {
+        router.push("/adm/dashboard");
+      }
+    } catch (error) {
+      console.error(error);
+      if (error?.response?.status == 401) {
+        setError(`Nom d'utilisateur ou mot de passe incorrect`);
+      } else
+        setError("Erreur de serveur interne, veuillez réessayer plus tard"); // Set error message
+      setIsLoadingPage(false);
+    } finally {
+      setIsLoading(false); // Set loading state to false
+    }
+  };
+  return (
+    <>
+      {isLoadingPage ? (
+        <LoadingPage />
+      ) : (
+        <div className="relative w-full h-screen">
+          <img
+            alt="bg"
+            className="absolute w-full h-full -z-20 "
+            src="/icons/loginBg.png"
+          />
+          <div className="absolute w-full h-full bg-black bg-opacity-70 -z-10 " />
+
 
 					<div className='flex flex-col items-center justify-center w-full h-full gap-20 lg:flex-row '>
 						<div className='flex flex-col items-center justify-center'>
@@ -157,21 +156,19 @@ export default function Login() {
 									)}
 								</div>
 
-								<button
-									type='submit'
-									className='my-2 w-full h-10 bg-[#F18C4F] rounded-lg font-bold cursor-pointer '
-									onClick={handleSubmit}
-									disabled={isLoading} // Disable button during loading
-								>
-									{isLoading
-										? 'Loading...'
-										: 'Log in'}
-								</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			)}
-		</>
-	);
+                <button
+                  type="submit"
+                  className="my-2 w-full h-10 bg-[#F18C4F] rounded-lg font-bold cursor-pointer "
+                  onClick={handleSubmit}
+                  disabled={isLoading} // Disable button during loading
+                >
+                  {isLoading ? "Loading..." : "Log in"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
