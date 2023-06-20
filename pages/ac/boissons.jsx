@@ -166,42 +166,11 @@ export default function Boissons() {
     });
     setDrinks(filteredDrinks);
   }
-  function structureResult(response) {
-    const result = [];
-    response.forEach((drink) => {
-      result.push({
-        id: drink.id_boisson,
-        name: drink.libelle_boisson,
-        price: drink.prix_boisson,
 
-        ingredients: [
-          { name: "espresso", quantity: 10 },
-          { name: "steamed milk", quantity: 10 },
-          { name: "foamed milk", quantity: 10 },
-        ],
-        image: `${DEPLOY_URL}/${drink.path_image_boisson}`,
-      });
-    });
-    return result;
-  }
   const [drinks, setDrinks] = useState(defaultData);
-  useEffect(() => {
-    axios
-      .get(DEPLOY_URL + "/boissons")
-      .then((res) => {
-        console.log(res.data);
-        setDrinks(structureResult(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        console.log("finally");
-      });
-  }, []);
 
   return (
-    <div className="text-center pt-8 flex flex-col items-center">
+    <div className="text-center pt-8 flex flex-col items-center pb-12">
       <Head>
         <title>Boissons</title>
         <link rel="icon" href="/favicon.ico" />
@@ -213,7 +182,7 @@ export default function Boissons() {
       <div className="flex my-8 justify-between h-full gap-10 relative">
         <select
           className="py-2 px-4 rounded absolute top-[-80px] right-40 shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
-          value={tableView}
+          value={tableView ? "list" : "grid"}
           onChange={(e) => {
             if (e == "list") {
               toggleTableView(true);
@@ -242,19 +211,27 @@ export default function Boissons() {
 
       {tableView ? (
         // Table view
-        <table className="w-full">
+        <table className="w-full p-1 rounded overflow-hidden">
           <thead>
-            <tr>
-              <th className="py-2 px-4 border-b">ID</th>
-              <th className="py-2 px-4 border-b">Name</th>
-              <th className="py-2 px-4 border-b">Price</th>
-              <th className="py-2 px-4 border-b">Actions</th>{" "}
+            <tr className=" bg-dark-grey text-white overflow-hidden">
+              <th className=" py-2 border-2 border-dark-grey overflow-hidden px-4 border-b  rounded-l">
+                ID
+              </th>
+              <th className=" py-2 border-2 border-dark-grey overflow-hidden px-4 border-b">
+                Name
+              </th>
+              <th className=" py-2 border-2 border-dark-grey overflow-hidden px-4 border-b">
+                Price
+              </th>
+              <th className=" py-2 border-2 border-dark-grey overflow-hidden px-4 border-b rounded-r">
+                Actions
+              </th>{" "}
               {/* New column for actions */}
             </tr>
           </thead>
           <tbody>
             {drinks.map((drink, i) => (
-              <tr key={i}>
+              <tr key={i} className="border-2 border-dark-grey">
                 <td className="py-2 px-4 border-b">{drink.id}</td>
                 <td className="py-2 px-4 border-b">{drink.name}</td>
                 <td className="py-2 px-4 border-b">{drink.price}</td>

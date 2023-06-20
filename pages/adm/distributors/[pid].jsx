@@ -85,19 +85,19 @@ const Distributor = () => {
             </p>
             <div className="flex justify-between">
               <button
-                className="py-3 px-4 bg-dark rounded-xl text-white hover:bg-white hover:text-dark shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all"
+                className="py-3 px-4 bg-dark rounded text-white hover:bg-white hover:text-dark shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all"
                 onClick={handleMarkAsStolen}
               >
                 {buttonTexts.markAsStolen}
               </button>
               <button
-                className="py-3 px-4 border-2 border-dark bg-white rounded-xl text-dark hover:text-white hover:bg-dark transition-all"
+                className="py-3 px-4 border-2 border-dark bg-white rounded text-dark hover:text-white hover:bg-dark transition-all"
                 onClick={handleRequestMaintenance}
               >
                 {buttonTexts.requestMaintenance}
               </button>
             </div>
-            <div className="rounded-xl shadow-2xl overflow-hidden w-[480px] h-[420px]">
+            <div className="rounded shadow-2xl overflow-hidden w-[480px] h-[420px]">
               <LocationMap />
             </div>
           </div>

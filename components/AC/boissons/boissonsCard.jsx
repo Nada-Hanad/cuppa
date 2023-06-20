@@ -10,7 +10,7 @@ import EditBoissonModal from "./editBoissonModal";
  */
 export default function BoissonCard({ drink, drinks, setDrinks }) {
   return (
-    <div className="h-[200px] rounded-xl bg-white p-[10px] text-start flex flex-col justify-between shadow-lg">
+    <div className="h-[200px] rounded bg-white p-[10px] text-start flex flex-col justify-between shadow-lg">
       <div className="flex justify-between items-center gap-4">
         <Image
           src={drink.image}

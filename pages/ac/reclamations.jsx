@@ -16,7 +16,7 @@ import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { useGlobalFilter, useTable } from "react-table";
 //import SearchBar from '../../components/shared/search/searchBar';
-import { API_URL } from "../../config/api";
+import { API_URL, DEPLOY_URL } from "../../config/api";
 import { SearchTableBar } from "../../components/shared/search/searchTableBar";
 //import Title from '../../components/shared/layout/title';
 import { useRouter } from "next/router";
@@ -35,7 +35,7 @@ export default function Reclamations() {
       headers: { Authorization: `Bearer ${token}` },
     };
     const response = await axios
-      .get(`${API_URL}/reclamation/getAllReclamations/`, config)
+      .get(`${DEPLOY_URL}/reclamation/getAllReclamations/`, config)
       .catch((e) => console.log(e));
     if (response) {
       console.log(response);
@@ -177,7 +177,7 @@ export default function Reclamations() {
       </div>
       <div className="flex w-[1000px] items-center justify-evenly">
         <button
-          className={`w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
+          className={`w-[180px] h-[60px] rounded border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
             selectedButton === "" ? "bg-[#343A49] text-white" : "bg-white"
           }`}
           onClick={() => handleButtonClick("")}
@@ -186,7 +186,7 @@ export default function Reclamations() {
         </button>
 
         <button
-          className={`w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
+          className={`w-[180px] h-[60px] rounded border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
             selectedButton === "Quality"
               ? "bg-[#343A49] text-white"
               : "bg-white"
@@ -197,7 +197,7 @@ export default function Reclamations() {
         </button>
 
         <button
-          className={`w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
+          className={`w-[180px] h-[60px] rounded border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
             selectedButton === "Delivery"
               ? "bg-[#343A49] text-white"
               : "bg-white"
@@ -207,7 +207,7 @@ export default function Reclamations() {
           Delivery
         </button>
         <button
-          className={`w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
+          className={`w-[180px] h-[60px] rounded border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
             selectedButton === "Pending"
               ? "bg-[#343A49] text-white"
               : "bg-white"
@@ -217,7 +217,7 @@ export default function Reclamations() {
           Pending
         </button>
         <button
-          className={`w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
+          className={`w-[180px] h-[60px] rounded border-[3px] border-[#343A49] text-[#343A49] font-semibold text-[20px] flex items-center justify-evenly ${
             selectedButton === "Not-Pending"
               ? "bg-[#343A49] text-white"
               : "bg-white"

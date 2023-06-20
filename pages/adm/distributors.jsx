@@ -139,8 +139,8 @@ export default function Distributors() {
             ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center w-full px-24">
-          <div className="flex items-center justify-between py-4 border-b border-gray-300 w-full">
+        <div className="flex flex-col items-center w-full rounded overflow-hidden">
+          <div className="flex items-center justify-between py-4  w-full rounded-t bg-dark-grey text-white">
             <div className="flex flex-col w-32">
               <h3 className="text-lg font-medium">N Série </h3>
               <p className="text-sm text-gray-500">Localisation</p>

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function ReclamationCard() {
   return (
-    <div className="h-[350px] w-80 rounded-xl bg-white p-[10px] text-start flex flex-col justify-between">
+    <div className="h-[350px] w-80 rounded bg-white p-[10px] text-start flex flex-col justify-between">
       <div className="">
         <Image
           src="/placeholders/distributeur.jpg"

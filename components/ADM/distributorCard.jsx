@@ -50,7 +50,7 @@ export default function DistributorCard({
   };
 
   return (
-    <div className="h-[350px] w-80 rounded-xl bg-white p-[10px] text-start flex flex-col justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] relative">
+    <div className="h-[350px] w-80 rounded bg-white p-[10px] text-start flex flex-col justify-between shadow-[0_3px_10px_rgb(0,0,0,0.2)] relative">
       <div className="absolute top-4 right-4">
         <button
           className="bg-white rounded-full h-8 w-8 grid items-center shadow-md hover:bg-red-300 hover:text-white transition-colors duration-300"

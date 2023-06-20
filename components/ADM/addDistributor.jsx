@@ -57,7 +57,7 @@ export default function AddDistributorModal({ distributors, setDistributors }) {
   return (
     <>
       <button
-        className="px-4 py-4 bg-dark-grey rounded-xl text-white self-end mr-12"
+        className="px-4 py-4 bg-dark-grey rounded text-white self-end mr-12"
         type="button"
         onClick={() => setShowModal(true)}
       >
