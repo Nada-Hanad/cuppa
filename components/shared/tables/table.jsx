@@ -60,8 +60,7 @@ p-2'>
 									'path_annonceur' ? (
 										<td
 											key={idx}
-											className='bg-white p-3 h-full relative font-bold
-                                                                                flex justify-center'>
+											className='relative flex justify-center h-full p-3 font-bold bg-white'>
 											<div class='w-14 h-14 rounded-full overflow-hidden'>
 												<img
 													src={`${PUBLIC_URL}${cell.value}`}
@@ -75,8 +74,7 @@ p-2'>
 									  cell.value === 'Personne' ? (
 										<td
 											key={idx}
-											className='bg-white p-2  font-bold
-                                                                                 flex justify-center'>
+											className='flex justify-center p-2 font-bold bg-white'>
 											<Image
 												src='/icons/man 2.svg'
 												width={40}
@@ -89,8 +87,7 @@ p-2'>
 									  cell.value === 'Enterprise' ? (
 										<td
 											key={idx}
-											className='bg-white p-2  font-bold
-                                                                                 flex justify-center'>
+											className='flex justify-center p-2 font-bold bg-white'>
 											<Image
 												src='/icons/office 2.svg'
 												width={40}
@@ -98,10 +95,9 @@ p-2'>
 												alt='office'
 											/>
 										</td>
-									) :
-									 cell.column.id ===
+									) : cell.column.id ===
 											'id_client' &&
-									  !(cell.value) ? (
+									  !cell.value ? (
 										<td
 											key={idx}
 											className=' p-2  font-bold text-[#343A49]  
@@ -109,26 +105,43 @@ p-2'>
                                                                                  '>
 											Pas de propriétaire
 										</td>
-									) 
-									
-									:
-									cell.column.id === 'type_client' && cell.value === 'individual'? 
-      (
-        <td>
-          <div className="flex justify-center">
-            <Image src="/icons/user.svg" width={40} height={40} />
-          </div>
-        </td>
-      ):cell.column.id === 'type_client' && cell.value === 'enterprise'? 
-      (
-        <td>
-          <div className="flex justify-center">
-            <Image src="/icons/company.png" width={40} height={40} />
-          </div>
-        </td>
-      )
-									:
-									(
+									) : cell.column.id ===
+									  'distributeurs' ? (
+										<td
+											key={idx}
+											className=' p-2  font-bold text-[#343A49]  
+
+                                                                                 '>
+											{cell.value[0]
+												? cell.value[0]
+														.distributor_count
+												: 0}
+										</td>
+									) : cell.column.id ===
+											'type_client' &&
+									  cell.value === 'individual' ? (
+										<td>
+											<div className='flex justify-center'>
+												<Image
+													src='/icons/user.svg'
+													width={40}
+													height={40}
+												/>
+											</div>
+										</td>
+									) : cell.column.id ===
+											'type_client' &&
+									  cell.value === 'enterprise' ? (
+										<td>
+											<div className='flex justify-center'>
+												<Image
+													src='/icons/company.png'
+													width={40}
+													height={40}
+												/>
+											</div>
+										</td>
+									) : (
 										cell.column.id !=
 											'id_annonceur' && (
 											<td

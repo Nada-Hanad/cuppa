@@ -66,7 +66,7 @@ export default function SADM_clients() {
 			},
 			{
 				Header: 'Nombre des distributeurs',
-				accessor: 'nb_distributeurs',
+				accessor: 'distributeurs',
 			},
 		],
 		[]
