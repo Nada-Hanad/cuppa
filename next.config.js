@@ -5,7 +5,7 @@ const nextConfig = {
   },
 
   images: {
-    domains: ["images.unsplash.com", "localhost"],
+    domains: ["images.unsplash.com", "localhost", "cuppa.onrender.com"],
   },
 };
 

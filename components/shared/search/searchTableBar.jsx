@@ -1,6 +1,6 @@
-import regeneratorRuntime from 'regenerator-runtime';
-import React, { useState } from 'react';
-import { useAsyncDebounce } from 'react-table';
+import regeneratorRuntime from "regenerator-runtime";
+import React, { useState } from "react";
+import { useAsyncDebounce } from "react-table";
 /*
 const SearchContainer = tw.div`
   mb-6
@@ -26,27 +26,28 @@ const Input = tw.input`
 `;
 */
 export function SearchTableBar({
-	preGlobalFilteredRows,
-	globalFilter,
-	setGlobalFilter,
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
 }) {
-	const count = preGlobalFilteredRows.length;
-	const [value, setValue] = useState(globalFilter);
-	const onChange = useAsyncDebounce((value) => {
-		setGlobalFilter(value || undefined);
-	}, 300);
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined);
+  }, 300);
 
-	return (
-		<input
-			type='text'
-			id='search'
-			name='search'
-			className='w-[650px] h-[60px] p-4 rounded-[15px] text-lg shadow-xl '
-			value={value || ''}
-			onChange={(e) => {
-				setValue(e.target.value);
-				onChange(e.target.value);
-			}}
-			placeholder={`${count} enregistrements...`}></input>
-	);
+  return (
+    <input
+      type="text"
+      id="search"
+      name="search"
+      className="w-[650px] h-[60px] p-4 rounded text-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] "
+      value={value || ""}
+      onChange={(e) => {
+        setValue(e.target.value);
+        onChange(e.target.value);
+      }}
+      placeholder={`${count} enregistrements...`}
+    ></input>
+  );
 }

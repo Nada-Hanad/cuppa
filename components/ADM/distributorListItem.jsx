@@ -44,7 +44,7 @@ const DistributorListItem = ({ distributor, all, setAll }) => {
   };
 
   return (
-    <div className="flex items-center justify-between py-4 border-b border-gray-300 w-full">
+    <div className="flex items-center justify-between py-4 border-b-2 border-l-2 border-r-2 border-dark-grey w-full pr-4 ">
       <div className="flex flex-col w-32">
         <h3 className="text-lg font-medium">
           {distributor.numero_serie_distributeur}
