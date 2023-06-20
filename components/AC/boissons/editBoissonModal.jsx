@@ -3,6 +3,8 @@ import AddIngredients from "./addIngredients";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { DEPLOY_URL } from "../../../config/api";
 
 /**
  * Component for editing a drink.
@@ -13,6 +15,39 @@ import "react-toastify/dist/ReactToastify.css";
  */
 export default function EditBoissonModal({ drink, drinks, setDrinks }) {
   const [showModal, setShowModal] = useState(false);
+  const [ingredient, setIngredient] = useState([]);
+  function getIngredients() {
+    axios
+      .get(DEPLOY_URL + "/ing")
+      .then((res) => {
+        console.log(res.data);
+        setIngredient(res.data);
+      })
+      .catch((err) => {
+        toast.error("Une erreur s'est produite!");
+      })
+      .finally(() => {});
+  }
+  useEffect(() => {
+    // getIngredients();
+  }, []);
+  const editBeverage = (beverage, drinks, setDrinks) => {
+    axios
+      .put(DEPLOY_URL + "/boissons/" + beverage.id_boisson, beverage)
+      .then((res) => {
+        // Add the new beverage to the drinks array
+        const newDrinks = [...drinks, res.data];
+        setDrinks(newDrinks);
+        // Show a success message
+        toast.success("Boisson modifié avec succès");
+      })
+      .catch((err) => {
+        // Show an error message
+        toast.error(
+          "Une erreur s'est produite lors de la modification de la boisson"
+        );
+      });
+  };
   const availableIngredients = [
     "coffee",
     "tea",
@@ -42,23 +77,25 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
   const [name, setName] = useState(drink.name);
   const [price, setPrice] = useState(drink.price);
   const [image, setImage] = useState(drink.image);
+  const [time, setTime] = useState(drink.time);
+  const [des, setDes] = useState(drink.description);
   const [ingredients, setIngredients] = useState(drink.ingredients);
 
   const handleSave = () => {
-    const newDrinks = drinks.map((e) => {
-      if (e.id === drink.id) {
-        return {
-          ...drink,
-          name,
-          price,
-          image,
-          ingredients,
-        };
-      } else {
-        return e;
-      }
-    });
-    setDrinks(newDrinks);
+    // Create a new drink object
+    const beverage = {
+      duree_preparation_boisson: time,
+      libelle_boisson: name,
+      description_boisson: des,
+      prix_boisson: parseFloat(price),
+      id_client: 1,
+      path_image_boisson: image,
+      ingredients: ingredients.map((ingredient) => ({
+        id_outil: ingredient.id,
+        quantite_preparation: ingredient.quantity,
+      })),
+    };
+    editBeverage(beverage, drinks, setDrinks);
 
     // Reset the form
     setName("");
@@ -98,6 +135,15 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
     }
     if (price < 0) {
       toast.error("Veuillez entrer un prix positif");
+      return;
+    }
+
+    if (!des) {
+      toast.error("Veuillez remplir la description");
+      return;
+    }
+    if (!time) {
+      toast.error("Veuillez remplir la durée de préparation");
       return;
     }
 
@@ -179,6 +225,38 @@ export default function EditBoissonModal({ drink, drinks, setDrinks }) {
                         placeholder="Entrez le prix de la boisson"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label
+                        className="block mb-2 font-bold text-gray-700"
+                        htmlFor="name"
+                      >
+                        Description de la boisson
+                      </label>
+                      <input
+                        className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+                        id="name"
+                        type="text"
+                        placeholder="Entrez la description de la boisson"
+                        value={des}
+                        onChange={(e) => setDes(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label
+                        className="block mb-2 font-bold text-gray-700"
+                        htmlFor="name"
+                      >
+                        Durée de préparation
+                      </label>
+                      <input
+                        className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+                        id="name"
+                        type="text"
+                        placeholder="Entrez le nom de la boisson"
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
                       />
                     </div>
                     <div className="mb-4">

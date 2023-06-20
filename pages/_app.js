@@ -33,13 +33,11 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     console.log(localStorage);
-    router.push("/ac/reclamations");
     if (!localStorage.getItem("token")) {
       router.push("/login");
     }
   }, []);
   if (router.pathname === "/login") {
-
     return <Login />;
   }
   return (
