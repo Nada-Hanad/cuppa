@@ -81,65 +81,80 @@ export default function Login() {
           />
           <div className="absolute w-full h-full bg-black bg-opacity-70 -z-10 " />
 
-          <div className="flex flex-col items-center justify-center w-full h-full gap-20 lg:flex-row ">
-            <div className="flex flex-col items-center justify-center">
-              <div className="flex items-center justify-center">
-                <img
-                  alt="logo"
-                  src="icons/whiteLogo.svg"
-                  className="w-24 h-24 sm:w-32 sm:h-32 lg:w-48 lg:h-48 animate-roll-in"
-                />
-                <h2 className="font-bold tracking-widest mt-8 text-[40px]  md:text-[50px] lg:text-[70px] text-white">
-                  CUPPA
-                </h2>
-              </div>
-              <p className=" text-[22px] md:text-[28px] lg:text-[36px] text-white font-bold">
-                Pouring Happiness Into Every Cup
-              </p>
-            </div>
-            <div className="flex w-9/12 sm:w-6/12  md:w-5/12  lg:w-4/12 xl:w-3/12 bg-white rounded-[20px] h-5/6  lg:h-2/3 justify-center items-center flex-col">
-              <img alt="logo" src="icons/blackLogo.svg" className="w-20 h-24" />
-              <h3 className="text-black my-4 font-bold text-[20px]">
-                Bienvenue !
-              </h3>
-              <form className="flex flex-col px-12">
-                <label className="my-1 font-normal text-dark-gray ">
-                  Nom d&apos;utilisateur
-                </label>
-                <input
-                  type="text "
-                  onChange={(e) => setUsername(e.target.value)}
-                  value={username}
-                  className={`px-4 py-2 border-2  rounded-xl  ${
-                    error ? " border-red-500 " : " border-dark-grey "
-                  }  `}
-                />
-                <label className="my-1 font-normal text-dark-gray ">
-                  Mot de passe
-                </label>
-                <input
-                  type="password"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                  value={password}
-                  className={`px-4 py-2 border-2  rounded-xl 	${
-                    error ? " border-red-500 " : " border-dark-grey "
-                  }	`}
-                />
-                <div className="flex items-center justify-start ">
-                  <input
-                    type="checkbox"
-                    onClick={setRememberMe}
-                    className="w-4 h-4 border-gray-300 rounded-sm form-checkbox text-emerald-700 focus:text-red-500 focus:border-red-800"
-                  />
-                  <label className="my-1 ml-3 font-normal text-dark-gray ">
-                    Se Souvenir de moi
-                  </label>
-                </div>
-                <div className="w-64">
-                  {error && <p className="w-2/3 text-red-500">{error}</p>}
-                </div>
+
+					<div className='flex flex-col items-center justify-center w-full h-full gap-20 lg:flex-row '>
+						<div className='flex flex-col items-center justify-center'>
+							<div className='flex items-center justify-center'>
+								<img
+									alt='logo'
+									src='icons/whiteLogo.svg'
+									className='w-24 h-24 sm:w-32 sm:h-32 lg:w-48 lg:h-48 animate-roll-in'
+								/>
+								<h2 className='font-bold tracking-widest mt-8 text-[40px]  md:text-[50px] lg:text-[70px] text-white'>
+									CUPPA
+								</h2>
+							</div>
+							<p className=' text-[22px] md:text-[28px] lg:text-[36px] text-white font-bold'>
+								Pouring Happiness Into Every Cup
+							</p>
+						</div>
+						<div className='flex w-11/12 sm:w-6/12  md:w-5/12  lg:w-4/12 xl:w-3/12 bg-white rounded-[20px] h-5/6  lg:h-2/3 justify-center items-center flex-col'>
+							<img
+								alt='logo'
+								src='icons/blackLogo.svg'
+								className='w-20 h-24'
+							/>
+							<h3 className='text-black my-4 font-bold text-[20px]'>
+								Bienvenue !
+							</h3>
+							<form className='flex flex-col px-12'>
+								<label className='my-1 font-normal text-dark-gray '>
+									Nom d&apos;utilisateur
+								</label>
+								<input
+									type='text '
+									onChange={(e) =>
+										setUsername(e.target.value)
+									}
+									value={username}
+									className={`px-4 py-2 border-2  rounded-xl  ${
+										error
+											? ' border-red-500 '
+											: ' border-dark-grey '
+									}  `}
+								/>
+								<label className='my-1 font-normal text-dark-gray '>
+									Mot de passe
+								</label>
+								<input
+									type='password'
+									onChange={(e) => {
+										setPassword(e.target.value);
+									}}
+									value={password}
+									className={`px-4 py-2 border-2  rounded-xl 	${
+										error
+											? ' border-red-500 '
+											: ' border-dark-grey '
+									}	`}
+								/>
+								<div className='flex items-center justify-start '>
+									<input
+										type='checkbox'
+										onClick={setRememberMe}
+										className='w-4 h-4 border-gray-300 rounded-sm form-checkbox text-emerald-700 focus:text-red-500 focus:border-red-800'
+									/>
+									<label className='my-1 ml-3 font-normal text-dark-gray '>
+										Se Souvenir de moi
+									</label>
+								</div>
+								<div className='w-64'>
+									{error && (
+										<p className='w-2/3 text-red-500'>
+											{error}
+										</p>
+									)}
+								</div>
 
                 <button
                   type="submit"

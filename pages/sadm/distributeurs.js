@@ -109,14 +109,6 @@ export default function SADM_distributeurs() {
 						return (
 							<div className='flex justify-end'>
 								{/*<Button onClick={() => alert('details ')} className="mr-16">
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> fcbd69d635fc28cbfca0c32c74560e6bda911cac
-=======
-
->>>>>>> origin
                   details
                 </Button>*/}
 							</div>
@@ -252,37 +244,3 @@ export default function SADM_distributeurs() {
 		</div>
 	);
 }
-/*
-
-        <button
-          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
-          onClick={() => {
-            setDistributeurs(
-              defaultData.filter((d) => d.etat_distributeur === 'Active')
-            )
-          }}
-        >
-          Activés
-        </button>
-        <button
-          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
-          onClick={() => {
-            setDistributeurs(
-              defaultData.filter((d) => d.etat_distributeur === 'Inactive')
-            )
-          }}
-        >
-          Désactivés
-        </button>
-      </div>
-      <DataTable
-        getTableProps={getTableProps}
-        getTableBodyProps={getTableBodyProps}
-        headerGroups={headerGroups}
-        rows={rows}
-        prepareRow={prepareRow}
-      />
-    </div>
-  )
-}
-*/

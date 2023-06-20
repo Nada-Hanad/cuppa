@@ -19,6 +19,11 @@ export default function Layout({ children }) {
 			case 'adm':
 				setMenuItems([
 					{
+						href: '/adm/profil',
+						title: 'Profil',
+						icon: '/icons/user.svg',
+					},
+					{
 						href: '/adm/dashboard',
 						title: 'Tableau de bord',
 						icon: '/icons/dashboard.svg',
