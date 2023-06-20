@@ -21,7 +21,7 @@ ChartJS.register(
 
 const labels = ["January"];
 
-const data = {
+let data = {
   labels,
   datasets: [
     {
@@ -55,6 +55,10 @@ const data = {
   ],
 };
 
-export default function BarChart() {
+export default function BarChart({ chartData }) {
+  if (chartData !== undefined) {
+    data = chartData;
+  }
+
   return <Bar data={data} />;
 }

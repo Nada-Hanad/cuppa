@@ -29,6 +29,11 @@ export default function Layout({ children }) {
 						icon: '/icons/mug.svg',
 					},
 					{
+						href: '/adm/finance',
+						title: 'Finance',
+						icon: '/icons/finance.svg',
+					},
+					{
 						href: '/adm/employees',
 						title: 'Employes',
 						icon: '/icons/user.svg',
@@ -78,19 +83,37 @@ export default function Layout({ children }) {
 					},
 				]);
 				break;
+			case 'decideur':
+				setMenuItems([
+					{
+						href: '/decideur/distributeurs',
+						title: 'Distributeurs',
+						icon: '/icons/mug.svg',
+					},
+					{
+						href: '/decideur/dashboard',
+						title: 'Tableau de bord',
+						icon: '/icons/dashboard.svg',
+					},
+					{
+						href: '/decideur/finance',
+						title: 'Finance',
+						icon: '/icons/finance.svg',
+					},
+				]);
+				break;
 		}
 		!role && setRole(localStorage.getItem('role'));
 		!username && setUsername(localStorage.getItem('name'));
 	}, [route]);
 
 	return (
-		<div className='w-full min-h-screen '>
+		<div className='relative w-full min-h-screen'>
 			<aside className='h-[calc(100%-32px)] bg-dark-grey rounded-2xl w-[250px] fixed top-4 left-4'>
 				<div className='flex items-center justify-center h-24 gap-4 my-10 text-white'>
 					<div>
 						<h2 className='font-bold text-[26px] -mt-8'>
-							{' '}
-							Bouchra{' '}
+							{' ' + username + ' '}
 						</h2>
 						<p className='font-bold text-[20px]'>{role}</p>
 					</div>
@@ -123,7 +146,7 @@ export default function Layout({ children }) {
 						<li
 							onClick={() => {
 								localStorage.removeItem('token');
-								router.push('/');
+								router.push('/login');
 							}}
 							className='absolute flex justify-center w-full gap-4 text-white cursor-pointer bottom-12'>
 							<Image

@@ -1,0 +1,179 @@
+{
+  "distributorUtilization": {
+    "region1": {
+      "week": {
+        "utilization": [70, 50, 80, 60, 75, 90, 85],
+        "dates": [
+          "2023-06-01",
+          "2023-06-02",
+          "2023-06-03",
+          "2023-06-04",
+          "2023-06-05",
+          "2023-06-06",
+          "2023-06-07"
+        ]
+      },
+      "month": {
+        "utilization": [80, 75, 90, 85],
+        "dates": ["2023-06-01", "2023-06-08", "2023-06-15", "2023-06-22"]
+      },
+      "year": {
+        "utilization": [70, 65, 75, 80, 85, 90, 95, 85, 80, 75, 70, 65],
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ]
+      }
+    },
+    "region2": {
+      "week": {
+        "utilization": [60, 80, 70, 85, 50, 65, 75],
+        "dates": [
+          "2023-06-01",
+          "2023-06-02",
+          "2023-06-03",
+          "2023-06-04",
+          "2023-06-05",
+          "2023-06-06",
+          "2023-06-07"
+        ]
+      },
+      "month": {
+        "utilization": [75, 90, 85, 80],
+        "dates": ["2023-06-01", "2023-06-08", "2023-06-15", "2023-06-22"]
+      },
+      "year": {
+        "utilization": [65, 75, 80, 85, 90, 95, 85, 80, 75, 70, 65, 70],
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ]
+      }
+    },
+    "region3": {
+      "week": {
+        "utilization": [75, 85, 90, 70, 80, 65, 60],
+        "dates": [
+          "2023-06-01",
+          "2023-06-02",
+          "2023-06-03",
+          "2023-06-04",
+          "2023-06-05",
+          "2023-06-06",
+          "2023-06-07"
+        ]
+      },
+      "month": {
+        "utilization": [85, 80, 75, 90],
+        "dates": ["2023-06-01", "2023-06-08", "2023-06-15", "2023-06-22"]
+      },
+      "year": {
+        "utilization": [75, 80, 85, 90, 95, 85, 80, 75, 70, 65, 60, 65],
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ]
+      }
+    },
+    "region4": {
+      "week": {
+        "utilization": [80, 70, 75, 85, 90, 65, 60],
+        "dates": [
+          "2023-06-01",
+          "2023-06-02",
+          "2023-06-03",
+          "2023-06-04",
+          "2023-06-05",
+          "2023-06-06",
+          "2023-06-07"
+        ]
+      },
+      "month": {
+        "utilization": [75, 80, 85, 90],
+        "dates": ["2023-06-01", "2023-06-08", "2023-06-15", "2023-06-22"]
+      },
+      "year": {
+        "utilization": [85, 90, 95, 85, 80, 75, 70, 65, 60, 65, 70, 75],
+        "months": [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ]
+      }
+    }
+  },
+  "consumerUsageStatistics": {
+    "week": {
+      "successfulOrders": 120,
+      "failedOrders": 8
+    },
+    "month": {
+      "successfulOrders": 550,
+      "failedOrders": 25
+    },
+    "year": {
+      "successfulOrders": 4000,
+      "failedOrders": 120
+    }
+  },
+  "paymentTransactionStatistics": {
+    "week": {
+      "validPayments": 112,
+      "invalidPayments": 5
+    },
+    "month": {
+      "validPayments": 500,
+      "invalidPayments": 20
+    },
+    "year": {
+      "validPayments": 3500,
+      "invalidPayments": 100
+    }
+  },
+  "distributorMonitoring": {
+    "totalDistributors": 100,
+    "activeDistributors": 80,
+    "disconnectedDistributors": 5,
+    "outOfServiceDistributors": 15
+  },
+  "regions": ["region1", "region2", "region3", "region4"]
+}

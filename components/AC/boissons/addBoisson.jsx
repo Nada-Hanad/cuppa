@@ -120,43 +120,43 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
 	return (
 		<>
 			<button
-				className='px-4 py-4 bg-dark-grey rounded-xl text-white self-end mr-12'
+				className='self-end px-4 py-4 mr-12 text-white bg-dark-grey rounded-xl'
 				type='button'
 				onClick={() => setShowModal(true)}>
 				Ajouter
 			</button>
 			{showModal ? (
 				<>
-					<div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none modal'>
-						<div className='relative w-auto my-6 mx-auto max-w-3xl'>
+					<div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none modal scrollbar scrollbar-thumb-scrollbarThumb scrollbar-track-scrollbarTrack'>
+						<div className='relative w-auto max-w-3xl mx-auto my-6'>
 							{/*content*/}
 							<div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[600px] w-[600px] overflow-scroll'>
 								{/*header*/}
-								<div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
+								<div className='flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200'>
 									<h3 className='text-3xl font-semibold text-dark-grey'>
 										Ajouter un boisson
 									</h3>
 									<button
-										className='p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none'
+										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
 										onClick={() =>
 											setShowModal(false)
 										}>
-										<span className='bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none'>
+										<span className='block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
 											×
 										</span>
 									</button>
 								</div>
 								{/*body*/}
-								<div className='relative p-6 flex-auto'>
+								<div className='relative flex-auto p-6'>
 									<form>
 										<div className='mb-4'>
 											<label
-												className='block text-gray-700 font-bold mb-2'
+												className='block mb-2 font-bold text-gray-700'
 												htmlFor='name'>
 												Nom de la boisson
 											</label>
 											<input
-												className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
 												id='name'
 												type='text'
 												placeholder='Entrez le nom de la boisson'
@@ -181,12 +181,12 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
 										/>
 										<div className='mb-4'>
 											<label
-												className='block text-gray-700 font-bold mb-2'
+												className='block mb-2 font-bold text-gray-700'
 												htmlFor='price'>
 												Prix
 											</label>
 											<input
-												className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
 												id='price'
 												type='number'
 												placeholder='Entrez le prix de la boisson'
@@ -201,12 +201,12 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
 										</div>
 										<div className='mb-4'>
 											<label
-												className='block text-gray-700 font-bold mb-2'
+												className='block mb-2 font-bold text-gray-700'
 												htmlFor='picture'>
 												Image
 											</label>
 											<input
-												className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
 												id='picture'
 												type='text'
 												placeholder="Entrez l'URL de l'image de la boisson"
@@ -221,14 +221,14 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
 											<p className='p-4'>
 												Ou bien
 											</p>
-											<div className='flex justify-between items-center gap-8 '>
+											<div className='flex items-center justify-between gap-8 '>
 												{image ? (
 													<Image
 														src={
 															image
 														}
 														alt='Boisson'
-														className='h-48 w-full object-cover rounded'
+														className='object-cover w-full h-48 rounded'
 														height={
 															300
 														}
@@ -237,7 +237,7 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
 														}
 													/>
 												) : (
-													<div className='h-48 w-48 bg-gray-200 rounded' />
+													<div className='w-48 h-48 bg-gray-200 rounded' />
 												)}
 												<input
 													id='image'
@@ -253,9 +253,9 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
 									</form>
 								</div>
 
-								<div className='flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b'>
+								<div className='flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200'>
 									<button
-										className='bg-dark-grey text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+										className='px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
 										type='button'
 										onClick={handleSubmit}>
 										Sauvegarder
@@ -264,7 +264,7 @@ export default function AddBoissonModal({ drinks, setDrinks }) {
 							</div>
 						</div>
 					</div>
-					<div className='opacity-25 fixed inset-0 z-40 bg-black'></div>
+					<div className='fixed inset-0 z-40 bg-black opacity-25'></div>
 				</>
 			) : null}
 		</>

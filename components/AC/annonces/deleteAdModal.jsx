@@ -3,13 +3,9 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { API_URL } from '../../config/api';
+import { API_URL } from '../../../config/api';
 
-export default function DeleteAdvertiserModal({
-	name,
-	AdervtiserId,
-	fetchAdvertisers,
-}) {
+export default function DeleteAnnonceModal({ Ad, fetchAdvertisements }) {
 	const [showModal, setShowModal] = React.useState(false);
 
 	useEffect(() => {
@@ -26,13 +22,19 @@ export default function DeleteAdvertiserModal({
 	}, []);
 
 	const handleSave = async () => {
-		// const updatedAds = drinks.filter((e) => e.id !== drink.id);
-		//  setDrinks(updatedAds);
-
 		try {
+			const token = localStorage.getItem('token');
+
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'multipart/form-data',
+				},
+			};
 			const res = await axios.post(
-				`${API_URL}/api/ads/deleteAdvertiser/${AdervtiserId}`,
-				{}
+				`${API_URL}/api/ads/deleteAdvertisement/${Ad.id_annonce}`,
+				{},
+				config
 			);
 			console.log(`deleted res.data`);
 
@@ -40,7 +42,7 @@ export default function DeleteAdvertiserModal({
 		} catch (err) {
 			console.error(err);
 		}
-		fetchAdvertisers();
+		fetchAdvertisements();
 		setShowModal(false);
 	};
 
@@ -59,6 +61,7 @@ export default function DeleteAdvertiserModal({
 				type='button'
 				onClick={() => setShowModal(true)}>
 				<Image
+					alt='deleteIcon'
 					className='text-dark-grey'
 					src='/icons/darkDeleteIcon.svg'
 					width={26}
@@ -72,9 +75,9 @@ export default function DeleteAdvertiserModal({
 							{/*content*/}
 							<div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none  h-[400px] w-[400px] '>
 								{/*header*/}
-								<div className='flex  items-start justify-center  mx-auto p-5 rounded-t'>
-									<h3 className='text-3xl font-semibold  text-dark-grey'>
-										Supprimer l&apos;annonceur
+								<div className='flex items-start justify-center p-5 mx-auto rounded-t'>
+									<h3 className='text-3xl font-semibold text-dark-grey'>
+										Supprimer l&apos;annonce
 									</h3>
 									<button
 										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
@@ -90,13 +93,13 @@ export default function DeleteAdvertiserModal({
 								<div className='relative p-12 mx-auto flex rounded-[20px] border-slate-800 border-1 border w-8/12 bg-[#EBEEF3]'>
 									<p className='font-bold text-dark-grey text-center text-[20px]'>
 										{` Voulez_vous supprimer
-                                                  l’annonceur  ${name}? `}
+                                                  l’annonce de ${Ad.nom_annonce} ? `}
 									</p>
 								</div>
 
 								<div className='flex items-center justify-between p-6 rounded-b'>
 									<button
-										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
+										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear bg-green-500 rounded shadow outline-none hover:shadow-lg focus:outline-none'
 										type='button'
 										onClick={() =>
 											setShowModal(false)
@@ -104,7 +107,7 @@ export default function DeleteAdvertiserModal({
 										Annuler
 									</button>
 									<button
-										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
+										className='w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear bg-red-500 rounded shadow outline-none hover:shadow-lg focus:outline-none'
 										type='button'
 										onClick={handleSubmit}>
 										Confirmer

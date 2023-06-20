@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useAsyncDebounce } from 'react-table';
 import { DataTable } from '../../components/shared/tables/table';
 import { useEffect, useState, useMemo } from 'react';
@@ -26,32 +27,38 @@ const Button = tw.button`
 export default function SADM_clients() {
 	const [clients, setClients] = useState([]);
 	const [defaultData, setDefaultData] = useState([]);
+	const [selectedClient, setSelectedClient] = useState(null);
+
+	const router = useRouter();
 
 	const fetchClients = async () => {
-		const response = await axios
-			.get(API_URL + '/distributeurs')
-			.catch((e) => console.log(e));
-		if (response) {
-			const clients = response.data;
-			setClients(clients);
-			setDefaultData(clients);
-		}
-	};
-	const handleDelete = async (id) => {
 		try {
-			const response = await axios.delete(
-				API_URL + `/distributeurs/${id}`
-			);
-			fetchClients();
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: { Authorization: `Bearer ${token}` },
+			};
+
+			const response = await axios
+				.get(
+					API_URL + '/api/account.management/getAllClients',
+					config
+				)
+				.catch((e) => console.log(e));
+			if (response) {
+				const clients = response.data.data;
+				console.log(clients);
+				setClients(clients);
+				setDefaultData(clients);
+			}
 		} catch (error) {
-			console.error(error);
+			console.log(error);
 		}
 	};
 	const columns = useMemo(
 		() => [
 			{
 				Header: '  Client',
-				accessor: 'client',
+				accessor: 'nom_client',
 			},
 			{
 				Header: 'Client type',
@@ -64,46 +71,7 @@ export default function SADM_clients() {
 		],
 		[]
 	);
-	const data = useMemo(
-		() => [
-			{
-				client: 'Bouchra.co',
-				type_client: 'enterprise',
-				nb_distributeurs: '1',
-			},
-			{
-				client: 'Safa Zakaria ',
-				type_client: 'person',
-				nb_distributeurs: '10',
-			},
-			{
-				client: 'Rouibi Selsabil',
-				type_client: 'person',
-				nb_distributeurs: '4',
-			},
-			{
-				client: 'Gouasmia Malak',
-				type_client: 'person',
-				nb_distributeurs: '3',
-			},
-			{
-				client: 'Hanad Nada',
-				type_client: 'person',
-				nb_distributeurs: '12',
-			},
-			{
-				client: 'Asma.co',
-				type_client: 'enterprise',
-				nb_distributeurs: '5',
-			},
-			{
-				client: 'Maissa.co',
-				type_client: 'enterprise',
-				nb_distributeurs: '9',
-			},
-		],
-		[]
-	);
+
 	const clientData = useMemo(() => [...clients], [clients]);
 	const tableHooks = (hooks) => {
 		hooks.visibleColumns.push((columns) => [
@@ -114,13 +82,29 @@ export default function SADM_clients() {
 				Cell: ({ row }) => {
 					return (
 						<div className='flex justify-evenly'>
-							<AddClientDistModal
-								client_id={row.original.id_client}
-								fetchClients={fetchClients}
-							/>
+							{/*  <AddClientDistModal
+                id_client={row.original.id_client}
+                fetchClients={fetchClients}
+              />*/}
+							<button
+								type='button'
+								onClick={() =>
+									setSelectedClient(row.original)
+								}
+								className='rounded-[15px] bg-transparent flex items-center justify-evenly'>
+								<Image
+									src='/icons/mug.svg'
+									width={35}
+									height={35}></Image>
+							</button>
 
-							<Button onClick={() => alert('details ')}>
-								details
+							<Button
+								onClick={() =>
+									router.push(
+										`/sadm/client/${row.original.id_client}`
+									)
+								}>
+								Details
 							</Button>
 						</div>
 					);
@@ -128,18 +112,13 @@ export default function SADM_clients() {
 			},
 		]);
 	};
+	//const tableInstence = useTable({ columns, data }, useGlobalFilter, tableHooks)
 	const tableInstence = useTable(
-		{ columns, data },
+		{ columns, data: clientData },
 		useGlobalFilter,
 		tableHooks
 	);
-	/*
-const tableInstence = useTable(
-  { columns, data: clientData },
-  useGlobalFilter,
-  tableHooks
-)
-*/
+
 	const {
 		getTableProps,
 		getTableBodyProps,
@@ -176,6 +155,11 @@ const tableInstence = useTable(
 						height={30}></Image>
 				</button>
 				<AddClientModal fetchClients={fetchClients} />
+				<AddClientDistModal
+					selectedClient={selectedClient}
+					setSelectedClient={setSelectedClient}
+					fetchClients={fetchClients}
+				/>
 				{/*<button className="w-[150px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly">
           <Image src="/icons/plus.png" width={35} height={35}></Image>
           Client

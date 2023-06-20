@@ -47,6 +47,6 @@ export function SearchTableBar({
 				setValue(e.target.value);
 				onChange(e.target.value);
 			}}
-			placeholder={`${count} records...`}></input>
+			placeholder={`${count} enregistrements...`}></input>
 	);
 }

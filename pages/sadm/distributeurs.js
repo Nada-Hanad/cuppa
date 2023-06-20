@@ -1,5 +1,7 @@
 import { useAsyncDebounce } from 'react-table';
 import Head from 'next/head';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image';
 import { DataTable } from '../../components/shared/tables/table';
 import { useEffect, useState, useMemo } from 'react';
@@ -38,10 +40,18 @@ export default function SADM_distributeurs() {
 	};
 	const handleDelete = async (id) => {
 		try {
-			const response = await axios.delete(
-				API_URL + `/distributeurs/${id}`
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: { Authorization: `Bearer ${token}` },
+			};
+
+			const response = await axios.post(
+				API_URL + `/distributeurs/delete/${id}`,
+				{},
+				config
 			);
 			fetchDistributeurs();
+			toast.success('supprimer avec success');
 		} catch (error) {
 			console.error(error);
 		}
@@ -73,15 +83,14 @@ export default function SADM_distributeurs() {
 			...columns,
 			{
 				id: 'Edit',
-				Header: 'actions',
+				Header: 'Actions',
 				Cell: ({ row }) => {
-					if (row.original.etat_distributeur === 'Desactivé') {
+					if (
+						row.original.etat_distributeur === 'Inactive' &&
+						row.original.id_client === null
+					) {
 						return (
 							<div className='flex justify-evenly'>
-								{/*
-                  <button onClick={() => alert('edit ')}>
-                    <Image src="/icons/edit.png" width={40} height={40}></Image>
-                  </button>*/}
 								<button
 									onClick={() =>
 										handleDelete(
@@ -94,13 +103,20 @@ export default function SADM_distributeurs() {
 										width={40}
 										height={40}></Image>
 								</button>
-								{/*<Button onClick={() => alert('details ')}>details</Button>*/}
 							</div>
 						);
 					} else {
 						return (
 							<div className='flex justify-end'>
 								{/*<Button onClick={() => alert('details ')} className="mr-16">
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> fcbd69d635fc28cbfca0c32c74560e6bda911cac
+=======
+
+>>>>>>> origin
                   details
                 </Button>*/}
 							</div>
@@ -207,7 +223,7 @@ export default function SADM_distributeurs() {
 					onClick={() => {
 						setDistributeurs(
 							defaultData.filter(
-								(d) => d.etat_distributeur === 'Activé'
+								(d) => d.etat_distributeur === 'Active'
 							)
 						);
 					}}>
@@ -219,7 +235,7 @@ export default function SADM_distributeurs() {
 						setDistributeurs(
 							defaultData.filter(
 								(d) =>
-									d.etat_distributeur === 'Desactivé'
+									d.etat_distributeur === 'Inactive'
 							)
 						);
 					}}>
@@ -237,11 +253,36 @@ export default function SADM_distributeurs() {
 	);
 }
 /*
+
         <button
-          onClick={addBtnClick}
-          className="w-[180px] h-[60px] rounded-[15px] bg-[#343A49] text-white text-[20px] flex items-center justify-evenly"
+          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
+          onClick={() => {
+            setDistributeurs(
+              defaultData.filter((d) => d.etat_distributeur === 'Active')
+            )
+          }}
         >
-          <Image src="/icons/plus.png" width={35} height={35}></Image>
-          distributeur
+          Activés
         </button>
+        <button
+          className="w-[180px] h-[60px] rounded-[15px] border-[3px] border-[#343A49] text-[#343A49] bg-white font-semibold text-[20px] flex items-center justify-evenly"
+          onClick={() => {
+            setDistributeurs(
+              defaultData.filter((d) => d.etat_distributeur === 'Inactive')
+            )
+          }}
+        >
+          Désactivés
+        </button>
+      </div>
+      <DataTable
+        getTableProps={getTableProps}
+        getTableBodyProps={getTableBodyProps}
+        headerGroups={headerGroups}
+        rows={rows}
+        prepareRow={prepareRow}
+      />
+    </div>
+  )
+}
 */
