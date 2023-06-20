@@ -99,7 +99,7 @@ export default function Login() {
 								Pouring Happiness Into Every Cup
 							</p>
 						</div>
-						<div className='flex w-9/12 sm:w-6/12  md:w-5/12  lg:w-4/12 xl:w-3/12 bg-white rounded-[20px] h-5/6  lg:h-2/3 justify-center items-center flex-col'>
+						<div className='flex w-11/12 sm:w-6/12  md:w-5/12  lg:w-4/12 xl:w-3/12 bg-white rounded-[20px] h-5/6  lg:h-2/3 justify-center items-center flex-col'>
 							<img
 								alt='logo'
 								src='icons/blackLogo.svg'
