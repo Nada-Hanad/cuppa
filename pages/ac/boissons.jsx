@@ -166,13 +166,31 @@ export default function Boissons() {
     });
     setDrinks(filteredDrinks);
   }
+  function structureResult(response) {
+    const result = [];
+    response.forEach((drink) => {
+      result.push({
+        id: drink.id_boisson,
+        name: drink.libelle_boisson,
+        price: drink.prix_boisson,
 
+        ingredients: [
+          { name: "espresso", quantity: 10 },
+          { name: "steamed milk", quantity: 10 },
+          { name: "foamed milk", quantity: 10 },
+        ],
+        image: `${DEPLOY_URL}/${drink.path_image_boisson}`,
+      });
+    });
+    return result;
+  }
   const [drinks, setDrinks] = useState(defaultData);
   useEffect(() => {
     axios
       .get(DEPLOY_URL + "/boissons")
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        setDrinks(structureResult(res.data));
       })
       .catch((err) => {
         console.log(err);
