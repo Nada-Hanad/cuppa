@@ -40,7 +40,7 @@ export default function Annonceurs() {
       headers: { Authorization: `Bearer ${token}` },
     };
     const response = await axios
-      .get(`${API_URL}/api/account.management/getEmployees/`, config)
+      .get(`${API_URL}/api/account.management/getEmployees`, config)
       .catch((e) => console.log(e));
     if (response) {
       const Employees = response.data;

@@ -72,18 +72,17 @@ export default function Profil() {
         <Title title="Profil" />
       </div>
       <div className="flex flex-col items-center justify-center md:flex-row gap-x-20 ">
-        <div className="flex flex-col items-start justify-start pt-8 pl-8 mx-auto mt-8 mb-24 text-center shadow-lg bg-slate-50 sm:w-full md:2/3 lg:w-1/3 min-h-96 ">
-          <div className="w-full mb-12">
+        <div className="flex flex-col items-start justify-start pt-8 px-8 mx-auto mt-8 mb-24 text-center shadow-lg bg-slate-50 sm:w-full md:2/3 lg:w-1/3 min-h-96 ">
+          <div className="w-full mb-12 ">
             <img
               alt="profile"
               height={48}
               width={48}
-              className="object-cover w-48 h-48 mx-auto rounded-sm "
-              src="/icons/profilePicture2.png"
+              className="object-cover w-48 h-48 mx-auto rounded"
+              src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
             />
           </div>
 
-          <InfoLine title="Identifiant   " value={profil?.id_utilisateur} />
           <InfoLine
             title="Nom d 'utilisateur   "
             value={profil?.username_utilisateur}
@@ -96,13 +95,15 @@ export default function Profil() {
           />
           <InfoLine
             title="Sexe   "
-            value={profil?.profil?.sexe_utilisateur == "M" ? "Homme" : "Femme"}
+            value={
+              profil?.profil?.sexe_utilisateur == "M"
+                ? "Homme"
+                : profil?.profil?.sexe_utilisateur == "F"
+                ? "Femme"
+                : ""
+            }
           />
-          <InfoLine title="Clinet  " value={profil?.client?.nom_client} />
-          <InfoLine
-            title="Superviseur  "
-            value={profil?.supervisor?.profil?.nom_utilisateur}
-          />
+          <InfoLine title="Client" value={profil?.client?.nom_client} />
         </div>
 
         <div className="flex flex-col items-center justify-center w-4/12">

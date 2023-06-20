@@ -53,7 +53,7 @@ export default function Login() {
       } else if (role === "AC") {
         router.push("/ac/profil");
       } else if (role === "decideur") {
-        router.push("/decideur");
+        router.push("/decideur/dashboard");
       } else if (role === "ADM") {
         router.push("/adm/dashboard");
       }

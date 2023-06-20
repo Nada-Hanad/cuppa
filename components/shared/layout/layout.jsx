@@ -91,19 +91,24 @@ export default function Layout({ children }) {
       case "decideur":
         setMenuItems([
           {
-            href: "/decideur/distributeurs",
-            title: "Distributeurs",
-            icon: "/icons/mug.svg",
-          },
-          {
             href: "/decideur/dashboard",
             title: "Tableau de bord",
             icon: "/icons/dashboard.svg",
           },
           {
+            href: "/decideur/distributeurs",
+            title: "Distributeurs",
+            icon: "/icons/mug.svg",
+          },
+          {
             href: "/decideur/finance",
             title: "Finance",
             icon: "/icons/finance.svg",
+          },
+          {
+            href: "/decideur/profil",
+            title: "Profile",
+            icon: "/icons/user.svg",
           },
         ]);
         break;
@@ -130,7 +135,7 @@ export default function Layout({ children }) {
               <li className="m-2" key={title}>
                 <Link href={href}>
                   <span
-                    className={`gap-4 flex p-4 bg-bg-grey rounded hover:bg-white cursor-pointer ${
+                    className={`gap-4 flex p-4 bg-bg-grey rounded-xl hover:bg-white cursor-pointer ${
                       (router.asPath === href ||
                         router.pathname === href + "/[pid]") &&
                       "bg-white  "
