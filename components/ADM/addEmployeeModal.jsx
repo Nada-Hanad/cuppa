@@ -195,7 +195,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
                               />
                               <label
                                 htmlFor="M"
-                                className={`flex items-center px-5 py-1 rounded border border-gray-300  cursor-pointer ${
+                                className={`flex items-center px-5 py-1 rounded-xl border border-gray-300  cursor-pointer ${
                                   sexe === "M"
                                     ? " bg-slate-800 text-slate-50"
                                     : " bg-gray-50 text-gray-500"
@@ -215,7 +215,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
                               />
                               <label
                                 htmlFor="F"
-                                className={`flex items-center px-5 py-1 rounded bg-gray-200 border border-gray-300  cursor-pointer ${
+                                className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300  cursor-pointer ${
                                   sexe === "F"
                                     ? " bg-slate-800 text-slate-50"
                                     : " bg-gray-50 text-gray-500"

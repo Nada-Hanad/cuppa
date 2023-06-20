@@ -42,7 +42,7 @@ export function Search_bar({
       type="text"
       id="search"
       name="search"
-      className="w-[650px] h-[60px] p-4 rounded text-lg"
+      className="w-[650px] h-[60px] p-4 rounded text-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
       value={value || ""}
       onChange={(e) => {
         setValue(e.target.value);
