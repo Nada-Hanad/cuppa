@@ -83,23 +83,23 @@ export default function Login() {
 					/>
 					<div className='absolute w-full h-full bg-black bg-opacity-70 -z-10 ' />
 
-					<div className='flex flex-col items-center justify-center w-full h-full gap-20 xl:flex-row '>
+					<div className='flex flex-col items-center justify-center w-full h-full gap-20 lg:flex-row '>
 						<div className='flex flex-col items-center justify-center'>
 							<div className='flex items-center justify-center'>
 								<img
 									alt='logo'
 									src='icons/whiteLogo.svg'
-									className='w-48 h-48 animate-roll-in '
+									className='w-24 h-24 sm:w-32 sm:h-32 lg:w-48 lg:h-48 animate-roll-in'
 								/>
-								<h2 className='font-bold tracking-widest mt-8 text-[70px] text-white'>
+								<h2 className='font-bold tracking-widest mt-8 text-[40px]  md:text-[50px] lg:text-[70px] text-white'>
 									CUPPA
 								</h2>
 							</div>
-							<p className='text-[36px] text-white font-bold'>
+							<p className=' text-[22px] md:text-[28px] lg:text-[36px] text-white font-bold'>
 								Pouring Happiness Into Every Cup
 							</p>
 						</div>
-						<div className='flex w-3/12 bg-white rounded-[20px] h-2/3 justify-center items-center flex-col'>
+						<div className='flex w-9/12 sm:w-6/12  md:w-5/12  lg:w-4/12 xl:w-3/12 bg-white rounded-[20px] h-5/6  lg:h-2/3 justify-center items-center flex-col'>
 							<img
 								alt='logo'
 								src='icons/blackLogo.svg'

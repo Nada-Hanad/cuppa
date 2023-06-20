@@ -32,13 +32,13 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     console.log(localStorage);
-    // if (!localStorage.getItem("token")) {
-    //   router.push("/login");
-    // }
+    if (!localStorage.getItem("token")) {
+      router.push("/login");
+    }
   }, []);
-  // if (router.pathname === "/login") {
-  //   return <Login />;
-  // }
+  if (router.pathname === "/login") {
+    return <Login />;
+  }
   return (
     <Layout>
       {isLoading && (

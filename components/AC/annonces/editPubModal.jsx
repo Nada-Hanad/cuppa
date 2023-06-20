@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Range } from 'react-range';
 import axios from 'axios';
-import { API_URL } from '../../../config/api';
+import { API_URL, PUBLIC_URL } from '../../../config/api';
 import Autocomplete from 'react-autocomplete';
 
 export default function EditAnnonceModal({
@@ -22,7 +22,9 @@ export default function EditAnnonceModal({
 	const [startDate, setStartDate] = React.useState(Ad.date_debut);
 	const [minMaxAge, setMinMaxAge] = React.useState([Ad.ageMin, Ad.ageMax]);
 	const [videoFile, setVideoFile] = React.useState(null);
-	const [videoPath, setVideoPath] = React.useState('');
+	const [videoPath, setVideoPath] = React.useState(
+		`${PUBLIC_URL}${Ad.path_video}`
+	);
 	const [selectedAdvertiser, setSelectedAdvertiser] = React.useState({
 		name: Ad.nom_annonceur,
 		id: Ad.id_annonceur,
@@ -38,6 +40,9 @@ export default function EditAnnonceModal({
 				: showTimeUnite == 'semaines'
 				? showTime * 7
 				: showTime * 30;
+		let data;
+		let link;
+		let config;
 		const formData = new FormData();
 		formData.append('nom_annonce', name);
 		//	formData.append('id_annonceur', 6500);
@@ -49,12 +54,49 @@ export default function EditAnnonceModal({
 		formData.append('tarif_annonce', price);
 		formData.append('videoFile', videoFile);
 		videoFile && formData.append('videoFile', videoFile);
+		const token = localStorage.getItem('token');
+
+		if (!videoFile) {
+			data = {
+				nom_annonce: name,
+				duree_affichage,
+				type_forfait: type,
+				ageMax: minMaxAge[0],
+				ageMin: minMaxAge[1],
+				sexe_cible: sexe,
+				tarif_annonce: price,
+			};
+			link = 'updateAdvertisementWithoutTheFile';
+			config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			};
+		} else {
+			data = formData;
+			link = 'updateAdvertisement';
+
+			config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'multipart/form-data',
+				},
+			};
+		}
 		try {
+			console.log('---------------------------');
+
+			console.log(data);
+			console.log('---------------------------');
+
 			const res = await axios.post(
-				`${API_URL}/api/ads/updateAdvertisement/${Ad.id_annonce}`,
-				formData
+				`${API_URL}/api/ads/${link}/${Ad.id_annonce}`,
+				data,
+				config
 			);
-			console.log(res.data);
+			console.log(data);
+			console.log('*********************************************');
+			console.log(res);
 		} catch (err) {
 			console.error(err);
 		}
@@ -418,94 +460,139 @@ export default function EditAnnonceModal({
 												)}
 											/>
 										</div>
-										<div className='flex items-center justify-start mb-4'>
+										<div className='flex mb-4'>
 											<label
-												className='block font-bold mr-16 text-gray-700 '
+												className='block ml-2 mr-8 mt-[28px] font-bold text-left text-gray-700 '
 												htmlFor='name'>
 												Sexe
 											</label>
-
-											<div className='flex items-center justify-center'>
-												<div className='flex ml-2'>
-													<div className='mr-2'>
-														<input
-															type='radio'
-															name='sexe'
-															id='Male'
-															value='M'
-															className='mr-4 '
-															onClick={
-																handleSexeChange
-															}
-														/>
-														<label
-															htmlFor='M'
-															className={
-																'text-darkgrey text-18px text-semibold'
-															}>
-															Hommes
-														</label>
-													</div>
-													<div className='mr-2'>
-														<input
-															type='radio'
-															name='sexe'
-															id='Female'
-															value='F'
-															onClick={
-																handleSexeChange
-															}
-															className='mr-4 '
-														/>
-														<label htmlFor='F'>
-															Femmes
-														</label>
+											<div>
+												<div className='flex items-center justify-start'>
+													<div className='flex ml-2'>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='sexe'
+																id='M'
+																value='M'
+																className='mr-1 appearance-none '
+																onClick={
+																	handleSexeChange
+																}
+															/>
+															<label
+																htmlFor='M'
+																className={`flex items-center px-5 py-1 rounded-xl border border-gray-300  cursor-pointer ${
+																	sexe ===
+																	'M'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Hommes
+															</label>
+														</div>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='sexe'
+																id='F'
+																value='F'
+																onClick={
+																	handleSexeChange
+																}
+																className='mr-1 appearance-none'
+															/>
+															<label
+																htmlFor='F'
+																className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300  cursor-pointer ${
+																	sexe ===
+																	'F'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Femmes
+															</label>
+														</div>
+														<div>
+															<input
+																type='radio'
+																name='sexe'
+																id='B'
+																value='B'
+																className='mr-1 appearance-none'
+																onClick={
+																	handleSexeChange
+																}
+															/>
+															<label
+																htmlFor='B'
+																className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300 cursor-pointer ${
+																	sexe ===
+																	'B'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Les
+																deux
+															</label>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div className='flex items-center justify-start mb-4'>
+										<div className='flex items-center mb-4'>
 											<label
-												className='block font-bold mr-[68px] text-gray-700 '
+												className='block mt-4 ml-2 mr-8 font-bold text-left text-gray-700 '
 												htmlFor='name'>
 												Type
 											</label>
-
-											<div className='flex items-center justify-center'>
-												<div className='flex ml-2'>
-													<div className='mr-2'>
-														<input
-															type='radio'
-															name='Type'
-															id='forfait'
-															value='forfait'
-															className='mr-4 text-red-600 bg-darkgrey'
-															onClick={
-																handleTypeChange
-															}
-														/>
-														<label
-															htmlFor='forfait'
-															className={
-																'text-darkgrey text-18px text-semibold'
-															}>
-															Forfait
-														</label>
-													</div>
-													<div className='mr-2'>
-														<input
-															type='radio'
-															name='Type'
-															id='reel'
-															value='reel'
-															onClick={
-																handleTypeChange
-															}
-															className='mr-4 ml-5 '
-														/>
-														<label htmlFor='reel'>
-															Réel
-														</label>
+											<div>
+												<div className='flex items-center justify-start'>
+													<div className='flex ml-2'>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='type'
+																id='forfait'
+																value='forfait'
+																className='mr-1 appearance-none '
+																onClick={
+																	handleTypeChange
+																}
+															/>
+															<label
+																htmlFor='forfait'
+																className={`flex items-center px-5 py-1 rounded-xl border border-gray-300  cursor-pointer ${
+																	type ===
+																	'forfait'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Forfait
+															</label>
+														</div>
+														<div className='mr-2'>
+															<input
+																type='radio'
+																name='type'
+																id='reel'
+																value='reel'
+																onClick={
+																	handleTypeChange
+																}
+																className='mr-1 appearance-none'
+															/>
+															<label
+																htmlFor='reel'
+																className={`flex items-center px-5 py-1 rounded-xl bg-gray-200 border border-gray-300  cursor-pointer ${
+																	type ===
+																	'reel'
+																		? ' bg-slate-800 text-slate-50'
+																		: ' bg-gray-50 text-gray-500'
+																}`}>
+																Réel
+															</label>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -598,7 +685,7 @@ export default function EditAnnonceModal({
 													onChange={
 														handleFileInputChange
 													}
-													className='absolute inset-0 mt-2 w-full  opacity-0 cursor-pointer'
+													className='absolute inset-0 w-full mt-2 opacity-0 cursor-pointer'
 												/>
 												<button
 													className={`px-4 py-2 text-dark-gray ${

@@ -6,16 +6,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import { async } from 'regenerator-runtime';
 import { API_URL } from '../../config/api';
 
-export default function AddClientDistModal({ id_client, fetchClients }) {
+export default function AddClientDistModal({
+	selectedClient,
+	setSelectedClient,
+	fetchClients,
+}) {
 	const [showModal, setShowModal] = React.useState(false);
 
 	useEffect(() => {
 		function handleClickOutside(event) {
 			if (event.target.classList.contains('modal')) {
-				setShowModal(false);
+				setSelectedClient(null);
 			}
 		}
-
 
 		window.addEventListener('click', handleClickOutside);
 		return () => {
@@ -23,16 +26,24 @@ export default function AddClientDistModal({ id_client, fetchClients }) {
 		};
 	}, []);
 
-
 	const [numero_serie_distributeur, setnumero_serie_distributeur] =
 		React.useState('');
-	const addClientNewDist = async (client_id, numero_serie_distributeur) => {
+	const addClientNewDist = async (
+		selectedClient,
+		numero_serie_distributeur
+	) => {
 		try {
+			const token = localStorage.getItem('token');
+			const config = {
+				headers: { Authorization: `Bearer ${token}` },
+			};
 			const response = await axios.post(
-				`http://localhost:8000/distributeurs/${client_id}`,
+				API_URL +
+					`/distributeurs/${numero_serie_distributeur}/client`,
 				{
-					numero_serie_distributeur: numero_serie_distributeur,
-				}
+					id_client: '4',
+				},
+				config
 			);
 			console.log(response.data);
 		} catch (error) {
@@ -40,7 +51,7 @@ export default function AddClientDistModal({ id_client, fetchClients }) {
 		}
 	};
 	const handleSave = async () => {
-		await addClientNewDist(client_id, numero_serie_distributeur);
+		await addClientNewDist(selectedClient, numero_serie_distributeur);
 		// Reset the form
 		setnumero_serie_distributeur('');
 	};
@@ -54,59 +65,48 @@ export default function AddClientDistModal({ id_client, fetchClients }) {
 		}
 		// If all validations pass, save the beverage
 		await handleSave();
-		await fetchClients();
+		//await  fetchClients()
 		toast.success('Ajouté avec success');
-		setShowModal(false);
+		fetchClients();
+		setSelectedClient(null);
 	};
 
 	return (
 		<>
-			<button
-				type='button'
-				onClick={() => setShowModal(true)}
-				className='rounded-[15px] bg-transparent flex items-center justify-evenly'>
-				<Image
-					alt='mug'
-					src='/icons/mug.svg'
-					width={35}
-					height={35}></Image>
-			</button>
-
-
-			{showModal ? (
+			{selectedClient && (
 				<>
-					<div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none modal'>
-						<div className='relative w-auto my-6 mx-auto max-w-3xl'>
+					<div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none modal'>
+						<div className='relative w-auto max-w-3xl mx-auto my-6'>
 							{/*content*/}
 							<div className='border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none  h-[400px] w-[400px] overflow-hidden'>
 								{/*header*/}
-								<div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
+								<div className='flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200'>
 									<h3 className='text-3xl font-semibold'>
 										Ajouter un distributeur au
 										client{' '}
 									</h3>
 									<button
-										className='p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none'
+										className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
 										onClick={() =>
 											setShowModal(false)
 										}>
-										<span className='bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none'>
+										<span className='block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
 											×
 										</span>
 									</button>
 								</div>
 								{/*body*/}
-								<div className='relative p-6 flex-auto'>
+								<div className='relative flex-auto p-6'>
 									<form>
 										<div className='mb-4'>
 											<label
-												className='block text-gray-700 font-bold mb-2'
+												className='block mb-2 font-bold text-gray-700'
 												htmlFor='name'>
 												numero serie de
 												distributeur
 											</label>
 											<input
-												className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+												className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
 												id='numero_serie_distributeur'
 												type='text'
 												placeholder='Entrez le numero_serie_distributeur'
@@ -119,22 +119,86 @@ export default function AddClientDistModal({ id_client, fetchClients }) {
 											/>
 										</div>
 									</form>
-								</div>
+									{showModal ? (
+										<>
+											<div className='fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none modal'>
+												<div className='relative w-auto max-w-3xl mx-auto my-6'>
+													{/*content*/}
+													<div className='border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none  h-[400px] w-[400px] overflow-hidden'>
+														{/*header*/}
+														<div className='flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200'>
+															<h3 className='text-3xl font-semibold'>
+																Ajouter
+																un
+																distributeur
+																au
+																client{' '}
+															</h3>
+															<button
+																className='float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none'
+																onClick={() =>
+																	setShowModal(
+																		false
+																	)
+																}>
+																<span className='block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none'>
+																	×
+																</span>
+															</button>
+														</div>
+														{/*body*/}
+														<div className='relative flex-auto p-6'>
+															<form>
+																<div className='mb-4'>
+																	<label
+																		className='block mb-2 font-bold text-gray-700'
+																		htmlFor='name'>
+																		numero
+																		serie
+																		de
+																		distributeur
+																	</label>
+																	<input
+																		className='w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline'
+																		id='numero_serie_distributeur'
+																		type='text'
+																		placeholder='Entrez le numero_serie_distributeur'
+																		onChange={(
+																			e
+																		) =>
+																			setnumero_serie_distributeur(
+																				e
+																					.target
+																					.value
+																			)
+																		}
+																	/>
+																</div>
+															</form>
+														</div>
 
-								<div className='flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b'>
-									<button
-										className='bg-dark-grey text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
-										type='button'
-										onClick={handleSubmit}>
-										Ajouter
-									</button>
+														<div className='flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200'>
+															<button
+																className='px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none'
+																type='button'
+																onClick={
+																	handleSubmit
+																}>
+																Ajouter
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div className='fixed inset-0 z-40 bg-black opacity-25'></div>
+										</>
+									) : null}
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className='opacity-25 fixed inset-0 z-40 bg-black'></div>
 				</>
-			) : null}
+			)}
 		</>
 	);
 }

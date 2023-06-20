@@ -28,11 +28,20 @@ export default function DeleteAdvertiserModal({
 	const handleSave = async () => {
 		// const updatedAds = drinks.filter((e) => e.id !== drink.id);
 		//  setDrinks(updatedAds);
+		const token = localStorage.getItem('token');
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'multipart/form-data',
+			},
+		};
 
 		try {
 			const res = await axios.post(
 				`${API_URL}/api/ads/deleteAdvertiser/${Advertiser.id_annonceur}`,
-				{}
+				{},
+				config
 			);
 			console.log(`deleted res.data`);
 

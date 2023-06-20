@@ -90,6 +90,18 @@ export default function Annonceurs() {
 				Header: "Nombre d'annonces",
 				accessor: 'numberOfAds',
 			},
+			{
+				Header: 'Numéro de téléphone',
+				accessor: 'telephone_annonceur',
+			},
+			{
+				Header: 'RCS',
+				accessor: 'rcs_annonceur',
+			},
+			{
+				Header: 'fiscal ',
+				accessor: 'fiscal_annonceur',
+			},
 		],
 		[]
 	);
@@ -107,7 +119,7 @@ export default function Annonceurs() {
 					return (
 						<div className='flex justify-center'>
 							<button
-								className='self-end px-4 py-4 mr-12 text-white  rounded-xl'
+								className='self-end px-4 py-4 mr-12 text-white rounded-xl'
 								type='button'
 								onClick={() =>
 									setSelectedAdvertiserModify(
@@ -170,7 +182,7 @@ export default function Annonceurs() {
 
 	////////////////////////////////////////////////////////////////////////////////////
 	return (
-		<div className='relative flex flex-col items-center pt-4 overflow-x-hidden  text-center gap-11'>
+		<div className='relative flex flex-col items-center pt-4 overflow-x-hidden text-center gap-11'>
 			<Head>
 				<title>Gestion des Annonceurs</title>
 				<link rel='icon' href='/favicon.ico' />
