@@ -3,7 +3,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { API_URL } from "../../config/api";
+import { API_URL } from "../../../config/api";
 
 export default function DeleteAdvertiserModal({
   Advertiser,
