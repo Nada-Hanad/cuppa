@@ -97,7 +97,7 @@ export default function Login() {
                 Pouring Happiness Into Every Cup
               </p>
             </div>
-            <div className="flex w-11/12 sm:w-6/12  md:w-5/12  lg:w-4/12 xl:w-3/12 bg-white rounded-[20px] h-5/6  lg:h-2/3 justify-center items-center flex-col">
+            <div className="flex w-11/12 sm:w-6/12  md:w-5/12  lg:w-4/12 xl:w-3/12 bg-white rounded h-5/6  lg:h-2/3 justify-center items-center flex-col">
               <img alt="logo" src="icons/blackLogo.svg" className="w-20 h-24" />
               <h3 className="text-black my-4 font-bold text-[20px]">
                 Bienvenue !
@@ -143,7 +143,7 @@ export default function Login() {
 
                 <button
                   type="submit"
-                  className="my-2 w-full h-10 bg-[#F18C4F] rounded-lg font-bold cursor-pointer "
+                  className="my-2 w-full h-10 bg-[#F18C4F] rounded font-bold cursor-pointer text-white "
                   onClick={handleSubmit}
                   disabled={isLoading} // Disable button during loading
                 >

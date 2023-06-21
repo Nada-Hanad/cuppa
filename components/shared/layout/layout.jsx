@@ -77,14 +77,14 @@ export default function Layout({ children }) {
       case "sadm":
         setMenuItems([
           {
-            href: "/sadm/distributeurs",
-            title: "Distributeurs",
-            icon: "/icons/mug.svg",
-          },
-          {
             href: "/sadm/clients",
             title: "Clients",
             icon: "/icons/user.svg",
+          },
+          {
+            href: "/sadm/distributeurs",
+            title: "Distributeurs",
+            icon: "/icons/mug.svg",
           },
         ]);
         break;
@@ -119,7 +119,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="relative w-full min-h-screen">
-      <aside className="h-[calc(100%-32px)] bg-dark-grey rounded-2xl w-[250px] fixed top-4 left-4">
+      <aside className="h-[calc(100%-32px)] bg-dark-grey rounded-lg w-[250px] fixed top-4 left-4">
         <div className="flex items-center justify-center h-24 gap-4 my-10 text-white">
           <div>
             <h2 className="font-bold text-[26px] -mt-8">
@@ -135,7 +135,7 @@ export default function Layout({ children }) {
               <li className="m-2" key={title}>
                 <Link href={href}>
                   <span
-                    className={`gap-4 flex p-4 bg-bg-grey rounded-xl hover:bg-white cursor-pointer ${
+                    className={`gap-4 flex p-4 bg-bg-grey rounded hover:bg-white cursor-pointer ${
                       (router.asPath === href ||
                         router.pathname === href + "/[pid]") &&
                       "bg-white  "
