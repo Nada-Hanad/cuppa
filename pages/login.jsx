@@ -36,7 +36,7 @@ export default function Login() {
         password,
         rememberMe,
       });
-
+      console.log(response);
       setIsLoadingPage(true);
       let token = response.data.token;
       let role = response.data.role;

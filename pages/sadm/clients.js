@@ -93,7 +93,7 @@ export default function SADM_clients() {
 								}
 								className='rounded-[15px] bg-transparent flex items-center justify-evenly'>
 								<Image
-									src='/icons/mug.svg'
+									src='/icons/addDistIcon.svg'
 									width={35}
 									height={35}></Image>
 							</button>

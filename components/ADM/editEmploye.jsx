@@ -130,7 +130,7 @@ export default function EditEmployeModal({
                 {/*header*/}
                 <div className="flex items-start justify-center p-5 mx-auto border-b border-solid rounded-t border-slate-200">
                   <h3 className="text-3xl font-semibold text-dark-grey">
-                    Ajouter employé
+                    Modifier employé
                   </h3>
                   <button
                     className="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none"

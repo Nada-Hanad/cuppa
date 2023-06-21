@@ -9,7 +9,7 @@ import AddEmployeeModal from "../../components/ADM/addEmployeeModal";
 import EditEmployeModal from "../../components/ADM/editEmploye";
 import AddAdvertiserModal from "../../components/AC/annonces/addAdvertiser";
 import { API_URL } from "../../config/api";
-import DeleteAdvertiserModal from "../../components/AC/annonces/deleteAdvertiserModal";
+import DeleteAdvertiserModal from "../../components/ADM/deleteEmployeeModal";
 import ModifyAdvertiserModal from "../../components/AC/annonces/modifyAdvertiser";
 import { SearchTableBar } from "../../components/shared/search/searchTableBar";
 import Title from "../../components/shared/layout/title";

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClientIDCard = ({ client }) => {
+const ClientIDCard = ({ client ,nbr }) => {
   return (
     <div className="id-card bg-white shadow-lg rounded-md p-4 w-[500px] h-[250px] text-[#343A49]">
       <div className="id-card-header mb-5">
@@ -17,7 +17,7 @@ const ClientIDCard = ({ client }) => {
         </div>
         <div className='flex  justify-start gap-5 w-[80%] mb-4'>
           <h3> nombre de distributeurs:</h3>
-          <h3>{client.nb_distributeurs} </h3>
+          <h3>{nbr} </h3>
 
         </div>
       </div>
