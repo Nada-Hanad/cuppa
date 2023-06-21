@@ -13,6 +13,7 @@ import DeleteAdvertiserModal from "../../components/AC/annonces/deleteAdvertiser
 import ModifyAdvertiserModal from "../../components/AC/annonces/modifyAdvertiser";
 import { SearchTableBar } from "../../components/shared/search/searchTableBar";
 import Title from "../../components/shared/layout/title";
+import { CircularProgress } from "@mui/material";
 /*
 const Button = tw.button`
   pl-4
@@ -26,6 +27,8 @@ const Button = tw.button`
 */
 
 export default function Annonceurs() {
+  const [isLoading, setIsLoading] = useState(false);
+
   ////////////---------------------- Dynamic table -----------------------------------///////////////////////////////////////////////////////////////////////////////////////////////
   const [Employees, setEmployees] = useState([]);
   const [defaultData, setDefaultData] = useState([]);
@@ -34,6 +37,8 @@ export default function Annonceurs() {
   const [selectedAdvertiserModify, setSelectedAdvertiserModify] =
     useState(null);
   const fetchEmployees = async () => {
+    setIsLoading(true);
+
     const token = localStorage.getItem("token");
 
     const config = {
@@ -41,7 +46,10 @@ export default function Annonceurs() {
     };
     const response = await axios
       .get(`${API_URL}/api/account.management/getEmployees`, config)
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(e))
+      .finally(() => {
+        setIsLoading(false);
+      });
     if (response) {
       const Employees = response.data;
       setEmployees(Employees);
@@ -148,11 +156,11 @@ export default function Annonceurs() {
   return (
     <div className="relative flex flex-col items-center pt-4 overflow-x-hidden text-center gap-11">
       <Head>
-        <title>Gestion des Annonceurs</title>
+        <title>Gestion des Employées</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Title title="Gestion des Employees" />
+      <Title title="Gestion des Employés" />
       <div className="flex w-[1000px] items-center justify-evenly">
         <SearchTableBar
           preGlobalFilteredRows={preGlobalFilteredRows}
@@ -162,7 +170,7 @@ export default function Annonceurs() {
 
         <button className="w-[50px] h-[50px] rounded-full bg-[#343A49] flex items-center justify-center">
           <Image
-            alt="search Icon"
+            alt="Icône de recherche"
             src="/icons/search.svg"
             width={30}
             height={30}
@@ -180,14 +188,19 @@ export default function Annonceurs() {
         />
         <AddEmployeeModal fetchAdvertisers={fetchEmployees} />
       </div>
-
-      <DataTable
-        getTableProps={getTableProps}
-        getTableBodyProps={getTableBodyProps}
-        headerGroups={headerGroups}
-        rows={rows}
-        prepareRow={prepareRow}
-      />
+      {isLoading ? (
+        <div className="h-[500px] flex justify-center items-center">
+          <CircularProgress />
+        </div>
+      ) : (
+        <DataTable
+          getTableProps={getTableProps}
+          getTableBodyProps={getTableBodyProps}
+          headerGroups={headerGroups}
+          rows={rows}
+          prepareRow={prepareRow}
+        />
+      )}
     </div>
   );
 }

@@ -4,7 +4,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { API_URL } from "../../config/api";
+import { useState } from "react";
+import { CircularProgress } from "@mui/material";
 export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
 
@@ -38,6 +41,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
   };
 
   const handleSave = async () => {
+    setLoading(true);
     const token = localStorage.getItem("token");
 
     const config = {
@@ -58,8 +62,9 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
         },
         config
       );
-      console.log(res.data);
+      toast.success("Ajouté avec success");
     } catch (err) {
+      toast.error("Une erreure d'est produite");
       console.error(err);
     }
 
@@ -101,7 +106,6 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
 
     // If all validations pass, save the beverage
     handleSave();
-    toast.success("Modifié avec success");
   };
 
   return (
@@ -340,13 +344,17 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
                 </div>
 
                 <div className="flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200">
-                  <button
-                    className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none"
-                    type="button"
-                    onClick={handleSubmit}
-                  >
-                    Sauvegarder
-                  </button>
+                  {loading ? (
+                    <CircularProgress />
+                  ) : (
+                    <button
+                      className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white transition-all duration-150 ease-linear rounded shadow outline-none bg-dark-grey hover:shadow-lg focus:outline-none"
+                      type="button"
+                      onClick={handleSubmit}
+                    >
+                      Sauvegarder
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
