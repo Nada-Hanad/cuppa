@@ -7,8 +7,16 @@ import BarChart from "../../components/shared/charts/barChart";
 import Title from "../../components/shared/layout/title";
 
 import chartData from "../../helpers/mocks/dashboard.json";
+import { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
 
 export default function ADMDashboard() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  }, []);
   const [chartFilter, setChartFilter] = useState("month");
 
   const stats = [
@@ -156,50 +164,67 @@ export default function ADMDashboard() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Title title="Tableau de bord" />
-      <div className="w-[90%] mx-auto flex gap-4">
-        {stats.map((s, i) => (
-          <StatCard key={i} stat={s.stat} title={s.title} icon={s.icon} />
-        ))}
-      </div>
-      <div className="flex w-full gap-6">
-        <div className="w-2/3 flex flex-col gap-6">
-          <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
-            <LineChart
-              data={lineChartData}
-              title="Revenues"
-              filter={chartFilter}
-              onFilterChange={handleChartFilterChange}
-            />
-          </div>
-          <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
-            <LineChart
-              data={revenueData}
-              title="Revenues"
-              filter={chartFilter}
-              onFilterChange={handleChartFilterChange}
-            />
-          </div>
+      {loading ? (
+        <div className="h-[500px] flex items-center justify-center">
+          <CircularProgress />
         </div>
-        <div className="w-1/3 flex flex-col gap-5">
-          <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
-            <BarChart chartData={barChartData} title="Revenu par région" />
+      ) : (
+        <>
+          <div className="w-[90%] mx-auto flex gap-4">
+            {stats.map((s, i) => (
+              <StatCard key={i} stat={s.stat} title={s.title} icon={s.icon} />
+            ))}
           </div>
-          <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
-            <BarChart chartData={barChartData2} title="Coût par catégorie" />
+          <div className="flex w-full gap-6">
+            <div className="w-2/3 flex flex-col gap-6">
+              <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
+                <LineChart
+                  data={lineChartData}
+                  title="Revenues"
+                  filter={chartFilter}
+                  onFilterChange={handleChartFilterChange}
+                />
+              </div>
+              <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
+                <LineChart
+                  data={revenueData}
+                  title="Revenues"
+                  filter={chartFilter}
+                  onFilterChange={handleChartFilterChange}
+                />
+              </div>
+            </div>
+            <div className="w-1/3 flex flex-col gap-5">
+              <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
+                <BarChart chartData={barChartData} title="Revenu par région" />
+              </div>
+              <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
+                <BarChart
+                  chartData={barChartData2}
+                  title="Coût par catégorie"
+                />
+              </div>
+              <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
+                <BarChart
+                  chartData={barChartData3}
+                  title="Réclamations par type"
+                />
+              </div>
+            </div>
           </div>
-          <div className="w-full bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
-            <BarChart chartData={barChartData3} title="Réclamations par type" />
+          <div className="flex w-full items-center justify-center gap-5">
+            <div className="w-2/5 flex justify-center items-center  bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
+              <DoughnutChart data={donutChartData} title="Etat Distributeurs" />
+            </div>
+            <div className="w-2/5 flex justify-center items-center bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
+              <DoughnutChart
+                data={donutChartData2}
+                title="Type de maintenance"
+              />
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="flex w-full items-center justify-center gap-5">
-        <div className="w-2/5 flex justify-center items-center  bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
-          <DoughnutChart data={donutChartData} title="Etat Distributeurs" />
-        </div>
-        <div className="w-2/5 flex justify-center items-center bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded p-4">
-          <DoughnutChart data={donutChartData2} title="Type de maintenance" />
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

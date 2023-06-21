@@ -46,7 +46,7 @@ export default function Login() {
       localStorage.setItem("role", role);
       localStorage.setItem("name", name);
       // Redirect to another page
-      console.log(`role`);
+      console.log(response.data);
       //	console.log(response);
       if (role === "SADM") {
         router.push("/sadm/clients");

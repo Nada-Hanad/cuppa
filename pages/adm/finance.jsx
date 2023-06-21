@@ -59,7 +59,9 @@ export default function DeciderFinance() {
       </Head>
       <Title title="Finance" />
       {loading ? (
-        <CircularProgress />
+        <div className="h-[700px] flex justify-center items-center">
+          <CircularProgress />
+        </div>
       ) : (
         <>
           <div className="">

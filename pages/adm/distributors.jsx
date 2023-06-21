@@ -8,10 +8,13 @@ import { useState } from "react";
 import AddDistributorModal from "../../components/ADM/addDistributor";
 import DistributorListItem from "../../components/ADM/distributorListItem";
 import defaultDis from "../../helpers/mocks/distributors.json";
+import { CircularProgress } from "@mui/material";
+import { useEffect } from "react";
 
 export default function Distributors() {
+  const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("all"); // Valeur par défaut : 'all'
-  const [view, setView] = useState("grid"); // Valeur par défaut : 'grid'
+  const [view, setView] = useState("list"); // Valeur par défaut : 'grid'
 
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
@@ -26,7 +29,13 @@ export default function Distributors() {
     setSearchQuery(value);
   };
 
-  const [distributors, setDistributors] = useState(defaultDis);
+  const [distributors, setDistributors] = useState([]);
+  useEffect(() => {
+    setTimeout(() => {
+      setDistributors(defaultDis);
+      setLoading(false);
+    }, 2000);
+  }, []);
 
   return (
     <div className="text-center pt-8 flex flex-col items-center pb-12">
@@ -121,52 +130,62 @@ export default function Distributors() {
           }}
         />
       </div>
-      {view === "grid" ? (
-        <div className="grid grid-cols-3 gap-12">
-          {distributors
-            .filter((distributor) =>
-              distributor.numero_serie_distributeur
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase())
-            )
-            .map((distributor) => (
-              <DistributorCard
-                all={distributors}
-                setAll={setDistributors}
-                key={distributor.numero_serie_distributeur}
-                distributor={distributor}
-              />
-            ))}
+      {loading ? (
+        <div className="h-[500px] flex items-center justify-center">
+          <CircularProgress />
         </div>
       ) : (
-        <div className="flex flex-col items-center w-full rounded overflow-hidden">
-          <div className="flex items-center justify-between py-4  w-full rounded-t bg-dark-grey text-white">
-            <div className="flex flex-col w-32">
-              <h3 className="text-lg font-medium">N Série </h3>
-              <p className="text-sm text-gray-500">Localisation</p>
+        <>
+          {view === "grid" ? (
+            <div className="grid grid-cols-3 gap-12">
+              {distributors
+                .filter((distributor) =>
+                  distributor.numero_serie_distributeur
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+                )
+                .map((distributor) => (
+                  <DistributorCard
+                    all={distributors}
+                    setAll={setDistributors}
+                    key={distributor.numero_serie_distributeur}
+                    distributor={distributor}
+                  />
+                ))}
             </div>
-            <div className="ml-[10px]">
-              <span>Etat</span>
-            </div>
-            <span>{"Date d'installation"}</span>
-            <div className="flex items-center justify-start w-24 ">Actions</div>
-          </div>
+          ) : (
+            <div className="flex flex-col items-center w-full rounded overflow-hidden">
+              <div className="flex items-center justify-between py-4  w-full rounded-t bg-dark-grey text-white">
+                <div className="flex flex-col w-32">
+                  <h3 className="text-lg font-medium">N Série </h3>
+                  <p className="text-sm text-gray-500">Localisation</p>
+                </div>
+                <div className="ml-[10px]">
+                  <span>Etat</span>
+                </div>
+                <span>{"Date d'installation"}</span>
+                <div className="flex items-center justify-start w-24 ">
+                  Actions
+                </div>
+              </div>
 
-          {distributors
-            .filter((distributor) =>
-              distributor.numero_serie_distributeur
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase())
-            )
-            .map((distributor) => (
-              <DistributorListItem
-                all={distributors}
-                setAll={setDistributors}
-                key={distributor.numero_serie_distributeur}
-                distributor={distributor}
-              />
-            ))}
-        </div>
+              {distributors
+                .filter((distributor) =>
+                  distributor.numero_serie_distributeur
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+                )
+                .map((distributor) => (
+                  <DistributorListItem
+                    all={distributors}
+                    setAll={setDistributors}
+                    key={distributor.numero_serie_distributeur}
+                    distributor={distributor}
+                  />
+                ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
