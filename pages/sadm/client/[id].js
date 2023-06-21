@@ -135,7 +135,7 @@ export default function SADM_clientDetails() {
 
       <Title title="les distrbuteur de client" />
       <div className="flex w-[1000px] items-center justify-evenly">
-        <ClientIDCard client={client} />
+        <ClientIDCard client={client} nbr={distributeurs?.length } />
       </div>
       <div className="flex w-[1000px] items-center justify-evenly">
         <Search_bar

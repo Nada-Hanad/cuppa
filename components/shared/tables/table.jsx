@@ -13,7 +13,7 @@ export function DataTable({
     <div className="w-full">
       <table
         {...getTableProps()}
-        className="w-full text-base rounded drop-shadow-xl overflow-hidden p-2 "
+        className="w-full text-base rounded drop-shadow-xl overflow-hidden p-2 mb-20 "
       >
         <thead className="py-4 text-white bg-[#343A49] border-2 border-dark-grey">
           {headerGroups.map((headerGroup, index) => (
@@ -35,7 +35,7 @@ export function DataTable({
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
+        <tbody {...getTableBodyProps()} >
           {rows.map((row, index) => {
             prepareRow(row);
 
