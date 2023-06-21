@@ -3,7 +3,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { API_URL } from "../../../config/api";
+import { API_URL } from "../../config/api";
 
 export default function DeleteAdvertiserModal({
   Advertiser,
@@ -39,7 +39,7 @@ export default function DeleteAdvertiserModal({
 
     try {
       const res = await axios.post(
-        `${API_URL}/api/ads/deleteAdvertiser/${Advertiser.id_annonceur}`,
+        `${API_URL}/api/account.management/deleteAccount/AM/${Advertiser.id_utilisateur}`,
         {},
         config
       );
@@ -82,26 +82,23 @@ export default function DeleteAdvertiserModal({
                 {/*body*/}
                 <div className="relative p-12 mx-auto flex rounded-[20px] border-slate-800 border-1 border w-8/12 bg-[#EBEEF3]">
                   <p className="font-bold text-dark-grey text-center text-[20px]">
-                    {Advertiser.numberOfAds > 0
-                      ? " Vous ne pouvez pas supprimer ce annonceur car il a des annonces"
-                      : ` Voulez_vous supprimer
-                                                  l’annonceur  ${Advertiser.nom_annonceur}? `}
+                    
+                      
+                        Voulez_vous supprimer l’utilisateur  {Advertiser?.profil?.nom_utilisateur + Advertiser?.profil?.prenom_utilisateur }
                   </p>
                 </div>
 
                 <div
-                  className={`flex items-center lg:gap-x-24  p-6 rounded-b ${
-                    Advertiser.numberOfAds > 0 && " justify-center   "
-                  }`}
+                  className={`flex items-center lg:gap-x-24  p-6 rounded-b `}
                 >
                   <button
-                    className="w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold bg-green-500 text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none  hover:shadow-lg focus:outline-none"
+                    className="w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-green-500 hover:shadow-lg focus:outline-none"
                     type="button"
                     onClick={() => setSelectedAdvertiser(null)}
                   >
                     Annuler
                   </button>
-                  {Advertiser.numberOfAds == 0 && (
+                   
                     <button
                       className="w-5/12 px-2 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-red-500 hover:shadow-lg focus:outline-none"
                       type="button"
@@ -109,7 +106,7 @@ export default function DeleteAdvertiserModal({
                     >
                       Confirmer
                     </button>
-                  )}
+                  
                 </div>
               </div>
             </div>

@@ -29,19 +29,24 @@ export default function Profil() {
     e.preventDefault();
     setIsLoading(true);
     const data = {
-      username: username,
-      password: password,
+      username_utilisateur: username,
+      password_utilisateur: password,
+    };
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
     };
     const response = await axios
-      .post(
+      .put(
         `${API_URL}/api/account.management/modifyAccount/${profil?.role?.libelle_role}/${profil?.id_utilisateur}`,
-        data
+        data,
+        config
       )
       .catch((e) => console.log(e));
     if (response) {
-      const token = response.data.token;
       localStorage.setItem("token", token);
       setIsLoading(false);
+      fetchProfile();
     }
   };
   const fetchProfile = async () => {
@@ -123,7 +128,7 @@ export default function Profil() {
         <div className="flex flex-col items-center justify-center w-4/12">
           <button
             onClick={() => setOpenEdit(!openEdit)}
-            className="self-end px-4 py-4 mx-auto mb-8 text-white bg-dark-grey rounded"
+            className="self-end px-4 py-4 mx-auto mb-8 text-white rounded bg-dark-grey"
           >
             {" "}
             Modifier Profil

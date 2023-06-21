@@ -25,20 +25,39 @@ export default function Profil() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const data = {
-      username: username,
-      password: password,
+    let data = {};
+    if (username  && password ) {
+       data = {
+        username_utilisateur: username,
+        password_utilisateur: password,
+      };
+    } else if (username) {
+        data = {
+          username_utilisateur: username,
+        };
+    } else if (password) {
+        data = {  
+          password_utilisateur: password,
+        };
+
+    }
+    
+ 
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
     };
     const response = await axios
-      .post(
+      .put(
         `${API_URL}/api/account.management/modifyAccount/${profil?.role?.libelle_role}/${profil?.id_utilisateur}`,
-        data
+        data ,config
       )
       .catch((e) => console.log(e));
     if (response) {
-      const token = response.data.token;
+     
       localStorage.setItem("token", token);
       setIsLoading(false);
+      fetchProfile();
     }
   };
   const fetchProfile = async () => {
@@ -72,7 +91,7 @@ export default function Profil() {
         <Title title="Profil" />
       </div>
       <div className="flex flex-col items-center justify-center md:flex-row gap-x-20 ">
-        <div className="flex flex-col items-start justify-start pt-8 px-8 mx-auto mt-8 mb-24 text-center shadow-lg bg-slate-50 sm:w-full md:2/3 lg:w-1/3 min-h-96 ">
+        <div className="flex flex-col items-start justify-start px-8 pt-8 mx-auto mt-8 mb-24 text-center shadow-lg bg-slate-50 sm:w-full md:2/3 lg:w-1/3 min-h-96 ">
           <div className="w-full mb-12">
             <img
               alt="profile"
@@ -113,7 +132,7 @@ export default function Profil() {
         <div className="flex flex-col items-center justify-center w-4/12">
           <button
             onClick={() => setOpenEdit(!openEdit)}
-            className="self-end px-4 py-4 mx-auto mb-8 text-white bg-dark-grey rounded"
+            className="self-end px-4 py-4 mx-auto mb-8 text-white rounded bg-dark-grey"
           >
             {" "}
             Modifier Profil
