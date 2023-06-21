@@ -55,6 +55,12 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
       },
     };
     try {
+      
+      console.log(`-----------------------------------`);
+      console.log(`ImgaeFile`);
+      console.log(ImgaeFile);
+      console.log(`-----------------------------------`);
+
       const res = await axios.post(
         `${API_URL}/api/ads/createAdvertiser/`,
         formData,
@@ -122,7 +128,7 @@ export default function AddAdvertiserModal({ drinks, fetchAdvertisers }) {
   return (
     <>
       <button
-        className="self-end px-4 py-4 mr-12 text-white bg-dark-grey rounded"
+        className="self-end px-4 py-4 mr-12 text-white rounded bg-dark-grey"
         type="button"
         onClick={() => setShowModal(true)}
       >

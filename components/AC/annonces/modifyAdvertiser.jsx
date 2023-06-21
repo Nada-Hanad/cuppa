@@ -28,11 +28,11 @@ export default function ModifyAdvertiserModal({
 	useEffect(() => {
 		setName(Advertiser?.nom_annonceur);
 		setPhone(Advertiser?.telephone_annonceur);
-		setRCS(Advertiser?.rcf_annonceur);
+		setRCS(Advertiser?.rcs_annonceur);
 		setFiscal(Advertiser?.fiscal_annonceur);
 
 		setType(Advertiser?.type_annonceur);
-		setImage(Advertiser?.path_annonceur);
+		setImagePath(Advertiser?.path_annonceur);
 	}, [Advertiser]);
 	const [name, setName] = React.useState();
 	const [phone, setPhone] = React.useState('');
@@ -40,7 +40,7 @@ export default function ModifyAdvertiserModal({
 	const [fiscal, setFiscal] = React.useState('');
 	const [type, setType] = React.useState();
 	const [image, setImage] = React.useState();
-
+	const [imagePath, setImagePath] = React.useState();
 	const handleTypeChange = (e) => {
 		e.preventDefault();
 		setType(e.target.value);
@@ -51,23 +51,48 @@ export default function ModifyAdvertiserModal({
 		formData.append('nom_annonceur', name);
 		formData.append('telephone_annonceur', phone);
 		formData.append('fiscal_annonceur', fiscal);
-		formData.append('rcf_annonceur', RCS);
-		formData.append('path_annonceur', image);
-		try {
-			const token = localStorage.getItem('token');
-
-			const config = {
-				headers: {
-					Authorization: `Bearer ${token}`,
-					'Content-Type': 'multipart/form-data',
-				},
+		formData.append('rcs_annonceur', RCS);
+		formData.append('image', image ) ;
+		console.log(image);
+		const token = localStorage.getItem('token');
+		let data,link,config;
+		if (!image) {
+			data = {
+			  nom_annonceur: name,
+			  telephone_annonceur :phone,
+			  fiscal_annonceur: fiscal,
+			  rcs_annonceur:  RCS,
 			};
+			link = "updateAdvertiserWithoutTheFile";
+			config = {
+			  headers: {
+				Authorization: `Bearer ${token}`,
+			  },
+			};
+		  } else {
+			data = formData;
+			link = "updateAdvertiser";
+	  
+			config = {
+			  headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "multipart/form-data",
+			  },
+			};
+		  }
+		
+		try {
+
+	
 			const res = await axios.post(
-				`${API_URL}/api/ads/updateAdvertiser/${Advertiser.id_annonceur}`,
-				formData,
+				`${API_URL}/api/ads/${link}/${Advertiser.id_annonceur}`,
+				data,
 				config
 			);
+			console.log(formData.get('image'));
+			console.log(formData.get('nom_annonceur'));
 			console.log(res.data);
+			await fetchAdvertisers();
 		} catch (err) {
 			console.error(err);
 		}
@@ -87,25 +112,24 @@ export default function ModifyAdvertiserModal({
 
 		// If all validations pass, save the beverage
 		handleSave();
-		toast.success('Ajouté avec success');
+		//toast.success('Ajouté avec success');
+		
+		setSelectedAdvertiser(null);
 	};
 
 	// image handling
 
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
-		const input = e.target.value;
-
+		setImage(file);
 		if (file) {
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
 
 			reader.onload = () => {
-				setImage(reader.result);
+				setImagePath(reader.result);
 			};
 			setSelectedFile(true);
-		} else if (input) {
-			setImage(input);
 		}
 	};
 
@@ -303,9 +327,16 @@ export default function ModifyAdvertiserModal({
 											</label>
 
 											<div className='relative flex items-center justify-between gap-8 '>
-												{image ? (
+											{imagePath ? (
 													<Image
-														src={`${PUBLIC_URL}${image}`}
+														src={
+															imagePath.indexOf(
+																'data'
+															) !=
+															-1
+																? imagePath
+																: `${PUBLIC_URL}${imagePath}`
+														}
 														alt='Boisson'
 														className='object-cover w-full h-48 rounded'
 														height={
