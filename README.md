@@ -1,118 +1,41 @@
-# Charte de codage
+# Cuppa
 
-La charte de codage est un document qui regroupe l'ensemble des règles à suivre durant la programmation pour assurer un code cohérent et de qualité. Elle doit être respectée par tous les membres de l'équipe de développement.
+The web back office for a network of connected drink vending machines, built by a team of four students at ESI Algiers (March to June 2023). Each kind of user gets its own workspace: the platform operator manages client companies and their machines, a client's administrator runs its fleet, staff and finances, commercial agents manage advertising and complaints, and decision-makers follow the figures.
 
-## Règles générales
+![Administrator dashboard: active machines, maintenance requests, complaints and trends](docs/screenshots/adm-dashboard.png)
 
-- Le code doit être lisible et compréhensible par tous les membres de l'équipe.
-- Le code doit être documenté de manière adéquate. Les commentaires doivent être pertinents, clairs et concis.
-- Les noms de variables, de fonctions et de classes doivent être explicites et évocateurs de leur utilisation.
-- Le code doit être organisé de manière logique, en regroupant les fonctions et les classes qui ont une fonctionnalité similaire.
+| Login | Fleet of vending machines |
+|---|---|
+| ![Login screen](docs/screenshots/login.png) | ![Distributor list with state, installation date and actions](docs/screenshots/adm-distributors.png) |
 
-## Les messages des commits
+| Finance: balance sheet and income statement | Decision-maker dashboard |
+|---|---|
+| ![Finance page](docs/screenshots/adm-finance.png) | ![Decision-maker dashboard](docs/screenshots/decideur-dashboard.png) |
 
-- Les messages des commits doivent être clairs et explicites.
-- Les messages des commits doivent décrire la fonctionnalité ou le correctif apporté par le commit.
-- Les messages des commits doivent être rédigés en anglais.
-- Les messages des commits doivent être rédigés en utilisant la convention suivante : _type: message_.
-  Par exemple, pour faire un commit de finition de la fonctionnalité d'authentification :
+*Captured in November 2026 from the code as committed in June 2023. The project's API is no longer hosted, so these views show the bundled mock data in `helpers/mocks/` with a placeholder session; user names are marked "(démo)".*
 
-  ```bash
-  git commit -m "feat: completed authentification"
-  ```
+## What it covers
 
-  ### Les types de commits
+- **Four role-based workspaces** chosen at login: platform super-admin (`/sadm`), client administrator (`/adm`), commercial agent (`/ac`) and decision-maker (`/decideur`). A shared layout builds the navigation from the user's role.
+- **Fleet management:** list, search and filter machines by serial number and state, add, edit and delete them, assign them to client companies, and place them on a Google Map.
+- **Staff management:** add, edit and remove employees through modal forms.
+- **Finance:** revenue, costs and profit, with a balance sheet and an income statement per machine.
+- **Dashboards** built with Chart.js: maintenance requests and complaints over time, cost by category, usage by region.
+- **Commercial agent tools:** advertisers and ad campaigns, the drinks catalogue, and a complaints workflow with a detail page per complaint.
 
-  | Type         | Description                                        |
-  | ------------ | -------------------------------------------------- |
-  | **feat**     | Ajout d'une nouvelle fonctionnalité                |
-  | **fix**      | Correction d'un bug                                |
-  | **docs**     | Modification de la documentation                   |
-  | **style**    | Modification de la mise en forme du code           |
-  | **refactor** | Modification du code sans changer son comportement |
-  | **test**     | Ajout ou modification de tests                     |
-  | **conf**     | Modification de la configuration du projet         |
+## Stack
 
-## La création des branches
+Next.js 13 (pages router), React 18, Tailwind CSS with MUI components, Chart.js through react-chartjs-2, Google Maps through @react-google-maps/api, and Axios against the team's REST API.
 
-- Les branches doivent être créées à partir de la branche principale. i.e avant de créer une nouvelle branche, il faut basculer vers la branche **master**.
-  Avant de commencer à travailler :
+## Team
 
-  ```bash
-  git checkout master
-  ```
+Built as a university team project. Commits on this repository: [Nada Hanad](https://github.com/Nada-Hanad) (55), [yassineoo](https://github.com/yassineoo) (28), [Zack-19](https://github.com/Zack-19) (14) and [malak-gouasmia](https://github.com/malak-gouasmia) (1). The team followed a shared [coding charter](docs/CODING_GUIDELINES.md) for naming, comments and commit messages.
 
-  Effectuer un pull :
+## Running it
 
-  ```bash
-  git pull origin master
-  ```
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
 
-  En fin créer et basculer vers la nouvelle branche :
-
-  ```bash
-  git checkout -b feature-name
-  ```
-
-- Les branches doivent être nommées de manière explicite pour indiquer leur fonctionnalité ou leur objectif ainsi que le responsable de la tâche. elles doivent être nommées de cette manière : _name/feature/feature-name_.
-  Par exemple, pour la création de la fonctionnalité d'authentification :
-
-  ```bash
-  git checkout -b name/feature/auth
-  ```
-
-- Les branches doivent être fusionnées dans la branche principale après la fin de leur développement et leur validation.
-
-## Les normes de codage
-
-- Les noms des variables doivent être en anglais, en utilisant la convention camelCase.
-  ```javascript
-  const myVariable = "Hello World";
-  ```
-- Les noms des constantes doivent être en anglais, en utilisant la convention SCREAMING_SNAKE_CASE.
-
-  ```javascript
-  const API_URL = "https://api.example.com";
-  ```
-
-- Les noms des fonctions et des classes doivent être en anglais, en utilisant la convention PascalCase.
-
-  ```javascript
-  class MyClass {
-    myFunction() {
-      // ...
-    }
-  }
-  ```
-
-- Les fonctions doivent être écrites avec des commentaires avant le début de la fonction expliquant leur but et leur utilisation.
-
-  ```javascript
-  /**
-   * This function is used to do something
-   * @param {string} param1 - The first parameter
-   * @param {number} param2 - The second parameter
-   * @returns {boolean} - The result of the function
-   */
-  function myFunction(param1, param2) {
-    // ...
-  }
-  ```
-
-## Structure de code
-
-- Utiliser Prettier pour le formatage du code.
-
-- Chaque projet aura son propre fichier de configuration Prettier.
-
-## La documentation du code
-
-- Le code doit être documenté pour faciliter la compréhension de son fonctionnement et de son utilisation.
-- Les commentaires doivent être placés à des endroits stratégiques pour aider à la compréhension du code.
-- Les commentaires doivent être clairs, précis et pertinents. Ils doivent décrire le fonctionnement de la fonction, de la classe ou de la variable.
-- Les commentaires doivent être rédigés en anglais.
-- Le code doit être documenté de manière à faciliter la maintenance et les éventuelles modifications futures.
-
-## Conclusion
-
-La charte de codage est essentielle pour assurer un code de qualité, cohérent et facilement lisible par tous les membres de l'équipe. Elle doit être suivie avec rigueur et respect par tous les développeurs travaillant sur le projet.
+The API URL is set in `config/api.js`. Without a running backend, the login form cannot authenticate; pages that read `helpers/mocks/` still render once a `token` is present in `localStorage`.
